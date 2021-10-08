@@ -11,12 +11,6 @@
             </div>
           </div>
           <div class="p-4 row">
-            <label class="col-4" for="Email">Email:</label>
-            <div class="col-8">
-              <input minlength="3" class="form-control" id="email" type="email" placeholder="email" v-model="email" />
-            </div>
-          </div>
-          <div class="p-4 row">
             <label class="col-4" for="Password">Password:</label>
             <div class="col-8">
               <input minlength="3" class="form-control" id="password" type="text" placeholder="password" v-model="password" />
@@ -38,12 +32,11 @@ export default defineComponent({
     return {
       password: '',
       username: '',
-      email: '',
     };
   },
   methods: {
     login() {
-      loginAdmin(this.username, this.email, this.password);
+      loginAdmin(this.username, this.password);
     },
   },
 });
