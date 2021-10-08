@@ -5,6 +5,6 @@ export function getLoginData(): any {
 export function setUser(): void {
   localStorage.setItem('Username', 'User');
 }
-export function loginAdmin(username: string, email: string, password: string): void {
+export function loginAdmin(username: string, password: string): void {
   // let AdminData = localStorage.getItem('Admin');
 }
