@@ -1,7 +1,7 @@
 {
-    "singleQuote": true,
-    "arrowParens": "avoid",
-    "jsxBracketSameLine": true,
-    "printWidth": 150,
-    "htmlWhitespaceSensitivity": "ignore"
+  "singleQuote": true,
+  "arrowParens": "avoid",
+  "jsxBracketSameLine": true,
+  "printWidth": 150,
+  "htmlWhitespaceSensitivity": "ignore"
 }
