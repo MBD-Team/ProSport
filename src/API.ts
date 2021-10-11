@@ -4,7 +4,7 @@ interface Admin {
   online: boolean;
 }
 
-export function loginAdmin(username: string, password: string): true | false {
+export function loginAdmin(username: string, password: string): boolean {
   const Admin = JSON.parse(localStorage.getItem('Admin') || '') as Admin;
   if (Admin) {
     if (username == Admin.name && password == Admin.pw) {
