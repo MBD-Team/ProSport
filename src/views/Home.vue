@@ -1,11 +1,17 @@
 <template>
-  <div></div>
+  <div class="d-flex justify-content-around">
+    <humanFront />
+    <humanBack />
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import humanFront from '@/components/humanInterface/humanFront.vue';
+import humanBack from '@/components/humanInterface/humanBack.vue';
 
 export default defineComponent({
+  components: { humanFront, humanBack },
   data() {
     return {};
   },
