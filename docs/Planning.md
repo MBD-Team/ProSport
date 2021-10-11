@@ -64,17 +64,6 @@
 
 ## User Features
 
-- einteilung Erfahrungsstand
-
-- buttongroup
-
-  - Noob
-    - button
-  - intermediate
-    - button
-  - Advanced
-    - button
-
 - auswahl zwischen fitness,kraft oder ausdauertraining
 
   - als filter in der übungsauswahl
