@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex justify-content-around">
     <humanFront />
     <humanBack />
   </div>

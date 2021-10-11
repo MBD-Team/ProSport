@@ -1,6 +1,6 @@
 <template>
   <div id="navbar">
-    <nav class="row">
+    <nav class="row g-2">
       <div class="col-4"></div>
       <a class="col-4" href="#">
         <img src="@/assets/PS_Logo_doublebizeps.svg" width="220" height="55" class="" alt="PS_Logo" />
