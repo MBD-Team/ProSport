@@ -7,13 +7,13 @@
           <div class="p-4 row">
             <label class="col-4" for="Username">Username:</label>
             <div class="col-8">
-              <input minlength="3" class="form-control" id="username" type="text" placeholder="username" v-model="username" />
+              <input minlength="3" class="form-control" id="username" type="text" placeholder="username" v-model="username" autocomplete="off" />
             </div>
           </div>
           <div class="p-4 row">
             <label class="col-4" for="Password">Password:</label>
             <div class="col-8">
-              <input minlength="3" class="form-control" id="password" type="text" placeholder="password" v-model="password" />
+              <input minlength="3" class="form-control" id="password" type="password" placeholder="password" v-model="password" autocomplete="off" />
             </div>
           </div>
           <button class="btn btn-primary" type="submit">Login</button>
@@ -36,7 +36,14 @@ export default defineComponent({
   },
   methods: {
     login() {
-      loginAdmin(this.username, this.password);
+      if (loginAdmin(this.username, this.password)) {
+        console.log('admin logged in as:' + this.username);
+        this.username = '';
+        this.password = '';
+        this.$router.push('/');
+      } else {
+        this.password = '';
+      }
     },
   },
 });

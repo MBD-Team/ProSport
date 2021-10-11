@@ -5,6 +5,10 @@ export function getLoginData(): any {
 export function setUser(): void {
   localStorage.setItem('Username', 'User');
 }
-export function loginAdmin(username: string, password: string): void {
-  // let AdminData = localStorage.getItem('Admin');
+export function loginAdmin(username: string, password: string): true | false {
+  const Admin = JSON.parse(localStorage.getItem('Admin') || '');
+  if (Admin) {
+    if (username == Admin.name && password == Admin.pw) return true;
+  }
+  return false;
 }
