@@ -1,14 +1,15 @@
 <template>
-  <div id="nav"></div>
+  <div id="nav">
+    <Navbar />
+  </div>
   <router-view />
 </template>
-<script lang="ts">
+<script>
 import { defineComponent } from 'vue';
+import Navbar from '@/components/navbar.vue';
 
 export default defineComponent({
-  data() {
-    return {};
-  },
+  components: { Navbar },
 });
 </script>
 
@@ -17,13 +18,11 @@ export default defineComponent({
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  // text-align: center;
   color: #2c3e50;
 }
 
 #nav {
-  padding: 30px;
-
   a {
     font-weight: bold;
     color: #2c3e50;
