@@ -1,9 +1,11 @@
 <template>
   <div id="navbar">
-    <nav class="">
-      <a class="" href="#">
-        <img src="@/assets/PS_Logo_doublebizeps.svg" width="550" height="55" class="col-12" alt="PS_Logo" />
+    <nav class="row">
+      <div class="col-4"></div>
+      <a class="col-4" href="#">
+        <img src="@/assets/PS_Logo_doublebizeps.svg" width="220" height="55" class="" alt="PS_Logo" />
       </a>
+      <div class="col-4"></div>
     </nav>
   </div>
 </template>
