@@ -4,14 +4,10 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { setUser } from '@/API';
 
 export default defineComponent({
   data() {
     return {};
-  },
-  mounted() {
-    setUser();
   },
 });
 </script>
