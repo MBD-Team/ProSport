@@ -5,7 +5,7 @@ import Settings from '../views/Settings.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/Home',
+    path: '/',
     name: 'Home',
     component: Home,
   },
