@@ -14,7 +14,7 @@ export function loginAdmin(username: string, password: string): boolean {
   }
   return false;
 }
-export function isAdmin(): true | false {
+export function isAdmin(): boolean {
   const admin = JSON.parse(localStorage.getItem('Admin') || '');
   if (admin) {
     return admin.online;
