@@ -5,10 +5,10 @@ interface Admin {
 }
 
 export function loginAdmin(username: string, password: string): boolean {
-  const Admin = JSON.parse(localStorage.getItem('Admin') || 'null') as Admin;
-  if (Admin) {
-    if (username == Admin.name && password == Admin.pw) {
-      localStorage.setItem('Admin', JSON.stringify({ name: Admin.name, pw: Admin.pw, online: true }));
+  const admin = JSON.parse(localStorage.getItem('Admin') || 'null') as Admin;
+  if (admin) {
+    if (username == admin.name && password == admin.pw) {
+      localStorage.setItem('Admin', JSON.stringify({ name: admin.name, pw: admin.pw, online: true }));
       return true;
     }
   }
