@@ -27,7 +27,9 @@
     "tests/**/*.tsx",
     "src/components/Navbar.vue",
     "src/components/humanInterface/HumanFront.vue",
-    "src/components/humanInterface/HumanBack.vue"
+    "src/components/humanInterface/HumanBack.vue",
+    "src/components/humanInterface/list/List.vue",
+    "src/components/List.vue"
   ],
   "exclude": ["node_modules"]
 }

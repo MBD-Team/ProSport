@@ -207,6 +207,7 @@
           "
           d="m 22.86122,28.384646 6.28233,0.0992 3.042711,-2.38125 0.960633,-2.31511 v -3.86953 l -2.050521,-3.241145 -8.236189,0.142627"
           id="path11844"
+          @click="toggleList"
           sodipodi:nodetypes="ccccccc"
         />
         <use x="0" y="0" xlink:href="#path11844" id="use12297" transform="matrix(-1,0,0,1,45.722436,4.5318146e-7)" width="100%" height="100%" />
@@ -275,10 +276,18 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-
+import { toggleList } from '@/components/state';
 export default defineComponent({
+  methods: {
+    test() {
+      console.log('test nice');
+    },
+  },
   data() {
     return {};
+  },
+  setup() {
+    return { toggleList };
   },
 });
 </script>
