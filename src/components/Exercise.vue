@@ -21,8 +21,10 @@
               ></iframe>
             </div>
             <div class="col-6">
-              <h5>Beanspruchte Muskeln:</h5>
-              <p>{{ exercise?.muscles.join() }}</p>
+              <h5>Beanspruchte Hauptmuskeln:</h5>
+              <p>{{ exercise?.primaryMuscles.join() }}</p>
+              <h5>Beanspruchte Nebenmuskeln</h5>
+              <p>{{ exercise?.secondaryMuscles.join() }}</p>
               <h5>Beschreibung:</h5>
               <p>{{ exercise?.description }}</p>
             </div>
