@@ -17,7 +17,6 @@ const routes: Array<RouteRecordRaw> = [
     path: '/Admin',
     name: 'Admin',
     component: Admin,
-    meta: { requiresAuth: true },
   },
   {
     path: '/Settings',
