@@ -2,17 +2,6 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 
-export interface Exercise {
-  name: string;
-  description: string;
-  hints: string;
-  videoURL: string;
-  img: string;
-  difficulty: string;
-  primaryMuscles: string[];
-  secondaryMuscles: string[];
-  trainingDevices: string[];
-}
 export const MUSCLE_OPTIONS = ['Nacken', 'Schulter', 'Bizeps', 'Trizeps', 'Brust', 'Bauch', 'Po', 'Oberschenkel', 'Waden'];
 
 export async function login(email: string, password: string): Promise<boolean> {
@@ -30,7 +19,7 @@ export async function login(email: string, password: string): Promise<boolean> {
     return false;
   }
 }
-export async function addExercise(exercise: Exercise): Promise<boolean> {
+export async function addExercise(exercise: any): Promise<string> {
   const db = getFirestore();
   try {
     const docRef = await addDoc(collection(db, 'users'), {
@@ -46,20 +35,19 @@ export async function addExercise(exercise: Exercise): Promise<boolean> {
     });
     console.log('Document written with ID: ', docRef.id);
     console.log('Document written with Name: ', exercise.name);
-    getExercises();
-    return true;
+    return 'true';
   } catch (e) {
     console.error('Error adding document: ', e);
-    return false;
+    return "couldnt't add document";
   }
 }
 export async function getExercises(): Promise<any> {
   const db = getFirestore();
-  const exercises = [] as any;
+  let exercises = [] as any;
   const querySnapshot = await getDocs(collection(db, 'users'));
   querySnapshot.forEach(doc => {
-    exercises.push(JSON.stringify(doc.data()));
+    exercises.push(doc);
   });
-  console.log(JSON.parse(exercises[1]));
+  exercises = exercises.map((exercises: { data: () => any; id: string }) => ({ ...exercises.data(), id: exercises.id }));
   return exercises;
 }
