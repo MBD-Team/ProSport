@@ -1,6 +1,7 @@
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { DocumentData, getFirestore, QueryDocumentSnapshot } from 'firebase/firestore';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { CreatedExercise, Exercise } from './types';
 
 export const MUSCLE_OPTIONS = ['Nacken', 'Schulter', 'Bizeps', 'Trizeps', 'Brust', 'Bauch', 'Po', 'Oberschenkel', 'Waden'];
 
@@ -19,35 +20,29 @@ export async function login(email: string, password: string): Promise<boolean> {
     return false;
   }
 }
-export async function addExercise(exercise: any): Promise<string> {
+export async function addExercise(exercise: CreatedExercise): Promise<string> {
   const db = getFirestore();
-  try {
-    const docRef = await addDoc(collection(db, 'users'), {
-      name: exercise.name,
-      description: exercise.description,
-      hints: exercise.hints,
-      videoURL: exercise.videoURL,
-      img: exercise.img,
-      difficulty: exercise.difficulty,
-      primaryMuscles: exercise.primaryMuscles,
-      secondaryMuscles: exercise.secondaryMuscles,
-      trainingDevices: exercise.trainingDevices,
-    });
-    console.log('Document written with ID: ', docRef.id);
-    console.log('Document written with Name: ', exercise.name);
-    return 'true';
-  } catch (e) {
-    console.error('Error adding document: ', e);
-    return "couldnt't add document";
-  }
+  const docRef = await addDoc(collection(db, 'users'), {
+    name: exercise.name,
+    description: exercise.description,
+    hints: exercise.hints,
+    videoURL: exercise.videoURL,
+    img: exercise.img,
+    difficulty: exercise.difficulty,
+    primaryMuscles: exercise.primaryMuscles,
+    secondaryMuscles: exercise.secondaryMuscles,
+    trainingDevices: exercise.trainingDevices,
+  });
+  console.log('Exercise ID: ', docRef.id);
+  console.log('Exercise created with Name: ', exercise.name);
+  return docRef.id;
 }
-export async function getExercises(): Promise<any> {
+export async function getExercises(): Promise<Exercise[]> {
   const db = getFirestore();
-  let exercises = [] as any;
+  const docs: QueryDocumentSnapshot<DocumentData>[] = [];
   const querySnapshot = await getDocs(collection(db, 'users'));
   querySnapshot.forEach(doc => {
-    exercises.push(doc);
+    docs.push(doc);
   });
-  exercises = exercises.map((exercises: { data: () => any; id: string }) => ({ ...exercises.data(), id: exercises.id }));
-  return exercises;
+  return docs.map(exercises => ({ ...exercises.data(), id: exercises.id })) as Exercise[];
 }

@@ -147,7 +147,12 @@ export default defineComponent({
         primaryMuscles: this.primaryMuscles,
         secondaryMuscles: this.secondaryMuscles,
       };
-      if (!addExercise(newExercise)) this.error = "couldn't add exercise";
+      try {
+        addExercise(newExercise);
+      } catch (e) {
+        console.error('Error adding document: ', e);
+        this.error = "couldn't add exercise";
+      }
       this.addingExercise = false;
     },
     test() {
