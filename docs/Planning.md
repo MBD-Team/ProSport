@@ -40,7 +40,7 @@
 - nach muskelgruppen übungen sortieren ! ✅
 - gute erklärung/infos zur Übungen ! ✅
 
-- einteilung Erfahrungsstand ✅
+- einteilung Erfahrungsstand ✅ (wurde auf eine leicht mittel schwer übungseinteilung geändert)
 - trainingsplan vorgeschlagen bekommen / maybe als download verfügbar
 - auswahl zwischen fitness/gesundheit oder kraft oder ausdauer ✅
 
