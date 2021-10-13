@@ -1,7 +1,7 @@
 <template>
   <div id="list" :style="{ width: listWidth }">
-    <div id="task" v-for="exercise in filterex" v-bind:key="exercise">
-      <img :src="exercise.img" alt="" style="margin: 10px; width: 180px; height: 100px" />
+    <div id="task" v-for="exercise in filterex" v-bind:key="exercise.id">
+      <img :src="exercise.img" style="margin: 10px; width: 180px; height: 100px" />
       <span v-if="!collapsed">
         <b style="font-size: 35px">{{ exercise.name }}</b>
       </span>
@@ -15,54 +15,35 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { collapsed, toggleList, listWidth, selectedMuscle } from '@/components/state';
+import { Exercise } from '@/types';
+import { getExercises } from '@/API';
 
 export default defineComponent({
-  computed: {
-    filterex(): any {
-      return this.exercises.filter(e => e.muscles.includes(this.selectedMuscle));
-    },
-  },
   setup() {
     return { collapsed, toggleList, listWidth, selectedMuscle };
   },
   data() {
     return {
-      exercises: [
-        {
-          id: '1',
-          name: 'Kniebeuge',
-          description: 'machen sie einfach Kniebeuge',
-          hints: 'achte auf eine saubere Auführung, mache es ordentlich',
-          videoURL: 'https://www.youtube.com/watch?v=DLzxrzFCyOs',
-          img: 'https://i.ytimg.com/vi/DLzxrzFCyOs/hq720.jpg?sqp=-…AFwAcABBg==&rs=AOn4CLCIQNo98lOynmjcVeFpFGv6hNvsvw',
-          difficulty: 'easy',
-          muscles: ['Bein'],
-          trainingDevices: ['keine'],
-        },
-        {
-          id: '2',
-          name: 'Kniebeuge an den Armen',
-          description: 'machen sie einfach Kniebeuge mit ihren Armen',
-          hints: 'achte auf eine saubere Auführung, mache es ordentlich',
-          videoURL: 'https://www.youtube.com/watch?v=DLzxrzFCyOs',
-          img: 'https://i.ytimg.com/vi/DLzxrzFCyOs/hq720.jpg?sqp=-…AFwAcABBg==&rs=AOn4CLCIQNo98lOynmjcVeFpFGv6hNvsvw',
-          difficulty: 'hard',
-          muscles: ['Arm'],
-          trainingDevices: ['keine'],
-        },
-        {
-          id: '3',
-          name: 'Kniebeuge an den Rücken',
-          description: 'machen sie einfach Kniebeuge mit ihren Armen',
-          hints: 'achte auf eine saubere Auführung, mache es ordentlich',
-          videoURL: 'https://www.youtube.com/watch?v=DLzxrzFCyOs',
-          img: 'https://i.ytimg.com/vi/DLzxrzFCyOs/hq720.jpg?sqp=-…AFwAcABBg==&rs=AOn4CLCIQNo98lOynmjcVeFpFGv6hNvsvw',
-          difficulty: 'medium',
-          muscles: ['Arm', 'Bein'],
-          trainingDevices: ['keine'],
-        },
-      ],
+      exercises: [] as Exercise[],
     };
+  },
+  watch: { $route: 'getExercises' },
+  async mounted() {
+    await this.loadExercises();
+  },
+  methods: {
+    async loadExercises() {
+      try {
+        this.exercises = await getExercises();
+      } catch (e) {
+        console.log("couldn't load Exercises", e);
+      }
+    },
+  },
+  computed: {
+    filterex(): Exercise[] {
+      return this.exercises.filter(e => e.primaryMuscles.includes(this.selectedMuscle));
+    },
   },
 });
 </script>

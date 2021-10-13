@@ -94,7 +94,7 @@
           </div>
           <button class="btn btn-primary m-4 col-3" type="submit" v-if="!addingExercise">add Exercise</button>
           <span v-else class="m-4 spinner-border spinner-border-sm text-primary"></span>
-          <button class="btn btn-primary m-4 col-3" type="button" @click="getExercise()">show Exercises</button>
+          <button class="btn btn-primary m-4 col-3" type="button" @click="showExercises()">show Exercises</button>
         </form>
       </div>
     </div>
@@ -126,7 +126,7 @@ export default defineComponent({
     };
   },
   methods: {
-    async getExercise() {
+    async showExercises() {
       let res = await getExercises();
       console.log(res);
     },

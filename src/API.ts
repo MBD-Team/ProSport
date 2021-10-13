@@ -3,10 +3,9 @@ import { DocumentData, getFirestore, QueryDocumentSnapshot } from 'firebase/fire
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { CreatedExercise, Exercise } from './types';
 
-export const MUSCLE_OPTIONS = ['Nacken', 'Schulter', 'Bizeps', 'Trizeps', 'Brust', 'Bauch', 'Po', 'Oberschenkel', 'Waden'];
+export const MUSCLE_OPTIONS = ['neck', 'shoulder', 'arm', 'chest', 'belly', 'butt', 'leg'];
 
 export async function login(email: string, password: string): Promise<boolean> {
-  //TODO: return for login
   try {
     const auth = getAuth();
     //signInWithEmailAndPassword(auth, email, password).then(() => console.log('user logged in'));
@@ -22,7 +21,7 @@ export async function login(email: string, password: string): Promise<boolean> {
 }
 export async function addExercise(exercise: CreatedExercise): Promise<string> {
   const db = getFirestore();
-  const docRef = await addDoc(collection(db, 'users'), {
+  const docRef = await addDoc(collection(db, 'exercises'), {
     name: exercise.name,
     description: exercise.description,
     hints: exercise.hints,
@@ -40,7 +39,7 @@ export async function addExercise(exercise: CreatedExercise): Promise<string> {
 export async function getExercises(): Promise<Exercise[]> {
   const db = getFirestore();
   const docs: QueryDocumentSnapshot<DocumentData>[] = [];
-  const querySnapshot = await getDocs(collection(db, 'users'));
+  const querySnapshot = await getDocs(collection(db, 'exercises'));
   querySnapshot.forEach(doc => {
     docs.push(doc);
   });

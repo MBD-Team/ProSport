@@ -11,11 +11,13 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: { requiresAuth: true },
   },
   {
     path: '/Admin',
     name: 'Admin',
     component: Admin,
+    meta: { requiresAuth: true },
   },
   {
     path: '/Settings',
@@ -48,7 +50,6 @@ const getCurrentUser = () => {
 };
 router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  console.log({ currentUser: await getCurrentUser() });
   if (requiresAuth && !(await getCurrentUser())) {
     next('Admin');
   } else {
