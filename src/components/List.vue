@@ -67,9 +67,6 @@ export default defineComponent({
 });
 </script>
 
-id: string; name: string; description: string; hints: string[]; videoURL: string; img: string; difficulty: 'easy' | 'medium' | 'hard'; muscles:
-string[]; trainingDevices: string[];
-
 <style>
 :root {
   --list-bg-color: rgba(48, 48, 48, 0.623);

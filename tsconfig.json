@@ -19,17 +19,6 @@
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx",
-    "src/components/Navbar.vue",
-    "src/components/humanInterface/HumanFront.vue",
-    "src/components/humanInterface/HumanBack.vue",
-    "src/components/humanInterface/list/List.vue",
-    "src/components/List.vue"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts"],
   "exclude": ["node_modules"]
 }
