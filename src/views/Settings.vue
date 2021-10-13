@@ -1,14 +1,15 @@
 <template>
   <div>
-    <h2>Settings</h2>
+    <AddExercise />
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+import AddExercise from '@/components/AddExercise.vue';
 
 export default defineComponent({
-  data() {
-    return {};
+  components: {
+    AddExercise,
   },
 });
 </script>

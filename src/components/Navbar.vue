@@ -14,7 +14,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { currentUser } from '@/router';
-
 export default defineComponent({
   setup() {
     return { user: currentUser };
