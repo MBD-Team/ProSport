@@ -4,7 +4,8 @@
       <HumanFront />
       <HumanBack />
     </div>
-    <ListItem />
+    <ListItemRight />
+    <ListItemLeft />
   </div>
 </template>
 
@@ -12,16 +13,23 @@
 import { defineComponent } from 'vue';
 import HumanFront from '@/components/humanInterface/HumanFront.vue';
 import HumanBack from '@/components/humanInterface/HumanBack.vue';
-import ListItem from '@/components/List.vue';
-import { closeList } from '@/components/state';
+import ListItemRight from '@/components/ListRight.vue';
+import ListItemLeft from '@/components/ListLeft.vue';
+import { closeListLeft, closeListRight } from '@/components/state';
 
 export default defineComponent({
-  components: { HumanFront, HumanBack, ListItem },
+  components: { HumanFront, HumanBack, ListItemRight, ListItemLeft },
   setup() {
-    return { closeList };
+    return { closeListLeft, closeListRight };
   },
   data() {
     return {};
+  },
+  methods: {
+    closeList() {
+      closeListLeft();
+      closeListRight();
+    },
   },
 });
 </script>
