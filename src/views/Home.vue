@@ -4,8 +4,7 @@
       <HumanFront />
       <HumanBack />
     </div>
-    <ListItemRight />
-    <ListItemLeft />
+    <List :direction="orientation" />
   </div>
 </template>
 
@@ -13,24 +12,24 @@
 import { defineComponent } from 'vue';
 import HumanFront from '@/components/humanInterface/HumanFront.vue';
 import HumanBack from '@/components/humanInterface/HumanBack.vue';
-import ListItemRight from '@/components/ListRight.vue';
-import ListItemLeft from '@/components/ListLeft.vue';
-import { closeListLeft, closeListRight } from '@/components/state';
+import List from '@/components/List.vue';
+import { orientation, closeList } from '@/components/state';
 
 export default defineComponent({
-  components: { HumanFront, HumanBack, ListItemRight, ListItemLeft },
+  computed: {
+    direction() {
+      console.log(orientation);
+      return orientation;
+    },
+  },
+  components: { HumanFront, HumanBack, List },
   setup() {
-    return { closeListLeft, closeListRight };
+    return { orientation, closeList };
   },
   data() {
     return {};
   },
-  methods: {
-    closeList() {
-      closeListLeft();
-      closeListRight();
-    },
-  },
+  methods: {},
 });
 </script>
 <style lang="scss" scoped></style>

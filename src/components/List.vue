@@ -1,8 +1,8 @@
 <template>
-  <div id="list" :style="{ width: listWidthRight }">
+  <div :class="direction" id="list" :style="{ width: listWidth }">
     <div id="task" v-for="exercise in filterex" v-bind:key="exercise">
       <img :src="exercise.img" alt="" style="margin: 10px; width: 180px; height: 100px" />
-      <span v-if="!collapsedRight">
+      <span v-if="!collapsed">
         <b style="font-size: 35px">{{ exercise.name }}</b>
       </span>
       <b v-if="exercise.difficulty == 'easy'" style="color: #2da64f">{{ exercise.difficulty }}</b>
@@ -14,16 +14,22 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { collapsedRight, toggleListRight, listWidthRight, selectedMuscleRight } from '@/components/state';
+import { collapsed, toggleList, listWidth, selectedMuscle } from '@/components/state';
 
 export default defineComponent({
+  props: {
+    direction: {
+      type: String,
+      required: true,
+    },
+  },
   computed: {
     filterex(): any {
-      return this.exercises.filter(e => e.muscles.includes(this.selectedMuscleRight));
+      return this.exercises.filter(e => e.muscles.includes(this.selectedMuscle));
     },
   },
   setup() {
-    return { collapsedRight, toggleListRight, listWidthRight, selectedMuscleRight };
+    return { collapsed, toggleList, listWidth, selectedMuscle };
   },
   data() {
     return {
@@ -82,17 +88,23 @@ export default defineComponent({
 #list {
   color: rgb(0, 0, 0);
   background-color: var(--list-bg-color);
-  float: left;
   position: fixed;
   z-index: 1;
   top: 0;
-  left: 0;
   bottom: 0;
   padding: 0;
   transition: 0.3s ease;
   display: flex;
   flex-direction: column;
   overflow: scroll;
+}
+.left {
+  float: right;
+  right: 0;
+}
+.right {
+  float: left;
+  left: 0;
 }
 #task {
   background-color: rgba(255, 255, 255, 0.952);
