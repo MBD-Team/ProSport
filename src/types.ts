@@ -12,3 +12,8 @@ export interface Exercise {
   secondaryMuscles: string[];
   trainingDevices: string[];
 }
+
+export interface Equipment {
+  id: string;
+  name: string;
+}
