@@ -1,52 +1,52 @@
 <template>
   <div class="card card-default">
-    <div class="card-header">Add Exercise</div>
+    <div class="card-header">Übung hinzufügen</div>
     <div class="card-body p-4">
       <form @submit.prevent="addExe()" autocomplete="off">
         <div class="m-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
         <div class="mb-4 row">
-          <label class="col-4" for="name">Name of Exercise:</label>
+          <label class="col-4" for="name">Name der Übung:</label>
           <div class="col-8">
-            <input class="form-control" type="text" placeholder="name" v-model="name" autocomplete="off" required />
+            <input class="form-control" type="text" placeholder="" v-model="name" autocomplete="off" required />
           </div>
         </div>
         <div class="mb-4 row">
-          <label class="col-4" for="description">Description:</label>
+          <label class="col-4" for="description">Beschreibung:</label>
           <div class="col-8">
-            <textarea class="form-control" placeholder="description" v-model="description" autocomplete="off" required />
+            <textarea class="form-control" placeholder="" v-model="description" autocomplete="off" required />
           </div>
         </div>
         <div class="mb-4 row">
-          <label class="col-4" for="hints">Hints:</label>
+          <label class="col-4" for="hints">Hinweise:</label>
           <div class="col-8">
-            <textarea class="form-control" placeholder="hints" v-model="hints" autocomplete="off" required />
+            <textarea class="form-control" placeholder="" v-model="hints" autocomplete="off" required />
           </div>
         </div>
         <div class="mb-4 row">
-          <label class="col-4" for="videoURL">VideoURL:</label>
+          <label class="col-4" for="videoURL">YoutubeURL:</label>
           <div class="col-8">
-            <input minlength="3" class="form-control" type="text" placeholder="url" v-model="videoURL" autocomplete="off" required />
+            <input minlength="3" class="form-control" type="text" placeholder="" v-model="videoURL" autocomplete="off" required />
           </div>
         </div>
         <div class="mb-4" v-if="img"><img :src="img" style="width: 180px; height: 100px" /></div>
-        <div class="alert alert-danger" v-if="videoURL && !img">pls gimme youtube url</div>
+        <div class="alert alert-danger" v-if="videoURL && !img">Das ist kein Youtube link</div>
         <div class="mb-4 row">
-          <label class="col-4" for="difficulty">Difficulty:</label>
+          <label class="col-4" for="difficulty">Schwierigkeitsgrad:</label>
           <div class="col-8">
             <div class="btn-group">
               <input type="radio" class="btn-check" name="difficulty" id="easy" autocomplete="off" @change="difficulty = 'easy'" />
-              <label class="btn btn-outline-primary" for="easy">easy</label>
+              <label class="btn btn-outline-primary" for="easy">Leicht</label>
 
               <input type="radio" class="btn-check" name="difficulty" id="medium" autocomplete="off" @change="difficulty = 'medium'" />
-              <label class="btn btn-outline-primary" for="medium">medium</label>
+              <label class="btn btn-outline-primary" for="medium">Mittel</label>
 
               <input type="radio" class="btn-check" name="difficulty" id="hard" autocomplete="off" @change="difficulty = 'hard'" />
-              <label class="btn btn-outline-primary" for="hard">hard</label>
+              <label class="btn btn-outline-primary" for="hard">Schwer</label>
             </div>
           </div>
         </div>
         <div class="mb-4 row">
-          <label class="col-4" for="muscles">primary muscles:</label>
+          <label class="col-4" for="muscles">Hauptmuskel:</label>
           <div class="col-8">
             <Multiselect
               v-model="primaryMuscles"
@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="mb-4 row">
-          <label class="col-4" for="muscles">secondary muscles:</label>
+          <label class="col-4" for="muscles">Hilfsmuskel:</label>
           <div class="col-8">
             <Multiselect
               v-model="secondaryMuscles"
@@ -72,16 +72,16 @@
           </div>
         </div>
         <div class="mb-4 row">
-          <label class="col-4" for="devices">used equipment:</label>
+          <label class="col-4" for="devices">Trainigsgerät:</label>
           <div class="col-8">
             <select class="form-control" placeholder="equipment" v-model="trainingDevices" autocomplete="off" require>
               <option v-for="e in 10" :key="e" :value="e"></option>
             </select>
           </div>
         </div>
-        <button class="btn btn-primary col-3" type="submit" v-if="!addingExercise">add Exercise</button>
+        <button class="btn btn-primary col-3" type="submit" v-if="!addingExercise">Übung hinzufügen</button>
         <span v-else class="spinner-border spinner-border-sm text-primary"></span>
-        <button class="btn btn-primary ms-2 col-3" type="button" @click="showExercises()">show Exercises</button>
+        <button class="btn btn-primary ms-2 col-3" type="button" @click="showExercises()">Übungen anzeigen</button>
       </form>
     </div>
   </div>
