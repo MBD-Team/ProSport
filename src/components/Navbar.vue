@@ -8,12 +8,16 @@
       <button class="mb-1 btn btn-outline-dark me-2" @click="settings()">
         <i class="fas fa-user-cog" style="font-size: 30px"></i>
       </button>
+      <button class="mb-1 btn btn-outline-dark me-2" @click="logOut()">
+        <i class="fas fa-sign-out-alt" style="font-size: 30px"></i>
+      </button>
     </div>
   </nav>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { currentUser } from '@/router';
+import { logout } from '@/API';
 export default defineComponent({
   setup() {
     return { user: currentUser };
@@ -22,6 +26,10 @@ export default defineComponent({
   methods: {
     settings() {
       this.$router.push('/Settings');
+    },
+    logOut() {
+      logout();
+      this.$router.push('/');
     },
   },
 });
