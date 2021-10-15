@@ -113,7 +113,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { addExercise, MUSCLE_OPTIONS, getExercises, setEquipment, getEquipment, delEquipment } from '@/API';
+import { addExercise, MUSCLE_OPTIONS, getExercises, addEquipment, getEquipment, delEquipment } from '@/API';
 import type { Equipment } from '@/types';
 import Multiselect from '@vueform/multiselect';
 
@@ -144,7 +144,7 @@ export default defineComponent({
   methods: {
     async addEquipment() {
       if (!this.equipment) return;
-      let newEquipment = await setEquipment(this.equipment);
+      let newEquipment = await addEquipment(this.equipment);
       this.equipments.push(newEquipment);
       this.equipment = '';
     },
