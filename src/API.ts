@@ -60,7 +60,7 @@ export async function getExercises(): Promise<Exercise[]> {
   });
   return docs.map(exercises => ({ ...exercises.data(), id: exercises.id })) as Exercise[];
 }
-export async function setEquipment(equipment: string): Promise<Equipment> {
+export async function addEquipment(equipment: string): Promise<Equipment> {
   const db = getFirestore();
   const docRef = await addDoc(collection(db, 'equipment'), {
     name: equipment,
