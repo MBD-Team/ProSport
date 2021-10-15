@@ -287,6 +287,7 @@
         <circle id="path11807" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.313049" cx="91.606125" cy="129.68079" r="0.0059099379" />
         <circle id="path11809" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.313049" cx="91.606125" cy="129.68079" r="0.0059099379" />
         <path
+          :class="v6"
           style="
             fill: var(--legColor);
             fill-opacity: 1;
@@ -306,6 +307,7 @@
         <use x="0" y="0" xlink:href="#path11807" id="use968" width="100%" height="100%" />
         <use x="0" y="0" xlink:href="#path11809" id="use970" width="100%" height="100%" />
         <path
+          :class="v4"
           style="
             fill: var(--armColor);
             fill-opacity: 1;
@@ -378,6 +380,7 @@
           <circle id="path11807-6" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.264583" cx="77.423698" cy="109.60365" r="0.0049949638" />
           <circle id="path11809-1" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.264583" cx="77.423698" cy="109.60365" r="0.0049949638" />
           <path
+            :class="v5"
             style="
               fill: var(--buttColor);
               fill-opacity: 1;
@@ -403,6 +406,7 @@
             style="fill: #ff00ff; fill-opacity: 1"
           />
           <path
+            :class="v3"
             style="
               fill: var(--backColor);
               fill-opacity: 1;
@@ -419,6 +423,7 @@
           />
           <use x="0" y="0" xlink:href="#path17595" id="use17901" transform="matrix(-1,0,0,1,-39.67201,0)" width="100%" height="100%" />
           <path
+            :class="v1"
             style="
               fill: var(--neckColor);
               fill-opacity: 1;
@@ -435,6 +440,7 @@
           />
           <use x="0" y="0" xlink:href="#path18016" id="use18018" transform="matrix(-1,0,0,1,-39.804292,1.0000008e-8)" width="100%" height="100%" />
           <path
+            :class="v2"
             style="
               fill: var(--shoulderColor);
               fill-opacity: 1;
@@ -444,7 +450,8 @@
               stroke-linejoin: miter;
               stroke-opacity: 1;
             "
-            d="m -29.212038,25.099153 c 0.141838,0 -3.327555,0.779369 -4.266493,2.15404 -1.321833,1.935256 -1.736335,6.813021 -1.736335,6.813021 l 4.3987,-2.64583 4.911326,-2.282039 c -1.1024,-1.346397 -3.360534,-4.104333 -3.307198,-4.039192"
+            d="m -29.212038,25.099153 c 0.141838,0 -3.327555,0.779369 -4.266493,2.15404 -1.321833,1.935256
+          -1.736335,6.813021 -1.736335,6.813021 l 4.3987,-2.64583 4.911326,-2.282039 c -1.1024,-1.346397 -3.360534,-4.104333 -3.307198,-4.039192"
             id="path18133"
             @click.stop="chooseMuscle('shoulder', 'back')"
             sodipodi:nodetypes="cscccc"
@@ -458,7 +465,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import { toggleList, chooseMuscle } from '@/components/state';
+import { toggleList, chooseMuscle, selectedMuscle } from '@/components/state';
 export default defineComponent({
   methods: {},
   data() {
@@ -466,6 +473,50 @@ export default defineComponent({
   },
   setup() {
     return { toggleList, chooseMuscle };
+  },
+  computed: {
+    v1: function () {
+      if (selectedMuscle.value == 'neck') {
+        return 'neck';
+      } else {
+        return '';
+      }
+    },
+    v2: function () {
+      if (selectedMuscle.value == 'shoulder') {
+        return 'shoulder';
+      } else {
+        return '';
+      }
+    },
+    v3: function () {
+      if (selectedMuscle.value == 'back') {
+        return 'back';
+      } else {
+        return '';
+      }
+    },
+    v4: function () {
+      if (selectedMuscle.value == 'arm') {
+        return 'arm';
+      } else {
+        return '';
+      }
+    },
+    v5: function () {
+      if (selectedMuscle.value == 'butt') {
+        return 'butt';
+      } else {
+        return '';
+      }
+    },
+    v6: function () {
+      if (selectedMuscle.value == 'leg') {
+        return 'leg';
+      } else {
+        return '';
+      }
+    },
   },
 });
 </script>
@@ -476,5 +527,23 @@ img {
   margin-left: auto;
   margin-right: auto;
   //   width: 50%;
+}
+.shoulder {
+  fill: var(--selectedShoulderColor) !important;
+}
+.neck {
+  fill: var(--selectedNeckColor) !important;
+}
+.leg {
+  fill: var(--selectedLegColor) !important;
+}
+.back {
+  fill: var(--selectedBackColor) !important;
+}
+.arm {
+  fill: var(--selectedArmColor) !important;
+}
+.butt {
+  fill: var(--selectedButtColor) !important;
 }
 </style>

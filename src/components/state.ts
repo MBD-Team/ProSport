@@ -6,7 +6,7 @@ export const LIST_WIDTH_COLLAPSED = 0;
 export const orientation = ref('');
 export const collapsed = ref(true);
 export const toggleList = () => (collapsed.value = false);
-export const closeList = () => ((collapsed.value = true), console.log(orientation));
+export const closeList = () => ((collapsed.value = true), (selectedMuscle.value = ''), console.log(orientation));
 export function chooseMuscle(muscle: string, orientationside: string) {
   console.log((selectedMuscle.value = muscle));
   orientation.value = orientationside;
