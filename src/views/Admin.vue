@@ -4,10 +4,11 @@
       <div class="card-header">Login</div>
       <div class="card-body">
         <form @submit.prevent="login()" autocomplete="off">
+          <div class="m-4 alert alert-danger text-center" v-if="error">Username or password is not correct</div>
           <div class="p-4 row">
-            <label class="col-4" for="Username">Username:</label>
+            <label class="col-4" for="email">Email:</label>
             <div class="col-8">
-              <input minlength="3" class="form-control" id="username" type="text" placeholder="username" v-model="username" autocomplete="off" />
+              <input minlength="3" class="form-control" id="email" type="text" placeholder="email" v-model="email" autocomplete="off" />
             </div>
           </div>
           <div class="p-4 row">
@@ -16,7 +17,8 @@
               <input minlength="3" class="form-control" id="password" type="password" placeholder="password" v-model="password" autocomplete="off" />
             </div>
           </div>
-          <button class="btn btn-primary" type="submit">Login</button>
+          <button class="btn btn-primary m-4 col-1" type="submit" v-if="!loggingIn">Login</button>
+          <span v-else class="m-4 spinner-border spinner-border-sm text-primary"></span>
         </form>
       </div>
     </div>
@@ -25,25 +27,31 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { loginAdmin } from '@/API';
+import * as API from '@/API';
 
 export default defineComponent({
   data() {
     return {
       password: '',
-      username: '',
+      email: '',
+      error: false,
+      loggingIn: false,
     };
   },
   methods: {
-    login() {
-      if (loginAdmin(this.username, this.password)) {
-        console.log('admin logged in as:' + this.username);
-        this.username = '';
+    async login() {
+      this.error = false;
+      this.loggingIn = true;
+      if (await API.login(this.email, this.password)) {
+        console.log('admin logged in with:' + this.email);
+        this.email = '';
         this.password = '';
         this.$router.push('/');
       } else {
         this.password = '';
+        this.error = true;
       }
+      this.loggingIn = false;
     },
   },
 });

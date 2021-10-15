@@ -4,7 +4,7 @@
     <a class="col-4 overflow-hidden" href="#">
       <img src="@/assets/PS_Logo_doublebizeps.svg" width="220" height="55" class="" alt="PS_Logo" />
     </a>
-    <div class="col-4 d-flex align-items-center justify-content-end" v-if="admin">
+    <div class="col-4 d-flex align-items-center justify-content-end" v-if="user != null">
       <button class="mb-1 btn btn-outline-dark me-2" @click="settings()">
         <i class="fas fa-user-cog" style="font-size: 30px"></i>
       </button>
@@ -13,25 +13,13 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { isAdmin } from '@/API';
-
+import { currentUser } from '@/router';
 export default defineComponent({
-  mounted() {
-    this.fetchData();
+  setup() {
+    return { user: currentUser };
   },
-  data() {
-    return {
-      admin: false,
-    };
-  },
-  watch: {
-    $route: 'fetchData',
-  },
+
   methods: {
-    fetchData() {
-      isAdmin();
-      this.admin = isAdmin();
-    },
     settings() {
       this.$router.push('/Settings');
     },
