@@ -1,12 +1,21 @@
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { DocumentData, getFirestore, QueryDocumentSnapshot } from 'firebase/firestore';
+import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { deleteDoc, DocumentData, getFirestore, QueryDocumentSnapshot, doc } from 'firebase/firestore';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
-import { CreatedExercise, Exercise } from './types';
+import { currentUser } from './router';
+import { CreatedExercise, Exercise, Equipment, Muscle } from './types';
 
-export const MUSCLE_OPTIONS = ['Nacken', 'Schulter', 'Bizeps', 'Trizeps', 'Brust', 'Bauch', 'Po', 'Oberschenkel', 'Waden'];
+export const MUSCLE_OPTIONS = [
+  { name: 'Nacken', value: 'neck' },
+  { name: 'Schulter', value: 'shoulder' },
+  { name: 'Arme', value: 'arm' },
+  { name: 'Brust', value: 'chest' },
+  { name: 'Bauch', value: 'belly' },
+  { name: 'Rücken', value: 'back' },
+  { name: 'Po', value: 'butt' },
+  { name: 'Beine', value: 'leg' },
+] as Muscle[];
 
 export async function login(email: string, password: string): Promise<boolean> {
-  //TODO: return for login
   try {
     const auth = getAuth();
     //signInWithEmailAndPassword(auth, email, password).then(() => console.log('user logged in'));
@@ -20,9 +29,14 @@ export async function login(email: string, password: string): Promise<boolean> {
     return false;
   }
 }
+export async function logout(): Promise<void> {
+  const auth = getAuth();
+  await signOut(auth);
+  currentUser.value = null;
+}
 export async function addExercise(exercise: CreatedExercise): Promise<string> {
   const db = getFirestore();
-  const docRef = await addDoc(collection(db, 'users'), {
+  const docRef = await addDoc(collection(db, 'exercises'), {
     name: exercise.name,
     description: exercise.description,
     hints: exercise.hints,
@@ -40,9 +54,31 @@ export async function addExercise(exercise: CreatedExercise): Promise<string> {
 export async function getExercises(): Promise<Exercise[]> {
   const db = getFirestore();
   const docs: QueryDocumentSnapshot<DocumentData>[] = [];
-  const querySnapshot = await getDocs(collection(db, 'users'));
+  const querySnapshot = await getDocs(collection(db, 'exercises'));
   querySnapshot.forEach(doc => {
     docs.push(doc);
   });
   return docs.map(exercises => ({ ...exercises.data(), id: exercises.id })) as Exercise[];
+}
+export async function addEquipment(equipment: string): Promise<Equipment> {
+  const db = getFirestore();
+  const docRef = await addDoc(collection(db, 'equipment'), {
+    name: equipment,
+  });
+  return { id: docRef.id, name: equipment } as Equipment;
+}
+export async function getEquipment(): Promise<Equipment[]> {
+  const db = getFirestore();
+  const docs: QueryDocumentSnapshot<DocumentData>[] = [];
+  const querySnapshot = await getDocs(collection(db, 'equipment'));
+  querySnapshot.forEach(doc => {
+    docs.push(doc);
+  });
+  return docs.map(equipment => ({ ...equipment.data(), id: equipment.id })) as Equipment[];
+}
+export async function delEquipment(id: string): Promise<Equipment[] | null> {
+  const db = getFirestore();
+  const docs: QueryDocumentSnapshot<DocumentData>[] = [];
+  await deleteDoc(doc(db, 'equipment', id));
+  return getEquipment();
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container mt-4">
     <AddExercise />
   </div>
 </template>

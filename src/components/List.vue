@@ -1,7 +1,15 @@
 <template>
   <div :class="direction" id="list" :style="{ width: listWidth }">
-    <div id="task" v-for="exercise in filterex" v-bind:key="exercise">
-      <img :src="exercise.img" alt="" style="margin: 10px; width: 180px; height: 100px" />
+    <div
+      id="task"
+      v-for="exercise in filterex"
+      v-bind:key="exercise.id"
+      @click="selectedExercise = exercise"
+      href="#exampleModalToggle"
+      data-bs-toggle="modal"
+    >
+      <img :src="exercise.img" style="margin: 10px; width: 180px; height: 100px" />
+
       <span v-if="!collapsed">
         <b style="font-size: 35px">{{ exercise.name }}</b>
       </span>
@@ -10,11 +18,30 @@
       <b v-else style="color: #ed4e4e">{{ exercise.difficulty }}</b>
     </div>
   </div>
+  <!-- MODAL -->
+  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header" style="flex-direction: column">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: var(--closeButton)"></button>
+          <h1 class="modal-title" id="exampleModalToggleLabel"></h1>
+        </div>
+        <div class="modal-body">
+          <div class="row" v-if="selectedExercise != null">
+            <ExerciseDetail :exercise="selectedExercise" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { collapsed, toggleList, listWidth, selectedMuscle } from '@/components/state';
+import { Exercise } from '@/types';
+import { getExercises } from '@/API';
+import ExerciseDetail from '@/components/ExerciseDetail.vue';
 
 export default defineComponent({
   props: {
@@ -23,52 +50,35 @@ export default defineComponent({
       required: true,
     },
   },
-  computed: {
-    filterex(): any {
-      return this.exercises.filter(e => e.muscles.includes(this.selectedMuscle));
-    },
-  },
   setup() {
     return { collapsed, toggleList, listWidth, selectedMuscle };
   },
+  components: {
+    ExerciseDetail,
+  },
   data() {
     return {
-      exercises: [
-        {
-          id: '1',
-          name: 'Kniebeuge',
-          description: 'machen sie einfach Kniebeuge',
-          hints: 'achte auf eine saubere Auführung, mache es ordentlich',
-          videoURL: 'https://www.youtube.com/watch?v=DLzxrzFCyOs',
-          img: 'https://i.ytimg.com/vi/DLzxrzFCyOs/hq720.jpg?sqp=-…AFwAcABBg==&rs=AOn4CLCIQNo98lOynmjcVeFpFGv6hNvsvw',
-          difficulty: 'easy',
-          muscles: ['Bein'],
-          trainingDevices: ['keine'],
-        },
-        {
-          id: '2',
-          name: 'Kniebeuge an den Armen',
-          description: 'machen sie einfach Kniebeuge mit ihren Armen',
-          hints: 'achte auf eine saubere Auführung, mache es ordentlich',
-          videoURL: 'https://www.youtube.com/watch?v=DLzxrzFCyOs',
-          img: 'https://i.ytimg.com/vi/DLzxrzFCyOs/hq720.jpg?sqp=-…AFwAcABBg==&rs=AOn4CLCIQNo98lOynmjcVeFpFGv6hNvsvw',
-          difficulty: 'hard',
-          muscles: ['Arm'],
-          trainingDevices: ['keine'],
-        },
-        {
-          id: '3',
-          name: 'Kniebeuge an den Rücken',
-          description: 'machen sie einfach Kniebeuge mit ihren Armen',
-          hints: 'achte auf eine saubere Auführung, mache es ordentlich',
-          videoURL: 'https://www.youtube.com/watch?v=DLzxrzFCyOs',
-          img: 'https://i.ytimg.com/vi/DLzxrzFCyOs/hq720.jpg?sqp=-…AFwAcABBg==&rs=AOn4CLCIQNo98lOynmjcVeFpFGv6hNvsvw',
-          difficulty: 'medium',
-          muscles: ['Arm', 'Bein'],
-          trainingDevices: ['keine'],
-        },
-      ],
+      exercises: [] as Exercise[],
+      selectedExercise: null,
     };
+  },
+  watch: { $route: 'getExercises' },
+  async mounted() {
+    await this.loadExercises();
+  },
+  methods: {
+    async loadExercises() {
+      try {
+        this.exercises = await getExercises();
+      } catch (e) {
+        console.log("couldn't load Exercises", e);
+      }
+    },
+  },
+  computed: {
+    filterex(): Exercise[] {
+      return this.exercises.filter(e => e.primaryMuscles.includes(this.selectedMuscle));
+    },
   },
 });
 </script>
@@ -98,11 +108,11 @@ export default defineComponent({
   flex-direction: column;
   overflow: scroll;
 }
-.left {
+.front {
   float: right;
   right: 0;
 }
-.right {
+.back {
   float: left;
   left: 0;
 }

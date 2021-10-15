@@ -288,7 +288,7 @@
         <circle id="path11809" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.313049" cx="91.606125" cy="129.68079" r="0.0059099379" />
         <path
           style="
-            fill: #0000ff;
+            fill: var(--legColor);
             fill-opacity: 1;
             stroke: #000000;
             stroke-width: 0.313049px;
@@ -298,7 +298,7 @@
           "
           d="m 27.147583,61.516276 c 0,0 -0.124364,0.388023 -0.163787,0.587448 -1.194231,6.041196 -3.694336,12.857563 -6.182609,17.593132 -0.483755,0.920656 -0.08069,2.656829 -0.146833,3.516232 -0.163515,2.123239 -0.04875,2.888981 -0.450472,4.995418 -0.97223,5.097764 -3.914726,10.022524 -4.218496,15.306034 -0.03585,0.62422 0.3621,0.97681 0.287856,1.85355 -2.987268,-0.18568 -4.689401,-0.0365 -4.689401,-0.0365 v 0 c 0,0 -0.809922,-25.619911 0.481708,-34.333093 1.291641,-8.713181 5.226458,-18.329909 5.226458,-18.329909 z"
           id="use958"
-          @click.stop="chooseMuscle('leg', 'right')"
+          @click.stop="chooseMuscle('leg', 'back')"
           sodipodi:nodetypes="cssssaccczcc"
         />
         <use x="0" y="0" xlink:href="#path11803" id="use964" width="100%" height="100%" />
@@ -307,7 +307,7 @@
         <use x="0" y="0" xlink:href="#path11809" id="use970" width="100%" height="100%" />
         <path
           style="
-            fill: #ff0000;
+            fill: var(--armColor);
             fill-opacity: 1;
             stroke: #000000;
             stroke-width: 0.313049px;
@@ -317,7 +317,7 @@
           "
           d="m 14.879066,26.344826 -5.8238211,3.511191 c 0,0 -0.016328,0.125973 -0.7826259,2.700051 -0.7663571,2.574077 -0.3663123,4.369327 -0.5064007,6.890765 -0.041411,0.745131 -0.3525756,1.459866 -0.6345391,2.203838 -0.672176,1.773514 -1.5029573,3.58359 -2.0494442,5.433065 -0.6510917,2.203505 -1.2754437,7.798098 -1.1380884,8.961199 0.1373553,1.163101 0.2728294,0.878002 0.2728294,0.878002 l 4.0427701,0.565548 0.5266686,0.07371 c 0,0 2.7459463,-7.583813 3.5176743,-10.091053 0.771717,-2.50724 0.67265,-3.345321 1.217468,-5.008256 0.544831,-1.662935 2.075249,-4.869907 2.075249,-4.869907 l 0.418858,-6.708923 -1.136598,-2.739191 z"
           id="use976"
-          @click.stop="chooseMuscle('arm', 'right')"
+          @click.stop="chooseMuscle('arm', 'back')"
           sodipodi:nodetypes="cczssszccczzcccc"
         />
         <path
@@ -379,7 +379,7 @@
           <circle id="path11809-1" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.264583" cx="77.423698" cy="109.60365" r="0.0049949638" />
           <path
             style="
-              fill: #ff9b00;
+              fill: var(--buttColor);
               fill-opacity: 1;
               stroke: #000000;
               stroke-width: 0.264583px;
@@ -389,7 +389,7 @@
             "
             d="m -19.836005,49.742774 -8.135891,-0.13229 -0.259999,3.7008 c 0,0 1.366266,4.041951 2.901017,5.383578 1.491294,1.303638 5.561014,2.094272 5.561014,2.094272"
             id="path5151"
-            @click.stop="chooseMuscle('butt', 'right')"
+            @click.stop="chooseMuscle('butt', 'back')"
             sodipodi:nodetypes="cccac"
           />
           <use
@@ -404,7 +404,7 @@
           />
           <path
             style="
-              fill: #d5ab4d;
+              fill: var(--backColor);
               fill-opacity: 1;
               stroke: #000000;
               stroke-width: 0.264583px;
@@ -414,13 +414,13 @@
             "
             d="m -19.836005,49.742774 -8.135891,-0.13229 c 0,0 0.02402,-5.927615 -1.157554,-8.003644 -0.961806,-1.689903 -1.554426,-5.622396 -1.554426,-5.622396 l -0.13229,-4.56406 4.56406,-2.18282 6.542421,0.0714"
             id="path17595"
-            @click.stop="chooseMuscle('back', 'right')"
+            @click.stop="chooseMuscle('back', 'back')"
             sodipodi:nodetypes="ccscccc"
           />
           <use x="0" y="0" xlink:href="#path17595" id="use17901" transform="matrix(-1,0,0,1,-39.67201,0)" width="100%" height="100%" />
           <path
             style="
-              fill: #9b3e3a;
+              fill: var(--neckColor);
               fill-opacity: 1;
               stroke: #000000;
               stroke-width: 0.264583px;
@@ -430,13 +430,13 @@
             "
             d="m -19.130817,29.304664 -6.542421,-0.0714 -3.5388,-4.134111 c 0,0 3.660391,-1.504049 5.58933,-1.885157 1.502535,-0.296862 4.585091,-0.297657 4.585091,-0.297657"
             id="path18016"
-            @click.stop="chooseMuscle('neck', 'right')"
+            @click.stop="chooseMuscle('neck', 'back')"
             sodipodi:nodetypes="cccac"
           />
           <use x="0" y="0" xlink:href="#path18016" id="use18018" transform="matrix(-1,0,0,1,-39.804292,1.0000008e-8)" width="100%" height="100%" />
           <path
             style="
-              fill: #ffff00;
+              fill: var(--shoulderColor);
               fill-opacity: 1;
               stroke: #000000;
               stroke-width: 0.264583px;
@@ -446,7 +446,7 @@
             "
             d="m -29.212038,25.099153 c 0.141838,0 -3.327555,0.779369 -4.266493,2.15404 -1.321833,1.935256 -1.736335,6.813021 -1.736335,6.813021 l 4.3987,-2.64583 4.911326,-2.282039 c -1.1024,-1.346397 -3.360534,-4.104333 -3.307198,-4.039192"
             id="path18133"
-            @click.stop="chooseMuscle('shoulder', 'right')"
+            @click.stop="chooseMuscle('shoulder', 'back')"
             sodipodi:nodetypes="cscccc"
           />
           <use x="0" y="0" xlink:href="#path18133" id="use18135" transform="matrix(-1,0,0,1,-39.67201,0)" width="100%" height="100%" />

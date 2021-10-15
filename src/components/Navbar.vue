@@ -8,12 +8,16 @@
       <button class="mb-1 btn btn-outline-dark me-2" @click="settings()">
         <i class="fas fa-user-cog" style="font-size: 30px"></i>
       </button>
+      <button class="mb-1 btn btn-outline-dark me-2" @click="logOut()">
+        <i class="fas fa-sign-out-alt" style="font-size: 30px"></i>
+      </button>
     </div>
   </nav>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { currentUser } from '@/router';
+import { logout } from '@/API';
 export default defineComponent({
   setup() {
     return { user: currentUser };
@@ -23,12 +27,16 @@ export default defineComponent({
     settings() {
       this.$router.push('/Settings');
     },
+    logOut() {
+      logout();
+      this.$router.push('/');
+    },
   },
 });
 </script>
 <style scoped lang="scss">
 nav {
-  background: linear-gradient(180deg, rgb(180, 21, 21) 0%, rgba(200, 20, 20, 1) 88%, rgb(143, 22, 22) 97%);
+  background: linear-gradient(180deg, var(--navbarColor1) 0%, var(--navbarColor2) 88%, var(--navbarColor3) 97%);
   box-shadow: 0px -8px 8px 10px rgba(0, 0, 0, 0.5);
 }
 
