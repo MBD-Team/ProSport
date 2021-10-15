@@ -1,6 +1,7 @@
 <template>
   <div :class="direction" id="list" :style="{ width: listWidth }">
     <div
+      :class="selectedMuscle"
       id="task"
       v-for="exercise in filterex"
       v-bind:key="exercise.id"
@@ -112,7 +113,7 @@ export default defineComponent({
   float: right;
   right: 0;
 }
-.back {
+.backside {
   float: left;
   left: 0;
 }
@@ -126,5 +127,29 @@ export default defineComponent({
 }
 b {
   margin-left: 5px;
+}
+.shoulder {
+  background-color: var(--selectedShoulderColor) !important;
+}
+.neck {
+  background-color: var(--selectedNeckColor) !important;
+}
+.leg {
+  background-color: var(--selectedLegColor) !important;
+}
+.back {
+  background-color: var(--selectedBackColor) !important;
+}
+.arm {
+  background-color: var(--selectedArmColor) !important;
+}
+.butt {
+  background-color: var(--selectedButtColor) !important;
+}
+.chest {
+  background-color: var(--selectedChestColor) !important;
+}
+.belly {
+  background-color: var(--selectedBellyColor) !important;
 }
 </style>
