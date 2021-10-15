@@ -288,7 +288,7 @@
         <circle id="path11809" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.313049" cx="91.606125" cy="129.68079" r="0.0059099379" />
         <path
           style="
-            fill: #0000ff;
+            fill: var(--legColor);
             fill-opacity: 1;
             stroke: #000000;
             stroke-width: 0.313049px;
@@ -307,7 +307,7 @@
         <use x="0" y="0" xlink:href="#path11809" id="use970" width="100%" height="100%" />
         <path
           style="
-            fill: #ff0000;
+            fill: var(--armColor);
             fill-opacity: 1;
             stroke: #000000;
             stroke-width: 0.313049px;
@@ -379,7 +379,7 @@
           <circle id="path11809-1" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.264583" cx="77.423698" cy="109.60365" r="0.0049949638" />
           <path
             style="
-              fill: #ff9b00;
+              fill: var(--buttColor);
               fill-opacity: 1;
               stroke: #000000;
               stroke-width: 0.264583px;
@@ -404,7 +404,7 @@
           />
           <path
             style="
-              fill: #d5ab4d;
+              fill: var(--backColor);
               fill-opacity: 1;
               stroke: #000000;
               stroke-width: 0.264583px;
@@ -420,7 +420,7 @@
           <use x="0" y="0" xlink:href="#path17595" id="use17901" transform="matrix(-1,0,0,1,-39.67201,0)" width="100%" height="100%" />
           <path
             style="
-              fill: #9b3e3a;
+              fill: var(--neckColor);
               fill-opacity: 1;
               stroke: #000000;
               stroke-width: 0.264583px;
@@ -436,7 +436,7 @@
           <use x="0" y="0" xlink:href="#path18016" id="use18018" transform="matrix(-1,0,0,1,-39.804292,1.0000008e-8)" width="100%" height="100%" />
           <path
             style="
-              fill: #ffff00;
+              fill: var(--shoulderColor);
               fill-opacity: 1;
               stroke: #000000;
               stroke-width: 0.264583px;

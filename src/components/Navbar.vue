@@ -28,7 +28,7 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 nav {
-  background: linear-gradient(180deg, rgb(180, 21, 21) 0%, rgba(200, 20, 20, 1) 88%, rgb(143, 22, 22) 97%);
+  background: linear-gradient(180deg, var(--navbarColor1) 0%, var(--navbarColor2) 88%, var(--navbarColor3) 97%);
   box-shadow: 0px -8px 8px 10px rgba(0, 0, 0, 0.5);
 }
 

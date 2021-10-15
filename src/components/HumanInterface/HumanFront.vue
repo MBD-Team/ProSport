@@ -163,7 +163,7 @@
       <g inkscape:label="Ebene 1" inkscape:groupmode="layer" id="layer1">
         <path
           style="
-            fill: #0000ff;
+            fill: var(--legColor);
             fill-opacity: 1;
             stroke: #000000;
             stroke-width: 0.264583px;
@@ -179,7 +179,7 @@
         <use x="0" y="0" xlink:href="#path2751" id="use6388" transform="matrix(-1,0,0,1,45.889328,4.5318146e-7)" width="100%" height="100%" />
         <path
           style="
-            fill: #ff00ff;
+            fill: var(--bellyColor);
             fill-opacity: 1;
             stroke: #000000;
             stroke-width: 0.264583px;
@@ -199,7 +199,7 @@
         <circle id="path11809" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.264583" cx="23.160397" cy="28.351559" r="0.0049949638" />
         <path
           style="
-            fill: #00ff00;
+            fill: var(--chestColor);
             fill-opacity: 1;
             stroke: #000000;
             stroke-width: 0.264583px;
@@ -215,7 +215,7 @@
         <use x="0" y="0" xlink:href="#path11844" id="use12297" transform="matrix(-1,0,0,1,45.722436,4.5318146e-7)" width="100%" height="100%" />
         <path
           style="
-            fill: #ff0000;
+            fill: var(--armColor);
             fill-opacity: 1;
             stroke: #000000;
             stroke-width: 0.264583px;
@@ -231,7 +231,7 @@
         <use x="0" y="0" xlink:href="#path12978" id="use16001" transform="matrix(-1,0,0,1,45.722436,2.0453181e-5)" width="100%" height="100%" />
         <path
           style="
-            fill: #ffff3a;
+            fill: var(--shoulderColor);
             fill-opacity: 1;
             stroke: #000000;
             stroke-width: 0.264583px;
