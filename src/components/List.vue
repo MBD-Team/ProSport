@@ -1,15 +1,15 @@
 <template>
-  <div id="list" :style="{ width: listWidth }">
+  <div :class="direction" id="list" :style="{ width: listWidth }">
     <div
       id="task"
       v-for="exercise in filterex"
       v-bind:key="exercise.id"
-      data-bs-toggle="modal"
-      href="#exampleModalToggle"
-      role="button"
       @click="selectedExercise = exercise"
+      href="#exampleModalToggle"
+      data-bs-toggle="modal"
     >
       <img :src="exercise.img" style="margin: 10px; width: 180px; height: 100px" />
+
       <span v-if="!collapsed">
         <b style="font-size: 35px">{{ exercise.name }}</b>
       </span>
@@ -44,6 +44,12 @@ import { getExercises } from '@/API';
 import ExerciseDetail from '@/components/ExerciseDetail.vue';
 
 export default defineComponent({
+  props: {
+    direction: {
+      type: String,
+      required: true,
+    },
+  },
   setup() {
     return { collapsed, toggleList, listWidth, selectedMuscle };
   },
@@ -92,17 +98,23 @@ export default defineComponent({
 #list {
   color: rgb(0, 0, 0);
   background-color: var(--list-bg-color);
-  float: right;
   position: fixed;
   z-index: 1;
   top: 0;
-  right: 0;
   bottom: 0;
   padding: 0;
   transition: 0.3s ease;
   display: flex;
   flex-direction: column;
   overflow: scroll;
+}
+.front {
+  float: right;
+  right: 0;
+}
+.back {
+  float: left;
+  left: 0;
 }
 #task {
   background-color: rgba(255, 255, 255, 0.952);
