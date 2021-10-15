@@ -1,6 +1,14 @@
 <template>
   <div id="list" :style="{ width: listWidth }">
-    <div id="task" v-for="exercise in filterex" v-bind:key="exercise.id">
+    <div
+      id="task"
+      v-for="exercise in filterex"
+      v-bind:key="exercise.id"
+      data-bs-toggle="modal"
+      href="#exampleModalToggle"
+      role="button"
+      @click="selectedExercise = exercise"
+    >
       <img :src="exercise.img" style="margin: 10px; width: 180px; height: 100px" />
       <span v-if="!collapsed">
         <b style="font-size: 35px">{{ exercise.name }}</b>
@@ -10,6 +18,22 @@
       <b v-else style="color: #ed4e4e">{{ exercise.difficulty }}</b>
     </div>
   </div>
+  <!-- MODAL -->
+  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+        <div class="modal-header" style="flex-direction: column">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: var(--closeButton)"></button>
+          <h1 class="modal-title" id="exampleModalToggleLabel"></h1>
+        </div>
+        <div class="modal-body">
+          <div class="row" v-if="selectedExercise != null">
+            <ExerciseDetail :exercise="selectedExercise" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -17,14 +41,19 @@ import { defineComponent } from 'vue';
 import { collapsed, toggleList, listWidth, selectedMuscle } from '@/components/state';
 import { Exercise } from '@/types';
 import { getExercises } from '@/API';
+import ExerciseDetail from '@/components/ExerciseDetail.vue';
 
 export default defineComponent({
   setup() {
     return { collapsed, toggleList, listWidth, selectedMuscle };
   },
+  components: {
+    ExerciseDetail,
+  },
   data() {
     return {
       exercises: [] as Exercise[],
+      selectedExercise: null,
     };
   },
   watch: { $route: 'getExercises' },

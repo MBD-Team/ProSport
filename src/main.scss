@@ -16,4 +16,21 @@ $danger: #dc3545;
 $light: #f8f9fa;
 $dark: #212529;
 
+:root {
+  --closeButton: rgb(255, 0, 0);
+
+  --navbarColor1: rgb(180, 21, 21);
+  --navbarColor2: rgba(200, 20, 20, 1);
+  --navbarColor3: rgb(143, 22, 22);
+
+  --legColor: rgb(211, 187, 120);
+  --bellyColor: rgb(219, 144, 219);
+  --chestColor: rgb(144, 230, 144);
+  --shoulderColor: rgb(230, 230, 126);
+  --armColor: rgb(221, 134, 134);
+  --buttColor: rgb(228, 187, 126);
+  --backColor: rgb(240, 198, 136);
+  --neckColor: rgb(235, 133, 129);
+}
+
 @import '~bootstrap/scss/bootstrap';
