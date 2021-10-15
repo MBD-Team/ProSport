@@ -1,6 +1,16 @@
 <template>
   <div class="card card-default">
-    <div class="card-header">Übung hinzufügen</div>
+    <div class="card-header">
+      <button class="btn btn-primary">Übung hinzufügen</button>
+      <button class="btn btn-primary">Übung editieren</button>
+      <Multiselect
+        v-model="selectedExercise"
+        :options="exercises.map(({ id, name }) => ({ value: id, label: name }))"
+        :closeOnSelect="true"
+        :searchable="true"
+        noResultsText="Keine Übungen vorhanden"
+      />
+    </div>
     <div class="card-body p-4">
       <form @submit.prevent="addExe()" autocomplete="off">
         <div class="m-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
@@ -114,16 +124,19 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { addExercise, MUSCLE_OPTIONS, getExercises, addEquipment, getEquipment, delEquipment } from '@/API';
-import type { Equipment } from '@/types';
+import type { Equipment, Exercise } from '@/types';
 import Multiselect from '@vueform/multiselect';
 
 export default defineComponent({
   components: { Multiselect },
+  watch: { $route: 'getExercises' },
   mounted() {
     this.loadEquipment();
+    this.loadExercises();
   },
   data() {
     return {
+      selectedExercise: '',
       value: null,
       error: '',
       addingExercise: false,
@@ -139,9 +152,17 @@ export default defineComponent({
       secondaryMuscles: [] as string[],
       equipment: '',
       equipments: [] as Equipment[],
+      exercises: [] as Exercise[],
     };
   },
   methods: {
+    async loadExercises() {
+      try {
+        this.exercises = await getExercises();
+      } catch (e) {
+        console.log("couldn't load Exercises", e);
+      }
+    },
     async addEquipment() {
       if (!this.equipment) return;
       let newEquipment = await addEquipment(this.equipment);
