@@ -1,9 +1,11 @@
 <template>
   <div class="card card-default">
     <div class="card-header">
-      <button class="btn btn-primary">Übung hinzufügen</button>
-      <button class="btn btn-primary">Übung editieren</button>
+      <button class="btn btn-primary" @click="add()">Übung hinzufügen</button>
+      <button class="btn btn-primary" @click="edit()">Übung editieren</button>
       <Multiselect
+        @select="change()"
+        v-if="form == 'edit'"
         v-model="selectedExercise"
         :options="exercises.map(({ id, name }) => ({ value: id, label: name }))"
         :closeOnSelect="true"
@@ -11,7 +13,7 @@
         noResultsText="Keine Übungen vorhanden"
       />
     </div>
-    <div class="card-body p-4">
+    <div class="card-body p-4" v-if="form == 'add' || (form == 'edit' && selectedExercise)">
       <form @submit.prevent="addExe()" autocomplete="off">
         <div class="m-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
         <div class="mb-4 row">
@@ -137,6 +139,7 @@ export default defineComponent({
   data() {
     return {
       selectedExercise: '',
+      form: '',
       value: null,
       error: '',
       addingExercise: false,
@@ -156,6 +159,27 @@ export default defineComponent({
     };
   },
   methods: {
+    change() {
+      console.log({ selected: this.selectedExercise });
+      let chosenExercise = this.exercises.find(e => e.id == this.selectedExercise);
+      console.log(chosenExercise);
+      if (!chosenExercise) return;
+      console.log(chosenExercise.name);
+      this.name = chosenExercise.name;
+      this.description = chosenExercise.description;
+      this.hints = chosenExercise.hints;
+      this.videoURL = chosenExercise.videoURL;
+      this.difficulty = chosenExercise.difficulty;
+      this.primaryMuscles = chosenExercise.primaryMuscles;
+      this.secondaryMuscles = chosenExercise.secondaryMuscles;
+      this.trainingDevices = chosenExercise.trainingDevices;
+    },
+    add() {
+      this.form = 'add';
+    },
+    edit() {
+      this.form = 'edit';
+    },
     async loadExercises() {
       try {
         this.exercises = await getExercises();
@@ -196,6 +220,10 @@ export default defineComponent({
         let videoID = this.videoURL.split('youtu.be/')[1].slice(0, 11);
         videoURL = `https://www.youtube.com/embed/${videoID}`;
         img = `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
+      } else if (this.videoURL.includes('youtube.com/embed/')) {
+        let videoID = this.videoURL.split('embed/')[1].slice(0, 11);
+        videoURL = `https://www.youtube.com/embed/${videoID}`;
+        img = `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
       } else {
         this.error = 'wrong URL type';
         return; //not supported
@@ -228,11 +256,14 @@ export default defineComponent({
   },
   computed: {
     img(): string | null {
-      if (this.videoURL.includes('youtube')) {
-        let videoID = this.videoURL.split('v=')[1].slice(0, 11);
+      if (this.videoURL.includes('youtube.com/watch')) {
+        let videoID = this.videoURL.split('?v=')[1].slice(0, 11);
         return `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
       } else if (this.videoURL.includes('youtu.be/')) {
         let videoID = this.videoURL.split('youtu.be/')[1].slice(0, 11);
+        return `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
+      } else if (this.videoURL.includes('youtube.com/embed/')) {
+        let videoID = this.videoURL.split('embed/')[1].slice(0, 11);
         return `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
       }
       return null;
