@@ -2,9 +2,18 @@ import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { deleteDoc, DocumentData, getFirestore, QueryDocumentSnapshot, doc } from 'firebase/firestore';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { currentUser } from './router';
-import { CreatedExercise, Exercise, Equipment } from './types';
+import { CreatedExercise, Exercise, Equipment, Muscle } from './types';
 
-export const MUSCLE_OPTIONS = ['Nacken', 'Schulter', 'Arme', 'Brust', 'Bauch', 'Po', 'Beine'];
+export const MUSCLE_OPTIONS = [
+  { name: 'Nacken', value: 'neck' },
+  { name: 'Schulter', value: 'shoulder' },
+  { name: 'Arme', value: 'arm' },
+  { name: 'Brust', value: 'chest' },
+  { name: 'Bauch', value: 'belly' },
+  { name: 'Rücken', value: 'back' },
+  { name: 'Po', value: 'butt' },
+  { name: 'Beine', value: 'leg' },
+] as Muscle[];
 
 export async function login(email: string, password: string): Promise<boolean> {
   try {
@@ -56,7 +65,7 @@ export async function setEquipment(equipment: string): Promise<Equipment> {
   const docRef = await addDoc(collection(db, 'equipment'), {
     name: equipment,
   });
-  return { id: docRef.id, name: equipment };
+  return { id: docRef.id, name: equipment } as Equipment;
 }
 export async function getEquipment(): Promise<Equipment[]> {
   const db = getFirestore();

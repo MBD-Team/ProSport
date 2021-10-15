@@ -50,12 +50,13 @@
           <div class="col-8">
             <Multiselect
               v-model="primaryMuscles"
-              :options="musclesOptions.filter(p => !secondaryMuscles.includes(p))"
+              :options="muscleOptions.filter(m => !this.secondaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
               mode="tags"
               :closeOnSelect="false"
               :searchable="true"
               noResultsText="no muscles found"
             />
+            <!-- .filter(e => e.primaryMuscles.includes(this.selectedMuscle)); -->
           </div>
         </div>
         <div class="mb-4 row">
@@ -63,20 +64,26 @@
           <div class="col-8">
             <Multiselect
               v-model="secondaryMuscles"
-              :options="musclesOptions.filter(s => !primaryMuscles.includes(s))"
+              :options="muscleOptions.filter(m => !this.primaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
               mode="tags"
               :closeOnSelect="false"
               :searchable="true"
               noResultsText="no muscles found"
             />
+            <!--musclesOptions.map(({ id, name }) => ({ value: id, label: musclesOptions.filter(s => !primaryMuscles.includes(s.name)) }))  -->
           </div>
         </div>
         <div class="mb-4 row">
-          <label class="col-4" for="devices">Trainigsgerät:</label>
+          <label class="col-4" for="muscles">Trainigsgerät:</label>
           <div class="col-8">
-            <select class="form-control" placeholder="equipment" v-model="trainingDevices" autocomplete="off" require>
-              <option v-for="e in 10" :key="e" :value="e"></option>
-            </select>
+            <Multiselect
+              v-model="trainingDevices"
+              :options="equipments.map(({ id, name }) => ({ value: id, label: name }))"
+              mode="tags"
+              :closeOnSelect="false"
+              :searchable="true"
+              noResultsText="keine Geräte vorhanden"
+            />
           </div>
         </div>
         <button class="btn btn-primary col-3" type="submit" v-if="!addingExercise">Übung hinzufügen</button>
@@ -85,14 +92,36 @@
       </form>
     </div>
   </div>
+  <div class="card card-default mt-4">
+    <div class="card-header">Trainingsgerät hinzufügen</div>
+    <div class="card-body">
+      <form class="mb-4 row" @submit.prevent="addEquipment()">
+        <label class="col-4" for="device">Name des Gerätes:</label>
+        <div class="col-8">
+          <input class="form-control" type="text" placeholder="" v-model="equipment" autocomplete="off" required />
+        </div>
+        <button class="btn btn-primary ms-2 col-3" type="submit">hinzufügen</button>
+      </form>
+      <ul class="list-group" v-for="e in equipments" :key="e.id">
+        <li class="list-group-item">
+          {{ e.name }}
+          <div @click="deleteEquipment(e.id)"><i class="fas fa-trash-alt" style="float: right"></i></div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { addExercise, MUSCLE_OPTIONS, getExercises } from '@/API';
+import { addExercise, MUSCLE_OPTIONS, getExercises, setEquipment, getEquipment, delEquipment } from '@/API';
+import type { Equipment } from '@/types';
 import Multiselect from '@vueform/multiselect';
 
 export default defineComponent({
   components: { Multiselect },
+  mounted() {
+    this.loadEquipment();
+  },
   data() {
     return {
       value: null,
@@ -104,13 +133,30 @@ export default defineComponent({
       videoURL: '',
       difficulty: '',
       muscles: [],
-      trainingDevices: [] as string[],
-      musclesOptions: MUSCLE_OPTIONS,
+      trainingDevices: [] as Equipment[],
+      muscleOptions: MUSCLE_OPTIONS,
       primaryMuscles: [] as string[],
       secondaryMuscles: [] as string[],
+      equipment: '',
+      equipments: [] as Equipment[],
     };
   },
   methods: {
+    async addEquipment() {
+      if (!this.equipment) return;
+      let newEquipment = await setEquipment(this.equipment);
+      this.equipments.push(newEquipment);
+      this.equipment = '';
+    },
+    async loadEquipment() {
+      this.equipments = await getEquipment();
+    },
+    deleteEquipment(id: string) {
+      //delete local equipment
+      this.equipments = this.equipments.filter(e => e.id != id);
+      //overwrite firebase
+      delEquipment(id);
+    },
     async showExercises() {
       let res = await getExercises();
       console.log(res);
