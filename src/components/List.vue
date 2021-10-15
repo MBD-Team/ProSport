@@ -1,5 +1,5 @@
 <template>
-  <div id="list" :style="{ width: listWidth }">
+  <div :class="direction" id="list" :style="{ width: listWidth }">
     <div id="task" v-for="exercise in filterex" v-bind:key="exercise">
       <img :src="exercise.img" alt="" style="margin: 10px; width: 180px; height: 100px" />
       <span v-if="!collapsed">
@@ -17,6 +17,12 @@ import { defineComponent } from 'vue';
 import { collapsed, toggleList, listWidth, selectedMuscle } from '@/components/state';
 
 export default defineComponent({
+  props: {
+    direction: {
+      type: String,
+      required: true,
+    },
+  },
   computed: {
     filterex(): any {
       return this.exercises.filter(e => e.muscles.includes(this.selectedMuscle));
@@ -82,17 +88,23 @@ export default defineComponent({
 #list {
   color: rgb(0, 0, 0);
   background-color: var(--list-bg-color);
-  float: right;
   position: fixed;
   z-index: 1;
   top: 0;
-  right: 0;
   bottom: 0;
   padding: 0;
   transition: 0.3s ease;
   display: flex;
   flex-direction: column;
   overflow: scroll;
+}
+.left {
+  float: right;
+  right: 0;
+}
+.right {
+  float: left;
+  left: 0;
 }
 #task {
   background-color: rgba(255, 255, 255, 0.952);

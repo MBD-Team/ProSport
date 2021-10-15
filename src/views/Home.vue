@@ -4,25 +4,32 @@
       <HumanFront />
       <HumanBack />
     </div>
-    <ListItem />
+    <List :direction="orientation" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HumanFront from '@/components/HumanInterface/HumanFront.vue';
-import HumanBack from '@/components/HumanInterface/HumanBack.vue';
-import ListItem from '@/components/List.vue';
-import { closeList } from '@/components/state';
+import HumanFront from '@/components/humanInterface/HumanFront.vue';
+import HumanBack from '@/components/humanInterface/HumanBack.vue';
+import List from '@/components/List.vue';
+import { orientation, closeList } from '@/components/state';
 
 export default defineComponent({
-  components: { HumanFront, HumanBack, ListItem },
+  computed: {
+    direction() {
+      console.log(orientation);
+      return orientation;
+    },
+  },
+  components: { HumanFront, HumanBack, List },
   setup() {
-    return { closeList };
+    return { orientation, closeList };
   },
   data() {
     return {};
   },
+  methods: {},
 });
 </script>
 <style lang="scss" scoped></style>
