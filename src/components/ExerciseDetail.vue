@@ -13,11 +13,28 @@
     </div>
     <div style="margin-left: 2vw">
       <h1>Name der Übung</h1>
-      <p style="font-size: 25px">{{ exercise?.name }}</p>
+      <p style="font-size: 25px">
+        {{ exercise?.name }}
+      </p>
       <h3>Beanspruchte Hauptmuskeln</h3>
-      <p style="font-size: 20px">{{ exercise?.primaryMuscles.join() }}</p>
+      <p style="font-size: 20px">
+        {{
+          muscleOptions
+            .filter(m => exercise?.primaryMuscles.includes(m.value))
+            .map(p => p.name)
+            .join(', ')
+        }}
+      </p>
+      <!-- muscleOptions.filter(m => !this.secondaryMuscles.includes(m.value)) -->
       <h3>Beanspruchte Nebenmuskeln</h3>
-      <p style="font-size: 20px">{{ exercise?.secondaryMuscles.join() }}</p>
+      <p style="font-size: 20px">
+        {{
+          muscleOptions
+            .filter(m => exercise?.secondaryMuscles.includes(m.value))
+            .map(p => p.name)
+            .join(', ')
+        }}
+      </p>
     </div>
   </div>
   <div style="margin-left: 5vw; margin-top: 2vh">
@@ -29,12 +46,16 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Exercise } from '@/types';
+import { MUSCLE_OPTIONS } from '@/API';
 export default defineComponent({
   props: {
     exercise: Object,
   },
+  data() {
+    return {
+      muscleOptions: MUSCLE_OPTIONS,
+    };
+  },
 });
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
