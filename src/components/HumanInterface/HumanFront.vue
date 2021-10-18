@@ -162,7 +162,7 @@
       </defs>
       <g inkscape:label="Ebene 1" inkscape:groupmode="layer" id="layer1">
         <path
-          :class="v5"
+          :class="legStyle"
           style="
             fill: var(--legColor);
             fill-opacity: 1;
@@ -179,7 +179,7 @@
         />
         <use x="0" y="0" xlink:href="#path2751" id="use6388" transform="matrix(-1,0,0,1,45.889328,4.5318146e-7)" width="100%" height="100%" />
         <path
-          :class="v3"
+          :class="bellyStyle"
           style="
             fill: var(--bellyColor);
             fill-opacity: 1;
@@ -200,7 +200,7 @@
         <circle id="path11807" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.264583" cx="23.160397" cy="28.351559" r="0.0049949638" />
         <circle id="path11809" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.264583" cx="23.160397" cy="28.351559" r="0.0049949638" />
         <path
-          :class="v1"
+          :class="chestStyle"
           style="
             fill: var(--chestColor);
             fill-opacity: 1;
@@ -217,7 +217,7 @@
         />
         <use x="0" y="0" xlink:href="#path11844" id="use12297" transform="matrix(-1,0,0,1,45.722436,4.5318146e-7)" width="100%" height="100%" />
         <path
-          :class="v4"
+          :class="armStyle"
           style="
             fill: var(--armColor);
             fill-opacity: 1;
@@ -234,7 +234,7 @@
         />
         <use x="0" y="0" xlink:href="#path12978" id="use16001" transform="matrix(-1,0,0,1,45.722436,2.0453181e-5)" width="100%" height="100%" />
         <path
-          :class="v2"
+          :class="shoulderStyle"
           style="
             fill: var(--shoulderColor);
             fill-opacity: 1;
@@ -295,35 +295,36 @@ export default defineComponent({
     return { toggleList, chooseMuscle };
   },
   computed: {
-    v1: function () {
+    
+    chestStyle: function () {
       if (selectedMuscle.value == 'chest') {
         return 'chest';
       } else {
         return '';
       }
     },
-    v2: function () {
+    shoulderStyle: function () {
       if (selectedMuscle.value == 'shoulder') {
         return 'shoulder';
       } else {
         return '';
       }
     },
-    v3: function () {
+    bellyStyle: function () {
       if (selectedMuscle.value == 'belly') {
         return 'belly';
       } else {
         return '';
       }
     },
-    v4: function () {
+    armStyle: function () {
       if (selectedMuscle.value == 'arm') {
         return 'arm';
       } else {
         return '';
       }
     },
-    v5: function () {
+    legStyle: function () {
       if (selectedMuscle.value == 'leg') {
         return 'leg';
       } else {

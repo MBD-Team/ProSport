@@ -287,7 +287,7 @@
         <circle id="path11807" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.313049" cx="91.606125" cy="129.68079" r="0.0059099379" />
         <circle id="path11809" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.313049" cx="91.606125" cy="129.68079" r="0.0059099379" />
         <path
-          :class="v6"
+          :class="legStyle"
           style="
             fill: var(--legColor);
             fill-opacity: 1;
@@ -307,7 +307,7 @@
         <use x="0" y="0" xlink:href="#path11807" id="use968" width="100%" height="100%" />
         <use x="0" y="0" xlink:href="#path11809" id="use970" width="100%" height="100%" />
         <path
-          :class="v4"
+          :class="armStyle"
           style="
             fill: var(--armColor);
             fill-opacity: 1;
@@ -380,7 +380,7 @@
           <circle id="path11807-6" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.264583" cx="77.423698" cy="109.60365" r="0.0049949638" />
           <circle id="path11809-1" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.264583" cx="77.423698" cy="109.60365" r="0.0049949638" />
           <path
-            :class="v5"
+            :class="buttStyle"
             style="
               fill: var(--buttColor);
               fill-opacity: 1;
@@ -406,7 +406,7 @@
             style="fill: #ff00ff; fill-opacity: 1"
           />
           <path
-            :class="v3"
+            :class="backStyle"
             style="
               fill: var(--backColor);
               fill-opacity: 1;
@@ -423,7 +423,7 @@
           />
           <use x="0" y="0" xlink:href="#path17595" id="use17901" transform="matrix(-1,0,0,1,-39.67201,0)" width="100%" height="100%" />
           <path
-            :class="v1"
+            :class="neckStyle"
             style="
               fill: var(--neckColor);
               fill-opacity: 1;
@@ -440,7 +440,7 @@
           />
           <use x="0" y="0" xlink:href="#path18016" id="use18018" transform="matrix(-1,0,0,1,-39.804292,1.0000008e-8)" width="100%" height="100%" />
           <path
-            :class="v2"
+            :class="shoulderStyle"
             style="
               fill: var(--shoulderColor);
               fill-opacity: 1;
@@ -475,42 +475,42 @@ export default defineComponent({
     return { toggleList, chooseMuscle };
   },
   computed: {
-    v1: function () {
+    neckStyle: function () {
       if (selectedMuscle.value == 'neck') {
         return 'neck';
       } else {
         return '';
       }
     },
-    v2: function () {
+    shoulderStyle: function () {
       if (selectedMuscle.value == 'shoulder') {
         return 'shoulder';
       } else {
         return '';
       }
     },
-    v3: function () {
+    backStyle: function () {
       if (selectedMuscle.value == 'back') {
         return 'back';
       } else {
         return '';
       }
     },
-    v4: function () {
+    armStyle: function () {
       if (selectedMuscle.value == 'arm') {
         return 'arm';
       } else {
         return '';
       }
     },
-    v5: function () {
+    buttStyle: function () {
       if (selectedMuscle.value == 'butt') {
         return 'butt';
       } else {
         return '';
       }
     },
-    v6: function () {
+    legStyle: function () {
       if (selectedMuscle.value == 'leg') {
         return 'leg';
       } else {
