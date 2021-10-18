@@ -246,50 +246,33 @@ export default defineComponent({
         this.error = 'wrong URL type';
         return; //not supported
       }
-      if (this.form == 'edit') {
-        let newExercise = {
-          name: this.name,
-          description: this.description,
-          hints: this.hints,
-          videoURL,
-          img,
-          difficulty: this.difficulty,
-          trainingDevices: this.trainingDevices,
-          primaryMuscles: this.primaryMuscles,
-          secondaryMuscles: this.secondaryMuscles,
-        };
-        try {
-          this.loading = true;
+
+      let newExercise = {
+        name: this.name,
+        description: this.description,
+        hints: this.hints,
+        videoURL,
+        img,
+        difficulty: this.difficulty,
+        trainingDevices: this.trainingDevices,
+        primaryMuscles: this.primaryMuscles,
+        secondaryMuscles: this.secondaryMuscles,
+      };
+      try {
+        this.loading = true;
+        if (this.form == 'edit') {
           updateExercise(newExercise, this.selectedExercise);
-        } catch (e) {
-          console.error('Error adding document: ', e);
-          this.error = 'Übung konnte nicht geändert werden';
-        } finally {
-          this.loading = false;
         }
-      }
-      if (this.form == 'add') {
-        let newExercise = {
-          name: this.name,
-          description: this.description,
-          hints: this.hints,
-          videoURL,
-          img,
-          difficulty: this.difficulty,
-          trainingDevices: this.trainingDevices,
-          primaryMuscles: this.primaryMuscles,
-          secondaryMuscles: this.secondaryMuscles,
-        };
-        try {
-          this.loading = true;
+        if (this.form == 'add') {
           addExercise(newExercise);
-        } catch (e) {
-          console.error('Error adding document: ', e);
-          this.error = 'Übung konnte nicht hinzugefügt werden';
-        } finally {
-          this.loading = false;
         }
+      } catch (e) {
+        console.error('Error adding document: ', e);
+        this.error = 'Übung konnte nicht gespeichert werden';
+      } finally {
+        this.loading = false;
       }
+
       this.reset();
       this.getExercises();
     },
