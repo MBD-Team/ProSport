@@ -6,6 +6,8 @@ import './main.scss';
 import 'bootstrap';
 import '@fortawesome/fontawesome-free/js/all.js';
 
+import './registerServiceWorker';
+
 import router from './router';
 
 // Import the functions you need from the SDKs you need
