@@ -118,8 +118,7 @@
             />
           </div>
         </div>
-        <button class="btn btn-primary col-3" type="submit" v-if="!loading && form == 'add'">Übung hinzufügen</button>
-        <button class="btn btn-primary col-3" type="submit" v-if="!loading && form == 'edit'">Übung ändern</button>
+        <button class="btn btn-primary col-3" type="submit" v-if="!loading">Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}</button>
         <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
         <button class="btn btn-primary ms-2 col-3" type="button" @click="showExercises()">Übungen anzeigen</button>
       </form>
