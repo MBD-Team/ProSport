@@ -120,7 +120,7 @@
         </div>
         <button class="btn btn-primary col-3" type="submit" v-if="!loading && form == 'add'">Übung hinzufügen</button>
         <button class="btn btn-primary col-3" type="submit" v-if="!loading && form == 'edit'">Übung ändern</button>
-        <span v-else class="spinner-border spinner-border-sm text-primary"></span>
+        <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
         <button class="btn btn-primary ms-2 col-3" type="button" @click="showExercises()">Übungen anzeigen</button>
       </form>
     </div>
@@ -193,6 +193,16 @@ export default defineComponent({
       this.trainingDevices = chosenExercise.trainingDevices;
     },
     add() {
+      if (this.form == 'add') return;
+      this.name = '';
+      this.description = '';
+      this.hints = '';
+      this.videoURL = '';
+      this.difficulty = '';
+      this.primaryMuscles = [];
+      this.secondaryMuscles = [];
+      this.trainingDevices = [];
+      this.selectedExercise = '';
       this.form = 'add';
     },
     edit() {
