@@ -63,6 +63,9 @@ export default defineComponent({
   created() {
     if (this.$route.params.data) {
       this.exercise = JSON.parse(this.$route.params.data as string);
+      localStorage.setItem('lastExercise', JSON.stringify(this.exercise));
+    } else if (localStorage.getItem('lastExercise')) {
+      this.exercise = JSON.parse(localStorage.getItem('lastExercise')!);
     } else {
       this.$router.push('/');
     }
