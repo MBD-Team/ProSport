@@ -1,13 +1,6 @@
 <template>
   <div :class="direction" id="list" :style="{ width: listWidth }">
-    <div
-      id="task"
-      v-for="exercise in filterex"
-      v-bind:key="exercise.id"
-      @click="selectedExercise = exercise"
-      href="#exampleModalToggle"
-      data-bs-toggle="modal"
-    >
+    <div :class="selectedMuscle" id="task" v-for="exercise in filterex" v-bind:key="exercise.id" @click="openExerciseDetail(exercise)">
       <img :src="exercise.img" style="margin: 10px; width: 180px; height: 100px" />
 
       <span v-if="!collapsed">
@@ -18,22 +11,6 @@
       <b v-else style="color: #ed4e4e">Schwer</b>
     </div>
   </div>
-  <!-- MODAL -->
-  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-    <div class="modal-dialog modal-fullscreen">
-      <div class="modal-content">
-        <div class="modal-header" style="flex-direction: column">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: var(--closeButton)"></button>
-          <h1 class="modal-title" id="exampleModalToggleLabel"></h1>
-        </div>
-        <div class="modal-body">
-          <div class="row" v-if="selectedExercise">
-            <ExerciseDetail :exercise="selectedExercise" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -41,7 +18,6 @@ import { defineComponent } from 'vue';
 import { collapsed, toggleList, listWidth, selectedMuscle } from '@/components/state';
 import { Exercise } from '@/types';
 import { getExercises } from '@/API';
-import ExerciseDetail from '@/components/ExerciseDetail.vue';
 
 export default defineComponent({
   props: {
@@ -53,16 +29,14 @@ export default defineComponent({
   setup() {
     return { collapsed, toggleList, listWidth, selectedMuscle };
   },
-  components: {
-    ExerciseDetail,
-  },
+  components: {},
   data() {
     return {
       exercises: [] as Exercise[],
       selectedExercise: null,
     };
   },
-  watch: { $route: 'getExercises' },
+  watch: { $route: 'loadExercises' },
   async mounted() {
     await this.loadExercises();
   },
@@ -73,6 +47,9 @@ export default defineComponent({
       } catch (e) {
         console.log("couldn't load Exercises", e);
       }
+    },
+    openExerciseDetail(exercise: Exercise) {
+      this.$router.push({ name: 'ExerciseDetail', params: { data: JSON.stringify(exercise) } });
     },
   },
   computed: {
@@ -85,7 +62,7 @@ export default defineComponent({
 
 <style>
 :root {
-  --list-bg-color: rgba(48, 48, 48, 0.623);
+  --list-bg-color: rgba(51, 51, 51, 0.815);
   --list-item-hover: rgb(95, 95, 95);
   --list-item-active: rgb(141, 141, 141);
 }
@@ -106,13 +83,13 @@ export default defineComponent({
   transition: 0.3s ease;
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow: auto;
 }
 .front {
   float: right;
   right: 0;
 }
-.back {
+.backside {
   float: left;
   left: 0;
 }

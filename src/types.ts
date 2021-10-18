@@ -10,7 +10,7 @@ export interface CreatedExercise {
   difficulty: string;
   primaryMuscles: string[];
   secondaryMuscles: string[];
-  trainingDevices: Equipment[];
+  trainingDevices: string[];
 }
 export interface Muscle {
   name: string;

@@ -162,6 +162,7 @@
       </defs>
       <g inkscape:label="Ebene 1" inkscape:groupmode="layer" id="layer1">
         <path
+          :class="{ leg: selectedMuscle == 'leg' }"
           style="
             fill: var(--legColor);
             fill-opacity: 1;
@@ -171,13 +172,18 @@
             stroke-linejoin: miter;
             stroke-opacity: 1;
           "
-          d="m 22.944662,51.992376 c 0,0 0.105119,0.32795 0.138438,0.4965 1.009341,5.1059 3.122375,10.86696 5.225417,14.86937 0.408858,0.77812 0.06815,2.2455 0.124095,2.97185 0.138203,1.79452 0.0412,2.44171 0.380738,4.22203 0.821706,4.30853 3.308647,8.47084 3.565388,12.93636 0.03033,0.52758 -0.306043,0.82558 -0.243293,1.56658 2.52478,-0.15693 3.963394,-0.0308 3.963394,-0.0308 v 0 c 0,0 0.684528,-21.65345 -0.407135,-29.01766 -1.091663,-7.36421 -4.417293,-15.49208 -4.417293,-15.49208 z"
+          d="m 22.944662,51.992376 c 0,0 0.105119,0.32795 0.138438,0.4965
+        1.009341,5.1059 3.122375,10.86696 5.225417,14.86937 0.408858,0.77812 0.06815,2.2455 0.124095,2.97185 0.138203,1.79452 0.0412,2.44171
+        0.380738,4.22203 0.821706,4.30853 3.308647,8.47084 3.565388,12.93636 0.03033,0.52758 -0.306043,0.82558 -0.243293,1.56658 2.52478,-0.15693
+        3.963394,-0.0308 3.963394,-0.0308 v 0 c 0,0 0.684528,-21.65345 -0.407135,-29.01766 -1.091663,-7.36421 -4.417293,-15.49208 -4.417293,-15.49208
+        z"
           id="path2751"
           @click.stop="chooseMuscle('leg', 'front')"
           sodipodi:nodetypes="cssssaccczcc"
         />
         <use x="0" y="0" xlink:href="#path2751" id="use6388" transform="matrix(-1,0,0,1,45.889328,4.5318146e-7)" width="100%" height="100%" />
         <path
+          :class="{ belly: selectedMuscle == 'belly' }"
           style="
             fill: var(--bellyColor);
             fill-opacity: 1;
@@ -198,6 +204,7 @@
         <circle id="path11807" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.264583" cx="23.160397" cy="28.351559" r="0.0049949638" />
         <circle id="path11809" style="fill: #ff00ff; stroke: #000000; stroke-width: 0.264583" cx="23.160397" cy="28.351559" r="0.0049949638" />
         <path
+          :class="{ chest: selectedMuscle == 'chest' }"
           style="
             fill: var(--chestColor);
             fill-opacity: 1;
@@ -214,6 +221,7 @@
         />
         <use x="0" y="0" xlink:href="#path11844" id="use12297" transform="matrix(-1,0,0,1,45.722436,4.5318146e-7)" width="100%" height="100%" />
         <path
+          :class="{ arm: selectedMuscle == 'arm' }"
           style="
             fill: var(--armColor);
             fill-opacity: 1;
@@ -230,6 +238,7 @@
         />
         <use x="0" y="0" xlink:href="#path12978" id="use16001" transform="matrix(-1,0,0,1,45.722436,2.0453181e-5)" width="100%" height="100%" />
         <path
+          :class="{ shoulder: selectedMuscle == 'shoulder' }"
           style="
             fill: var(--shoulderColor);
             fill-opacity: 1;
@@ -280,23 +289,20 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { toggleList, chooseMuscle } from '@/components/state';
+import { toggleList, chooseMuscle, selectedMuscle } from '@/components/state';
 export default defineComponent({
   methods: {},
   data() {
     return {};
   },
   setup() {
-    return { toggleList, chooseMuscle };
+    return { toggleList, chooseMuscle, selectedMuscle };
   },
 });
 </script>
 <style scoped lang="scss">
 img {
-  //   display: flex;
-  //   margin-top: 4rem;
   margin-left: auto;
   margin-right: auto;
-  //   width: 50%;
 }
 </style>

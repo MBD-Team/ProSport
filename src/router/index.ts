@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import Home from '../views/Home.vue';
 import Admin from '../views/Admin.vue';
+import ExerciseDetail from '../views/ExerciseDetail.vue';
 import Settings from '../views/Settings.vue';
 import { getAuth, User } from '@firebase/auth';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -16,6 +17,12 @@ const routes: Array<RouteRecordRaw> = [
     path: '/Admin',
     name: 'Admin',
     component: Admin,
+  },
+  {
+    path: '/ExerciseDetail',
+    name: 'ExerciseDetail',
+    props: true,
+    component: ExerciseDetail,
   },
   {
     path: '/Settings',

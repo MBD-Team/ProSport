@@ -18,19 +18,62 @@ $dark: #212529;
 
 :root {
   --closeButton: rgb(255, 0, 0);
+  --adminButtons: rgb(255, 0, 0);
 
   --navbarColor1: rgb(180, 21, 21);
   --navbarColor2: rgba(200, 20, 20, 1);
   --navbarColor3: rgb(143, 22, 22);
 
-  --legColor: rgb(211, 187, 120);
-  --bellyColor: rgb(219, 144, 219);
-  --chestColor: rgb(144, 230, 144);
-  --shoulderColor: rgb(230, 230, 126);
-  --armColor: rgb(221, 134, 134);
-  --buttColor: rgb(228, 187, 126);
-  --backColor: rgb(240, 198, 136);
-  --neckColor: rgb(235, 133, 129);
+  --legColor: rgb(212, 209, 255);
+  --bellyColor: rgb(255, 217, 255);
+  --chestColor: rgb(200, 255, 175);
+  --shoulderColor: rgb(195, 255, 255);
+  --armColor: rgb(255, 187, 187);
+  --buttColor: rgb(177, 255, 235);
+  --backColor: rgb(251, 255, 194);
+  --neckColor: rgb(255, 216, 172);
+
+  --selectedLegColor: rgb(17, 0, 255);
+  --selectedBellyColor: rgb(255, 0, 255);
+  --selectedChestColor: rgb(81, 255, 0);
+  --selectedShoulderColor: rgb(0, 255, 255);
+  --selectedArmColor: rgb(255, 0, 0);
+  --selectedButtColor: rgb(0, 255, 191);
+  --selectedBackColor: rgb(238, 255, 0);
+  --selectedNeckColor: rgb(255, 136, 0);
+}
+// Style Classes
+.shoulder {
+  fill: var(--selectedShoulderColor) !important;
+  background-color: var(--selectedShoulderColor) !important;
+}
+.neck {
+  fill: var(--selectedNeckColor) !important;
+  background-color: var(--selectedNeckColor) !important;
+}
+.chest {
+  fill: var(--selectedChestColor) !important;
+  background-color: var(--selectedChestColor) !important;
+}
+.back {
+  fill: var(--selectedBackColor) !important;
+  background-color: var(--selectedBackColor) !important;
+}
+.belly {
+  fill: var(--selectedBellyColor) !important;
+  background-color: var(--selectedBellyColor) !important;
+}
+.butt {
+  fill: var(--selectedButtColor) !important;
+  background-color: var(--selectedButtColor) !important;
+}
+.leg {
+  fill: var(--selectedLegColor) !important;
+  background-color: var(--selectedLegColor) !important;
+}
+.arm {
+  fill: var(--selectedArmColor) !important;
+  background-color: var(--selectedArmColor) !important;
 }
 
 @import '~bootstrap/scss/bootstrap';
