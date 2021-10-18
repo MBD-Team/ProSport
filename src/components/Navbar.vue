@@ -2,7 +2,7 @@
   <nav class="d-flex">
     <div class="col-4"></div>
     <a class="col-4 overflow-hidden" href="#" style="padding: 5px">
-      <img src="@/assets/PS_Logo_doublebizeps.svg" width="220" height="50" class="" alt="PS_Logo" />
+      <img src="@/assets/PS_Logo_doublebizeps.svg" width="220" height="50" class="" alt="PS_Logo" @dblclick="$router.push('/admin')" />
     </a>
 
     <div class="col-4 d-flex align-items-center justify-content-end" v-if="user != null">
