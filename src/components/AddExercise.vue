@@ -194,15 +194,7 @@ export default defineComponent({
     },
     add() {
       if (this.form == 'add') return;
-      this.name = '';
-      this.description = '';
-      this.hints = '';
-      this.videoURL = '';
-      this.difficulty = '';
-      this.primaryMuscles = [];
-      this.secondaryMuscles = [];
-      this.trainingDevices = [];
-      this.selectedExercise = '';
+      this.reset();
       this.form = 'add';
     },
     edit() {
@@ -298,6 +290,10 @@ export default defineComponent({
           this.loading = false;
         }
       }
+      this.reset();
+      this.getExercises();
+    },
+    reset() {
       this.name = '';
       this.description = '';
       this.hints = '';
@@ -307,9 +303,9 @@ export default defineComponent({
       this.secondaryMuscles = [];
       this.trainingDevices = [];
       this.selectedExercise = '';
-      this.getExercises();
     },
   },
+
   computed: {
     img(): string | null {
       if (this.videoURL.includes('youtube.com/watch')) {
