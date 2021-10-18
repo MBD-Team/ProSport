@@ -46,13 +46,35 @@
           <label class="col-4" for="difficulty">Schwierigkeitsgrad:</label>
           <div class="col-8">
             <div class="btn-group">
-              <input type="radio" class="btn-check" name="difficulty" id="easy" autocomplete="off" @change="difficulty = 'easy'" />
+              <input
+                type="radio"
+                class="btn-check"
+                name="difficulty"
+                id="easy"
+                autocomplete="off"
+                @change="difficulty = 'easy'"
+                :checked="difficulty == 'easy'"
+              />
               <label class="btn btn-outline-primary" for="easy">Leicht</label>
-
-              <input type="radio" class="btn-check" name="difficulty" id="medium" autocomplete="off" @change="difficulty = 'medium'" />
+              <input
+                type="radio"
+                class="btn-check"
+                name="difficulty"
+                id="medium"
+                autocomplete="off"
+                @change="difficulty = 'medium'"
+                :checked="difficulty == 'medium'"
+              />
               <label class="btn btn-outline-primary" for="medium">Mittel</label>
-
-              <input type="radio" class="btn-check" name="difficulty" id="hard" autocomplete="off" @change="difficulty = 'hard'" />
+              <input
+                type="radio"
+                class="btn-check"
+                name="difficulty"
+                id="hard"
+                autocomplete="off"
+                @change="difficulty = 'hard'"
+                :checked="difficulty == 'hard'"
+              />
               <label class="btn btn-outline-primary" for="hard">Schwer</label>
             </div>
           </div>
@@ -68,7 +90,6 @@
               :searchable="true"
               noResultsText="no muscles found"
             />
-            <!-- .filter(e => e.primaryMuscles.includes(this.selectedMuscle)); -->
           </div>
         </div>
         <div class="mb-4 row">
@@ -82,7 +103,6 @@
               :searchable="true"
               noResultsText="no muscles found"
             />
-            <!--musclesOptions.map(({ id, name }) => ({ value: id, label: musclesOptions.filter(s => !primaryMuscles.includes(s.name)) }))  -->
           </div>
         </div>
         <div class="mb-4 row">
@@ -98,7 +118,8 @@
             />
           </div>
         </div>
-        <button class="btn btn-primary col-3" type="submit" v-if="!addingExercise">Übung hinzufügen</button>
+        <button class="btn btn-primary col-3" type="submit" v-if="!loading && form == 'add'">Übung hinzufügen</button>
+        <button class="btn btn-primary col-3" type="submit" v-if="!loading && form == 'edit'">Übung ändern</button>
         <span v-else class="spinner-border spinner-border-sm text-primary"></span>
         <button class="btn btn-primary ms-2 col-3" type="button" @click="showExercises()">Übungen anzeigen</button>
       </form>
@@ -125,7 +146,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { addExercise, MUSCLE_OPTIONS, getExercises, addEquipment, getEquipment, delEquipment } from '@/API';
+import { addExercise, MUSCLE_OPTIONS, getExercises, addEquipment, getEquipment, delEquipment, updateExercise } from '@/API';
 import type { Equipment, Exercise } from '@/types';
 import Multiselect from '@vueform/multiselect';
 
@@ -134,7 +155,7 @@ export default defineComponent({
   watch: { $route: 'getExercises' },
   mounted() {
     this.loadEquipment();
-    this.loadExercises();
+    this.getExercises();
   },
   data() {
     return {
@@ -142,7 +163,7 @@ export default defineComponent({
       form: '',
       value: null,
       error: '',
-      addingExercise: false,
+      loading: false,
       name: '',
       description: '',
       hints: '',
@@ -160,11 +181,8 @@ export default defineComponent({
   },
   methods: {
     change() {
-      console.log({ selected: this.selectedExercise });
       let chosenExercise = this.exercises.find(e => e.id == this.selectedExercise);
-      console.log(chosenExercise);
       if (!chosenExercise) return;
-      console.log(chosenExercise.name);
       this.name = chosenExercise.name;
       this.description = chosenExercise.description;
       this.hints = chosenExercise.hints;
@@ -180,7 +198,7 @@ export default defineComponent({
     edit() {
       this.form = 'edit';
     },
-    async loadExercises() {
+    async getExercises() {
       try {
         this.exercises = await getExercises();
       } catch (e) {
@@ -197,9 +215,7 @@ export default defineComponent({
       this.equipments = await getEquipment();
     },
     deleteEquipment(id: string) {
-      //delete local equipment
       this.equipments = this.equipments.filter(e => e.id != id);
-      //overwrite firebase
       delEquipment(id);
     },
     async showExercises() {
@@ -212,7 +228,7 @@ export default defineComponent({
 
       let videoURL;
       let img;
-      if (this.videoURL.includes('youtube')) {
+      if (this.videoURL.includes('youtube.com/watch?v=')) {
         let videoID = this.videoURL.split('v=')[1].slice(0, 11);
         videoURL = `https://www.youtube.com/embed/${videoID}`;
         img = `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
@@ -228,30 +244,60 @@ export default defineComponent({
         this.error = 'wrong URL type';
         return; //not supported
       }
-
-      let newExercise = {
-        name: this.name,
-        description: this.description,
-        hints: this.hints,
-        videoURL,
-        img,
-        difficulty: this.difficulty,
-        trainingDevices: this.trainingDevices,
-        primaryMuscles: this.primaryMuscles,
-        secondaryMuscles: this.secondaryMuscles,
-      };
-      try {
-        this.addingExercise = true;
-        addExercise(newExercise);
-      } catch (e) {
-        console.error('Error adding document: ', e);
-        this.error = "couldn't add exercise";
-      } finally {
-        this.addingExercise = false;
+      if (this.form == 'edit') {
+        let newExercise = {
+          name: this.name,
+          description: this.description,
+          hints: this.hints,
+          videoURL,
+          img,
+          difficulty: this.difficulty,
+          trainingDevices: this.trainingDevices,
+          primaryMuscles: this.primaryMuscles,
+          secondaryMuscles: this.secondaryMuscles,
+        };
+        try {
+          this.loading = true;
+          updateExercise(newExercise, this.selectedExercise);
+        } catch (e) {
+          console.error('Error adding document: ', e);
+          this.error = 'Übung konnte nicht geändert werden';
+        } finally {
+          this.loading = false;
+        }
       }
-    },
-    test() {
-      console.log('test');
+      if (this.form == 'add') {
+        let newExercise = {
+          name: this.name,
+          description: this.description,
+          hints: this.hints,
+          videoURL,
+          img,
+          difficulty: this.difficulty,
+          trainingDevices: this.trainingDevices,
+          primaryMuscles: this.primaryMuscles,
+          secondaryMuscles: this.secondaryMuscles,
+        };
+        try {
+          this.loading = true;
+          addExercise(newExercise);
+        } catch (e) {
+          console.error('Error adding document: ', e);
+          this.error = 'Übung konnte nicht hinzugefügt werden';
+        } finally {
+          this.loading = false;
+        }
+      }
+      this.name = '';
+      this.description = '';
+      this.hints = '';
+      this.videoURL = '';
+      this.difficulty = '';
+      this.primaryMuscles = [];
+      this.secondaryMuscles = [];
+      this.trainingDevices = [];
+      this.selectedExercise = '';
+      this.getExercises();
     },
   },
   computed: {

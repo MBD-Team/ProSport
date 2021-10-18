@@ -1,6 +1,6 @@
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { deleteDoc, DocumentData, getFirestore, QueryDocumentSnapshot, doc } from 'firebase/firestore';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, updateDoc } from 'firebase/firestore';
 import { currentUser } from './router';
 import { CreatedExercise, Exercise, Equipment, Muscle } from './types';
 
@@ -81,4 +81,24 @@ export async function delEquipment(id: string): Promise<Equipment[] | null> {
   const docs: QueryDocumentSnapshot<DocumentData>[] = [];
   await deleteDoc(doc(db, 'equipment', id));
   return getEquipment();
+}
+export async function updateExercise(exercise: CreatedExercise, id: string): Promise<boolean> {
+  const db = getFirestore();
+  const exerciseRef = doc(db, 'exercises', id);
+  try {
+    await updateDoc(exerciseRef, {
+      name: exercise.name,
+      description: exercise.description,
+      hints: exercise.hints,
+      videoURL: exercise.videoURL,
+      img: exercise.img,
+      difficulty: exercise.difficulty,
+      primaryMuscles: exercise.primaryMuscles,
+      secondaryMuscles: exercise.secondaryMuscles,
+      trainingDevices: exercise.trainingDevices,
+    });
+  } catch {
+    return false;
+  }
+  return true;
 }
