@@ -11,22 +11,6 @@
       <b v-else style="color: #ed4e4e">{{ exercise.difficulty }}</b>
     </div>
   </div>
-  <!-- MODAL -->
-  <!-- <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-    <div class="modal-dialog modal-fullscreen">
-      <div class="modal-content">
-        <div class="modal-header" style="flex-direction: column">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="background-color: var(--closeButton)"></button>
-          <h1 class="modal-title" id="exampleModalToggleLabel"></h1>
-        </div>
-        <div class="modal-body">
-          <div class="row" v-if="selectedExercise != null">
-            <ExerciseDetail :exercise="selectedExercise" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
 </template>
 
 <script lang="ts">
@@ -99,7 +83,7 @@ export default defineComponent({
   transition: 0.3s ease;
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow: auto;
 }
 .front {
   float: right;
