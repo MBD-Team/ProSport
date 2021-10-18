@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/abschluss_finanz/',
+  publicPath: '/ProSport/',
   outputDir: './docs',
   //pwa: {
   //workboxPluginMode: "InjectManifest",
