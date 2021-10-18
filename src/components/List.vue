@@ -36,7 +36,7 @@ export default defineComponent({
       selectedExercise: null,
     };
   },
-  watch: { $route: 'getExercises' },
+  watch: { $route: 'loadExercises' },
   async mounted() {
     await this.loadExercises();
   },
