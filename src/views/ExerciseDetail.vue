@@ -79,17 +79,6 @@ export default defineComponent({
         }
       });
     });
-
-    // for (let trainingDevice of this.exercise.trainingDevices) {
-    //   console.log(trainingDevice);
-    //   for (let equipmentsLoad of this.equipmentsLoads) {
-    //     console.log(equipmentsLoad);
-    //     if (trainingDevice == equipmentsLoad.id) {
-    //       this.equipment.push(equipmentsLoad.name);
-    //     }
-    //   }
-    // }
-    console.log({ e: this.equipment });
   },
 
   data() {
