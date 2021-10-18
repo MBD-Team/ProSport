@@ -78,9 +78,8 @@ export async function delEquipment(id: string): Promise<Equipment[] | null> {
 }
 export async function updateExercise(exercise: CreatedExercise, id: string): Promise<boolean> {
   const db = getFirestore();
-  const exerciseRef = doc(db, 'exercises', id);
   try {
-    await updateDoc(exerciseRef, {
+    await updateDoc(doc(db, 'exercises', id), {
       name: exercise.name,
       description: exercise.description,
       hints: exercise.hints,
