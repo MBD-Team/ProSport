@@ -1,7 +1,7 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f2af47eaeec5f25e8dbd",
-    "url": "/ProSport/css/app.3f6dbbde.css"
+    "revision": "a131bffcdd2162e810e5",
+    "url": "/ProSport/css/app.81b08fc0.css"
   },
   {
     "revision": "c66b6c0209217e7d266e",
@@ -12,12 +12,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ProSport/img/PS_Logo_doublebizeps.b1eba7fd.svg"
   },
   {
-    "revision": "926198bc87d46046c657b82591e8db15",
+    "revision": "6d7de42f83b06ad716ab95eff2cf4895",
     "url": "/ProSport/index.html"
   },
   {
-    "revision": "f2af47eaeec5f25e8dbd",
-    "url": "/ProSport/js/app.8933f2ff.js"
+    "revision": "a131bffcdd2162e810e5",
+    "url": "/ProSport/js/app.4a4e13ef.js"
   },
   {
     "revision": "c66b6c0209217e7d266e",
