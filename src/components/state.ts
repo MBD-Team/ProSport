@@ -6,12 +6,14 @@ export const LIST_WIDTH_COLLAPSED = 0;
 export const orientation = ref('');
 export const collapsed = ref(true);
 export const toggleList = () => (collapsed.value = false);
-export const closeList = () => ((collapsed.value = true), (selectedMuscle.value = ''), console.log(orientation));
+export function closeList() {
+  collapsed.value = true;
+  selectedMuscle.value = '';
+}
 export function chooseMuscle(muscle: string, orientationside: string) {
-  console.log((selectedMuscle.value = muscle));
   orientation.value = orientationside;
-  console.log(orientation);
   collapsed.value = false;
+  selectedMuscle.value = muscle;
 }
 export const selectedMuscle = ref('');
 export const listWidth = computed(() => `${collapsed.value ? LIST_WIDTH_COLLAPSED : LIST_WIDTH}vw`);

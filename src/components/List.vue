@@ -104,28 +104,4 @@ export default defineComponent({
 b {
   margin-left: 5px;
 }
-.shoulder {
-  background-color: var(--selectedShoulderColor) !important;
-}
-.neck {
-  background-color: var(--selectedNeckColor) !important;
-}
-.leg {
-  background-color: var(--selectedLegColor) !important;
-}
-.back {
-  background-color: var(--selectedBackColor) !important;
-}
-.arm {
-  background-color: var(--selectedArmColor) !important;
-}
-.butt {
-  background-color: var(--selectedButtColor) !important;
-}
-.chest {
-  background-color: var(--selectedChestColor) !important;
-}
-.belly {
-  background-color: var(--selectedBellyColor) !important;
-}
 </style>

@@ -42,5 +42,38 @@ $dark: #212529;
   --selectedBackColor: rgb(238, 255, 0);
   --selectedNeckColor: rgb(255, 136, 0);
 }
+// Style Classes
+.shoulder {
+  fill: var(--selectedShoulderColor) !important;
+  background-color: var(--selectedShoulderColor) !important;
+}
+.neck {
+  fill: var(--selectedNeckColor) !important;
+  background-color: var(--selectedNeckColor) !important;
+}
+.chest {
+  fill: var(--selectedChestColor) !important;
+  background-color: var(--selectedChestColor) !important;
+}
+.back {
+  fill: var(--selectedBackColor) !important;
+  background-color: var(--selectedBackColor) !important;
+}
+.belly {
+  fill: var(--selectedBellyColor) !important;
+  background-color: var(--selectedBellyColor) !important;
+}
+.butt {
+  fill: var(--selectedButtColor) !important;
+  background-color: var(--selectedButtColor) !important;
+}
+.leg {
+  fill: var(--selectedLegColor) !important;
+  background-color: var(--selectedLegColor) !important;
+}
+.arm {
+  fill: var(--selectedArmColor) !important;
+  background-color: var(--selectedArmColor) !important;
+}
 
 @import '~bootstrap/scss/bootstrap';
