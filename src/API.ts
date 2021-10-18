@@ -1,6 +1,6 @@
 import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { deleteDoc, DocumentData, getFirestore, QueryDocumentSnapshot, doc } from 'firebase/firestore';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, updateDoc } from 'firebase/firestore';
 import { currentUser } from './router';
 import { CreatedExercise, Exercise, Equipment, Muscle } from './types';
 
@@ -20,12 +20,9 @@ export async function login(email: string, password: string): Promise<boolean> {
     const auth = getAuth();
     //signInWithEmailAndPassword(auth, email, password).then(() => console.log('user logged in'));
     await signInWithEmailAndPassword(auth, email, password);
-    console.log('user logged in');
     return true;
   } catch (e: any) {
-    const errCode = e.code;
-    const errMsg = e.message;
-    console.log({ errCode, errMsg });
+    console.log("couldn't login", e);
     return false;
   }
 }
@@ -47,8 +44,6 @@ export async function addExercise(exercise: CreatedExercise): Promise<string> {
     secondaryMuscles: exercise.secondaryMuscles,
     trainingDevices: exercise.trainingDevices,
   });
-  console.log('Exercise ID: ', docRef.id);
-  console.log('Exercise created with Name: ', exercise.name);
   return docRef.id;
 }
 export async function getExercises(): Promise<Exercise[]> {
@@ -60,7 +55,7 @@ export async function getExercises(): Promise<Exercise[]> {
   });
   return docs.map(exercises => ({ ...exercises.data(), id: exercises.id })) as Exercise[];
 }
-export async function setEquipment(equipment: string): Promise<Equipment> {
+export async function addEquipment(equipment: string): Promise<Equipment> {
   const db = getFirestore();
   const docRef = await addDoc(collection(db, 'equipment'), {
     name: equipment,
@@ -78,7 +73,25 @@ export async function getEquipment(): Promise<Equipment[]> {
 }
 export async function delEquipment(id: string): Promise<Equipment[] | null> {
   const db = getFirestore();
-  const docs: QueryDocumentSnapshot<DocumentData>[] = [];
   await deleteDoc(doc(db, 'equipment', id));
   return getEquipment();
+}
+export async function updateExercise(exercise: CreatedExercise, id: string): Promise<boolean> {
+  const db = getFirestore();
+  try {
+    await updateDoc(doc(db, 'exercises', id), {
+      name: exercise.name,
+      description: exercise.description,
+      hints: exercise.hints,
+      videoURL: exercise.videoURL,
+      img: exercise.img,
+      difficulty: exercise.difficulty,
+      primaryMuscles: exercise.primaryMuscles,
+      secondaryMuscles: exercise.secondaryMuscles,
+      trainingDevices: exercise.trainingDevices,
+    });
+  } catch {
+    return false;
+  }
+  return true;
 }

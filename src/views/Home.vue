@@ -13,6 +13,7 @@ import { defineComponent } from 'vue';
 
 import HumanFront from '@/components/HumanInterface/HumanFront.vue';
 import HumanBack from '@/components/HumanInterface/HumanBack.vue';
+
 import List from '@/components/List.vue';
 import { orientation, closeList } from '@/components/state';
 

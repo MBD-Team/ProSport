@@ -6,9 +6,9 @@
       <span v-if="!collapsed">
         <b style="font-size: 35px">{{ exercise.name }}</b>
       </span>
-      <b v-if="exercise.difficulty == 'easy'" style="color: #2da64f">{{ exercise.difficulty }}</b>
-      <b v-else-if="exercise.difficulty == 'medium'" style="color: #cfc22d">{{ exercise.difficulty }}</b>
-      <b v-else style="color: #ed4e4e">{{ exercise.difficulty }}</b>
+      <b v-if="exercise.difficulty == 'easy'" style="color: #2da64f">Leicht</b>
+      <b v-else-if="exercise.difficulty == 'medium'" style="color: #cfc22d">Mittel</b>
+      <b v-else style="color: #ed4e4e">Schwer</b>
     </div>
   </div>
 </template>
