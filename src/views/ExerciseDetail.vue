@@ -31,10 +31,14 @@
 import { defineComponent } from 'vue';
 import { Exercise } from '@/types';
 export default defineComponent({
-  props: {
-    exercise: Object,
+  created() {
+    this.exercise = JSON.parse(this.$route.params.data as string);
+  },
+  data() {
+    return {
+      exercise: {} as Exercise,
+    };
   },
 });
 </script>
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

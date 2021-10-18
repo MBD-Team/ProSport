@@ -1,14 +1,6 @@
 <template>
   <div :class="direction" id="list" :style="{ width: listWidth }">
-    <div
-      :class="selectedMuscle"
-      id="task"
-      v-for="exercise in filterex"
-      v-bind:key="exercise.id"
-      @click="selectedExercise = exercise"
-      href="#exampleModalToggle"
-      data-bs-toggle="modal"
-    >
+    <div :class="selectedMuscle" id="task" v-for="exercise in filterex" v-bind:key="exercise.id" @click="openExerciseDetail(exercise)">
       <img :src="exercise.img" style="margin: 10px; width: 180px; height: 100px" />
 
       <span v-if="!collapsed">
@@ -20,7 +12,7 @@
     </div>
   </div>
   <!-- MODAL -->
-  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <!-- <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-fullscreen">
       <div class="modal-content">
         <div class="modal-header" style="flex-direction: column">
@@ -34,7 +26,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
@@ -42,7 +34,6 @@ import { defineComponent } from 'vue';
 import { collapsed, toggleList, listWidth, selectedMuscle } from '@/components/state';
 import { Exercise } from '@/types';
 import { getExercises } from '@/API';
-import ExerciseDetail from '@/components/ExerciseDetail.vue';
 
 export default defineComponent({
   props: {
@@ -54,9 +45,7 @@ export default defineComponent({
   setup() {
     return { collapsed, toggleList, listWidth, selectedMuscle };
   },
-  components: {
-    ExerciseDetail,
-  },
+  components: {},
   data() {
     return {
       exercises: [] as Exercise[],
@@ -75,6 +64,9 @@ export default defineComponent({
         console.log("couldn't load Exercises", e);
       }
     },
+    openExerciseDetail(exercise: Exercise) {
+      this.$router.push({ name: 'ExerciseDetail', params: { data: JSON.stringify(exercise) } });
+    },
   },
   computed: {
     filterex(): Exercise[] {
@@ -86,7 +78,7 @@ export default defineComponent({
 
 <style>
 :root {
-  --list-bg-color: rgba(48, 48, 48, 0.623);
+  --list-bg-color: rgba(51, 51, 51, 0.815);
   --list-item-hover: rgb(95, 95, 95);
   --list-item-active: rgb(141, 141, 141);
 }
