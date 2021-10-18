@@ -484,10 +484,4 @@ img {
   margin-right: auto;
   //   width: 50%;
 }
-
-
-
-
-
-
 </style>
