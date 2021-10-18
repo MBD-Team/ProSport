@@ -20,12 +20,9 @@ export async function login(email: string, password: string): Promise<boolean> {
     const auth = getAuth();
     //signInWithEmailAndPassword(auth, email, password).then(() => console.log('user logged in'));
     await signInWithEmailAndPassword(auth, email, password);
-    console.log('user logged in');
     return true;
   } catch (e: any) {
-    const errCode = e.code;
-    const errMsg = e.message;
-    console.log({ errCode, errMsg });
+    console.log("couldn't login", e);
     return false;
   }
 }
@@ -47,8 +44,6 @@ export async function addExercise(exercise: CreatedExercise): Promise<string> {
     secondaryMuscles: exercise.secondaryMuscles,
     trainingDevices: exercise.trainingDevices,
   });
-  console.log('Exercise ID: ', docRef.id);
-  console.log('Exercise created with Name: ', exercise.name);
   return docRef.id;
 }
 export async function getExercises(): Promise<Exercise[]> {
@@ -78,7 +73,6 @@ export async function getEquipment(): Promise<Equipment[]> {
 }
 export async function delEquipment(id: string): Promise<Equipment[] | null> {
   const db = getFirestore();
-  const docs: QueryDocumentSnapshot<DocumentData>[] = [];
   await deleteDoc(doc(db, 'equipment', id));
   return getEquipment();
 }
