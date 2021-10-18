@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ProSport/precache-manifest.041af1197f6621195c254e2b0f84fbf3.js"
+  "/ProSport/precache-manifest.3789d53ea43bb94d9a7cea1ec33371d8.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "prosport"});
