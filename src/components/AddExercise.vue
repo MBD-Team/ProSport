@@ -1,10 +1,13 @@
 <template>
   <div class="card card-default">
-    <div class="card-header">
-      <button class="btn btn-primary" @click="add()">Übung hinzufügen</button>
-      <button class="btn btn-primary" @click="edit()">Übung editieren</button>
+    <div class="card-header header">
+      <button class="addBtn" @click="add()">Übung hinzufügen</button>
+      <button class="editBtn" style="margin-left: 1em" @click="edit()">Übung editieren</button>
+    </div>
+    <div style="margin: 1em">
       <Multiselect
         @select="change()"
+        placeholder="Wähle eine Übung"
         v-if="form == 'edit'"
         v-model="selectedExercise"
         :options="exercises.map(({ id, name }) => ({ value: id, label: name }))"
@@ -55,7 +58,7 @@
                 @change="difficulty = 'easy'"
                 :checked="difficulty == 'easy'"
               />
-              <label class="btn btn-outline-primary" for="easy">Leicht</label>
+              <label class="btn btn-outline-success" for="easy">Leicht</label>
               <input
                 type="radio"
                 class="btn-check"
@@ -65,7 +68,7 @@
                 @change="difficulty = 'medium'"
                 :checked="difficulty == 'medium'"
               />
-              <label class="btn btn-outline-primary" for="medium">Mittel</label>
+              <label class="btn btn-outline-warning" for="medium">Mittel</label>
               <input
                 type="radio"
                 class="btn-check"
@@ -75,7 +78,7 @@
                 @change="difficulty = 'hard'"
                 :checked="difficulty == 'hard'"
               />
-              <label class="btn btn-outline-primary" for="hard">Schwer</label>
+              <label class="btn btn-outline-danger" for="hard">Schwer</label>
             </div>
           </div>
         </div>
@@ -118,21 +121,27 @@
             />
           </div>
         </div>
-        <button class="btn btn-primary col-3" type="submit" v-if="!loading">Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}</button>
-        <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
-        <button class="btn btn-primary ms-2 col-3" type="button" @click="showExercises()">Übungen anzeigen</button>
+        <div class="row">
+          <div class="col-4"></div>
+          <button style="margin-left: 12px" class="addBtn col-3" type="submit" v-if="!loading">
+            Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}
+          </button>
+          <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
+          <button class="ms-2 col-3 showbtn" type="button" @click="showExercises()">Übungen anzeigen</button>
+        </div>
       </form>
     </div>
   </div>
   <div class="card card-default mt-4">
-    <div class="card-header">Trainingsgerät hinzufügen</div>
-    <div class="card-body">
+    <div class="card-header header">Trainingsgerät hinzufügen</div>
+    <div class="card-body" style="padding: 12px 12px 0px 12px">
       <form class="mb-4 row" @submit.prevent="addEquipment()">
         <label class="col-4" for="device">Name des Gerätes:</label>
         <div class="col-8">
           <input class="form-control" type="text" placeholder="" v-model="equipment" autocomplete="off" required />
         </div>
-        <button class="btn btn-primary ms-2 col-3" type="submit">hinzufügen</button>
+        <div class="col-4"></div>
+        <button style="margin-left: 12px !important; margin-top: 10px" class="addBtn ms-2 col-3" type="submit">hinzufügen</button>
       </form>
       <ul class="list-group" v-for="e in equipments" :key="e.id">
         <li class="list-group-item">
@@ -306,3 +315,15 @@ export default defineComponent({
 });
 </script>
 <style src="@vueform/multiselect/themes/default.css"></style>
+<style scoped lang="scss">
+button {
+  border: 1px solid rgb(32, 32, 32);
+  border-radius: 6px;
+}
+.showbtn {
+  background: linear-gradient(180deg, rgb(173, 173, 173) 0%, rgb(141, 141, 141) 85%, rgb(68, 68, 68) 100%);
+}
+.showbtn:active {
+  transform: scale(0.9);
+}
+</style>

@@ -9,7 +9,7 @@ $line-height-base: 1.6;
 // Colors
 $primary: #0d6efd;
 $secondary: #6c757d;
-$success: #198754;
+$success: #26be77;
 $info: #0dcaf0;
 $warning: #ffc107;
 $danger: #dc3545;
@@ -17,6 +17,14 @@ $light: #f8f9fa;
 $dark: #212529;
 
 :root {
+  --editButton: rgb(158, 158, 158);
+  --editButton2: rgb(99, 99, 99);
+  --editButton3: rgb(51, 51, 51);
+
+  --addButton: rgb(19, 141, 66);
+  --addButton2: rgb(10, 129, 56);
+  --addButton3: rgb(4, 90, 37);
+
   --closeButton: rgb(255, 0, 0);
   --adminButtons: rgb(255, 0, 0);
 
@@ -43,6 +51,24 @@ $dark: #212529;
   --selectedNeckColor: rgb(255, 136, 0);
 }
 // Style Classes
+.header {
+  background: linear-gradient(180deg, var(--navbarColor1) 0%, var(--navbarColor2) 88%, var(--navbarColor3) 97%);
+  color: #f8f9fa;
+}
+.editBtn {
+  background: linear-gradient(180deg, var(--editButton) 0%, var(--editButton2) 85%, var(--editButton3) 100%);
+}
+.editBtn:active {
+  transform: scale(0.9);
+  color: #f8f9fa;
+}
+.addBtn {
+  background: linear-gradient(180deg, var(--addButton) 0%, var(--addButton2) 85%, var(--addButton3) 100%);
+}
+.addBtn:active {
+  transform: scale(0.9);
+  color: #f8f9fa;
+}
 .shoulder {
   fill: var(--selectedShoulderColor) !important;
   background-color: var(--selectedShoulderColor) !important;
