@@ -169,7 +169,7 @@ export default defineComponent({
       videoURL: '',
       difficulty: '',
       muscles: [],
-      trainingDevices: [] as Equipment[],
+      trainingDevices: [] as string[],
       muscleOptions: MUSCLE_OPTIONS,
       primaryMuscles: [] as string[],
       secondaryMuscles: [] as string[],

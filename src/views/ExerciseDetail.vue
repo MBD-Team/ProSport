@@ -24,9 +24,27 @@
         <h1>Name der Übung</h1>
         <p style="font-size: 25px">{{ exercise?.name }}</p>
         <h3>Beanspruchte Hauptmuskeln</h3>
-        <p style="font-size: 20px">{{ exercise?.primaryMuscles.join() }}</p>
+        <p style="font-size: 20px">
+          {{
+            muscleOptions
+              .filter(m => exercise?.primaryMuscles.includes(m.value))
+              .map(p => p.name)
+              .join(', ')
+          }}
+        </p>
         <h3>Beanspruchte Nebenmuskeln</h3>
-        <p style="font-size: 20px">{{ exercise?.secondaryMuscles.join() }}</p>
+        <p style="font-size: 20px">
+          {{
+            muscleOptions
+              .filter(m => exercise?.secondaryMuscles.includes(m.value))
+              .map(p => p.name)
+              .join(', ')
+          }}
+        </p>
+        <h3>Benötigte Geräte</h3>
+        <p style="font-size: 20px">
+          {{ this.equipment.join(', ') }}
+        </p>
       </div>
     </div>
     <div style="margin-left: 5vw; margin-top: 2vh">
@@ -39,7 +57,8 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Exercise } from '@/types';
+import { Equipment, Exercise } from '@/types';
+import { getEquipment, MUSCLE_OPTIONS } from '@/API';
 export default defineComponent({
   created() {
     if (this.$route.params.data) {
@@ -48,8 +67,33 @@ export default defineComponent({
       this.$router.push('/');
     }
   },
+  async mounted() {
+    this.equipmentsLoads = await getEquipment();
+    this.equipmentsLoads.forEach(e => {
+      this.exercise.trainingDevices.forEach(t => {
+        if (e.id == t) {
+          this.equipment.push(e.name);
+        }
+      });
+    });
+
+    // for (let trainingDevice of this.exercise.trainingDevices) {
+    //   console.log(trainingDevice);
+    //   for (let equipmentsLoad of this.equipmentsLoads) {
+    //     console.log(equipmentsLoad);
+    //     if (trainingDevice == equipmentsLoad.id) {
+    //       this.equipment.push(equipmentsLoad.name);
+    //     }
+    //   }
+    // }
+    console.log({ e: this.equipment });
+  },
+
   data() {
     return {
+      equipment: [] as string[],
+      equipmentsLoads: [] as Equipment[],
+      muscleOptions: MUSCLE_OPTIONS,
       exercise: {
         id: '',
         name: '',
