@@ -216,8 +216,15 @@ export default defineComponent({
       this.equipments = await getEquipment();
     },
     deleteEquipment(id: string) {
-      this.equipments = this.equipments.filter(e => e.id != id);
-      delEquipment(id);
+      let usage = this.exercises.filter(e => e.trainingDevices.find(t => t == id)).length;
+      let display =
+        usage == 1
+          ? 'Übung benutzt dieses Gerät, sicher das du es entfernen möchtest ?'
+          : 'Übungen benutzen dieses Gerät, sicher das du sie entfernen möchtest ?';
+      if (usage !== 0 && window.confirm(`${usage} ${display}`)) {
+        this.equipments = this.equipments.filter(e => e.id != id);
+        delEquipment(id);
+      }
     },
     async showExercises() {
       let res = await getExercises();
