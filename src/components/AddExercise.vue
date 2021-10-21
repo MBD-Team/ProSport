@@ -115,6 +115,7 @@
               :closeOnSelect="false"
               :searchable="true"
               noResultsText="keine Geräte vorhanden"
+              placeholder="Kein Gerät benötigt"
             />
           </div>
         </div>
@@ -134,18 +135,49 @@
         </div>
         <button class="btn btn-primary ms-2 col-3" type="submit">hinzufügen</button>
       </form>
-      <ul class="list-group" v-for="e in equipments" :key="e.id">
-        <li class="list-group-item">
-          {{ e.name }}
-          <div @click="deleteEquipment(e.id)"><i class="fas fa-trash-alt" style="float: right"></i></div>
-        </li>
-      </ul>
+      <div class="m-4 alert alert-danger text-center" v-if="equipmentError">{{ equipmentError }}</div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td class="w-75">Aktive Geräte</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="e in equipments.filter(e => e.disabled == false)" :key="e.id">
+            <td>{{ e.name }}</td>
+            <td>
+              <div @click="disableEquipment(e.id, true)"><i class="fas fa-ban" style="float: right"></i></div>
+            </td>
+            <td>
+              <div @click="deleteEquipment(e.id)"><i class="fas fa-trash-alt" style="float: right"></i></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td class="w-75">Inaktive Geräte</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="e in equipments.filter(e => e.disabled == true)" :key="e.id">
+            <td>{{ e.name }}</td>
+            <td>
+              <div @click="disableEquipment(e.id, false)"><i class="fas fa-check-circle" style="float: right"></i></div>
+            </td>
+            <td>
+              <div @click="deleteEquipment(e.id)"><i class="fas fa-trash-alt" style="float: right"></i></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { addExercise, MUSCLE_OPTIONS, getExercises, addEquipment, getEquipment, delEquipment, updateExercise } from '@/API';
+import { addExercise, MUSCLE_OPTIONS, getExercises, addEquipment, getEquipment, delEquipment, updateExercise, updateEquipment } from '@/API';
 import type { Equipment, Exercise } from '@/types';
 import Multiselect from '@vueform/multiselect';
 
@@ -162,6 +194,7 @@ export default defineComponent({
       form: '',
       value: null,
       error: '',
+      equipmentError: '',
       loading: false,
       name: '',
       description: '',
@@ -221,7 +254,11 @@ export default defineComponent({
         usage == 1
           ? 'Übung benutzt dieses Gerät, sicher das du es entfernen möchtest ?'
           : 'Übungen benutzen dieses Gerät, sicher das du sie entfernen möchtest ?';
-      if (usage !== 0 && window.confirm(`${usage} ${display}`)) {
+      if (!usage) {
+        this.equipments = this.equipments.filter(e => e.id != id);
+        delEquipment(id);
+      }
+      if (usage && window.confirm(`${usage} ${display}`)) {
         this.equipments = this.equipments.filter(e => e.id != id);
         delEquipment(id);
       }
@@ -229,6 +266,15 @@ export default defineComponent({
     async showExercises() {
       let res = await getExercises();
       console.log(res);
+    },
+    async disableEquipment(id: string, disable: boolean) {
+      let changed = this.equipments.find(e => e.id == id);
+      if (!changed) {
+        this.equipmentError = 'das Gerät existiert nicht mehr';
+        return;
+      }
+      changed.disabled = disable;
+      this.equipments = await updateEquipment(changed);
     },
     addExe() {
       if (!this.difficulty) return (this.error = 'no difficulty chosen');

@@ -59,8 +59,9 @@ export async function addEquipment(equipment: string): Promise<Equipment> {
   const db = getFirestore();
   const docRef = await addDoc(collection(db, 'equipment'), {
     name: equipment,
+    disabled: false,
   });
-  return { id: docRef.id, name: equipment } as Equipment;
+  return { id: docRef.id, name: equipment, disabled: false } as Equipment;
 }
 export async function getEquipment(): Promise<Equipment[]> {
   const db = getFirestore();
@@ -74,6 +75,13 @@ export async function getEquipment(): Promise<Equipment[]> {
 export async function delEquipment(id: string): Promise<Equipment[] | null> {
   const db = getFirestore();
   await deleteDoc(doc(db, 'equipment', id));
+  return getEquipment();
+}
+export async function updateEquipment(equipment: Equipment): Promise<Equipment[]> {
+  const db = getFirestore();
+  await updateDoc(doc(db, 'equipment', equipment.id), {
+    disabled: equipment.disabled,
+  });
   return getEquipment();
 }
 export async function updateExercise(exercise: CreatedExercise, id: string): Promise<boolean> {
