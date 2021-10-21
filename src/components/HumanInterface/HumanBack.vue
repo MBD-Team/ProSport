@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="unselectable">
     <svg
       width="300"
       height="90vh"

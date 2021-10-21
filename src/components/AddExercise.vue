@@ -317,13 +317,7 @@ export default defineComponent({
 <style src="@vueform/multiselect/themes/default.css"></style>
 <style scoped lang="scss">
 button {
-  border: 1px solid rgb(32, 32, 32);
-  border-radius: 6px;
-}
-.showbtn {
-  background: linear-gradient(180deg, rgb(173, 173, 173) 0%, rgb(141, 141, 141) 85%, rgb(68, 68, 68) 100%);
-}
-.showbtn:active {
-  transform: scale(0.9);
+  border: 1px hidden rgba(32, 32, 32, 0);
+  border-radius: 5px;
 }
 </style>
