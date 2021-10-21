@@ -120,8 +120,36 @@
         </div>
         <button class="btn btn-primary col-3" type="submit" v-if="!loading">Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}</button>
         <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
-        <button class="btn btn-primary ms-2 col-3" type="button" @click="showExercises()">Übungen anzeigen</button>
+        <button class="btn btn-primary ms-2 col-3" type="button" @click="listExercises()">Übungen anzeigen</button>
       </form>
+    </div>
+  </div>
+  <div class="card card-default mt-4" v-if="list">
+    <div class="card-header">Übungen :</div>
+    <div class="card-body">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Name der Übung</th>
+            <th>Benötigte Geräte</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="exercise in exercises" :key="exercise.id">
+            <td>
+              {{ exercise.name }}
+            </td>
+            <td>
+              {{
+                equipments
+                  .filter(e => exercise.trainingDevices.find(t => t == e.id))
+                  .map(d => d.name)
+                  .join(', ')
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="card card-default mt-4">
@@ -158,6 +186,7 @@ export default defineComponent({
   },
   data() {
     return {
+      list: false,
       selectedExercise: '',
       form: '',
       value: null,
@@ -219,9 +248,12 @@ export default defineComponent({
       this.equipments = this.equipments.filter(e => e.id != id);
       delEquipment(id);
     },
-    async showExercises() {
+    async listExercises() {
       let res = await getExercises();
       console.log(res);
+
+      if (this.list) this.list = false;
+      else this.list = true;
     },
     addExe() {
       if (!this.difficulty) return (this.error = 'no difficulty chosen');
