@@ -118,18 +118,62 @@
               :closeOnSelect="false"
               :searchable="true"
               noResultsText="keine Geräte vorhanden"
+              placeholder="Kein Gerät benötigt"
             />
           </div>
         </div>
-        <div class="row">
-          <div class="col-4"></div>
-          <button style="margin-left: 12px" class="addBtn col-3" type="submit" v-if="!loading">
-            Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}
-          </button>
-          <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
-          <button class="ms-2 col-3 showbtn" type="button" @click="showExercises()">Übungen anzeigen</button>
-        </div>
+
+        <button class="btn btn-primary col-3" type="submit" v-if="!loading">Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}</button>
+        <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
+        <button class="btn btn-primary ms-2 col-3" type="button" @click="listExercises()">Übungen anzeigen</button>
       </form>
+    </div>
+  </div>
+  <div class="card card-default mt-4" v-if="list">
+    <div class="card-header">Übungen :</div>
+    <div class="card-body">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Name der Übung</th>
+            <th>Benötigte Geräte</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-if="enabled">
+            <tr>Aktive Übungen</tr>
+            <tr v-for="exercise in enabled" :key="exercise.id">
+              <td>
+                {{ exercise.name }}
+              </td>
+              <td>
+                {{
+                  equipments
+                    .filter(e => exercise.trainingDevices.find(t => t == e.id))
+                    .map(d => d.name)
+                    .join(', ')
+                }}
+              </td>
+            </tr>
+          </template>
+          <template v-if="disabled">
+            <tr>Inaktive Übungen</tr>
+            <tr v-for="exercise in disabled" :key="exercise.id">
+              <td>
+                {{ exercise.name }}
+              </td>
+              <td>
+                {{
+                  equipments
+                    .filter(e => exercise.trainingDevices.find(t => t == e.id))
+                    .map(d => d.name)
+                    .join(', ')
+                }}
+              </td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
     </div>
   </div>
   <div class="card card-default mt-4">
@@ -143,18 +187,59 @@
         <div class="col-4"></div>
         <button style="margin-left: 12px !important; margin-top: 10px" class="addBtn ms-2 col-3" type="submit">hinzufügen</button>
       </form>
-      <ul class="list-group" v-for="e in equipments" :key="e.id">
-        <li class="list-group-item">
-          {{ e.name }}
-          <div @click="deleteEquipment(e.id)"><i class="fas fa-trash-alt" style="float: right"></i></div>
-        </li>
-      </ul>
+      <div class="m-4 alert alert-danger text-center" v-if="equipmentError">{{ equipmentError }}</div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td class="w-75">Aktive Geräte</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="e in equipments.filter(e => e.disabled == false)" :key="e.id">
+            <td>{{ e.name }}</td>
+            <td>
+              <div @click="disableEquipment(e.id, true)"><i class="fas fa-ban" style="float: right"></i></div>
+            </td>
+            <td>
+              <div @click="deleteEquipment(e.id)"><i class="fas fa-trash-alt" style="float: right"></i></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td class="w-75">Inaktive Geräte</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="e in equipments.filter(e => e.disabled == true)" :key="e.id">
+            <td>{{ e.name }}</td>
+            <td>
+              <div @click="disableEquipment(e.id, false)"><i class="fas fa-check-circle" style="float: right"></i></div>
+            </td>
+            <td>
+              <div @click="deleteEquipment(e.id)"><i class="fas fa-trash-alt" style="float: right"></i></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { addExercise, MUSCLE_OPTIONS, getExercises, addEquipment, getEquipment, delEquipment, updateExercise } from '@/API';
+import {
+  addExercise,
+  MUSCLE_OPTIONS,
+  getExercises,
+  addEquipment,
+  getEquipment,
+  delEquipment,
+  updateExercise,
+  updateEquipment,
+  delExercise,
+} from '@/API';
 import type { Equipment, Exercise } from '@/types';
 import Multiselect from '@vueform/multiselect';
 
@@ -167,10 +252,12 @@ export default defineComponent({
   },
   data() {
     return {
+      list: false,
       selectedExercise: '',
       form: '',
       value: null,
       error: '',
+      equipmentError: '',
       loading: false,
       name: '',
       description: '',
@@ -225,12 +312,37 @@ export default defineComponent({
       this.equipments = await getEquipment();
     },
     deleteEquipment(id: string) {
-      this.equipments = this.equipments.filter(e => e.id != id);
-      delEquipment(id);
+      let usage = this.exercises.filter(e => e.trainingDevices.find(t => t == id)).length;
+      let display =
+        usage == 1
+          ? 'Übung benutzt dieses Gerät, sicher das du es entfernen möchtest ?'
+          : 'Übungen benutzen dieses Gerät, sicher das du sie entfernen möchtest ?';
+      if (!usage) {
+        this.equipments = this.equipments.filter(e => e.id != id);
+        delEquipment(id);
+      }
+      if (usage && window.confirm(`${usage} ${display}`)) {
+        this.exercises.filter(e => e.trainingDevices.find(t => t == id)).forEach(e => delExercise(e.id));
+        this.equipments = this.equipments.filter(e => e.id != id);
+        delEquipment(id);
+        this.exercises = this.exercises.filter(e => e.trainingDevices.find(t => t !== id));
+      }
     },
-    async showExercises() {
+    async listExercises() {
       let res = await getExercises();
       console.log(res);
+
+      if (this.list) this.list = false;
+      else this.list = true;
+    },
+    async disableEquipment(id: string, disable: boolean) {
+      let changed = this.equipments.find(e => e.id == id);
+      if (!changed) {
+        this.equipmentError = 'das Gerät existiert nicht mehr';
+        return;
+      }
+      changed.disabled = disable;
+      this.equipments = await updateEquipment(changed);
     },
     addExe() {
       if (!this.difficulty) return (this.error = 'no difficulty chosen');
@@ -310,6 +422,16 @@ export default defineComponent({
         return `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
       }
       return null;
+    },
+    enabled(): Exercise[] {
+      return this.exercises.filter(e =>
+        e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled)
+      );
+    },
+    disabled(): Exercise[] {
+      return this.exercises.filter(e =>
+        e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && this.equipments.find(e => e.id == t)?.disabled)
+      );
     },
   },
 });

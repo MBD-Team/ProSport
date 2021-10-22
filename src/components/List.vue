@@ -16,8 +16,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { collapsed, toggleList, listWidth, selectedMuscle } from '@/components/state';
-import { Exercise } from '@/types';
-import { getExercises } from '@/API';
+import { Equipment, Exercise } from '@/types';
+import { getEquipment, getExercises } from '@/API';
 
 export default defineComponent({
   props: {
@@ -34,11 +34,13 @@ export default defineComponent({
     return {
       exercises: [] as Exercise[],
       selectedExercise: null,
+      equipments: [] as Equipment[],
     };
   },
   watch: { $route: 'loadExercises' },
   async mounted() {
     await this.loadExercises();
+    this.equipments = await getEquipment();
   },
   methods: {
     async loadExercises() {
@@ -54,7 +56,9 @@ export default defineComponent({
   },
   computed: {
     filterex(): Exercise[] {
-      return this.exercises.filter(e => e.primaryMuscles.includes(this.selectedMuscle));
+      return this.exercises
+        .filter(e => e.primaryMuscles.includes(this.selectedMuscle))
+        .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled));
     },
   },
 });
