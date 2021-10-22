@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="unselectable">
     <svg
       width="300"
       height="90vh"
@@ -478,10 +478,7 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 img {
-  // display: flex;
-  //   margin-top: 4rem;
   margin-left: auto;
   margin-right: auto;
-  //   width: 50%;
 }
 </style>

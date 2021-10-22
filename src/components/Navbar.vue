@@ -1,5 +1,5 @@
 <template>
-  <nav class="d-flex">
+  <nav class="d-flex unselectable">
     <div class="col-4"></div>
     <a class="col-4 overflow-hidden" href="#" style="padding: 5px">
       <img src="@/assets/PS_Logo_doublebizeps.svg" width="220" height="50" class="" alt="PS_Logo" @dblclick="$router.push('/admin')" />
@@ -63,9 +63,9 @@ a {
   text-align: center;
 }
 button {
-  background: linear-gradient(180deg, var(--navbarColor1) 0%, var(--navbarColor2) 85%, var(--navbarColor3) 100%);
-  border: 1px solid rgb(32, 32, 32);
-  border-radius: 6px;
+  background: linear-gradient(180deg, var(--adminButtons1) 0%, var(--adminButtons2) 85%, var(--adminButtons3) 100%);
+  border: 1px hidden rgba(32, 32, 32, 0);
+  border-radius: 5px;
   margin-right: 0.8vw;
 }
 button:active {
@@ -73,7 +73,7 @@ button:active {
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1) inset;
   -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1) inset;
   -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1) inset;
-  border: 1px solid rgb(32, 32, 32);
+  border: 1px hidden rgba(32, 32, 32, 0);
   border-radius: 6px;
   margin-right: 0.8vw;
   transform: scale(0.9);
