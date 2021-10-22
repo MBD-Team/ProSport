@@ -136,19 +136,38 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="exercise in exercises" :key="exercise.id">
-            <td>
-              {{ exercise.name }}
-            </td>
-            <td>
-              {{
-                equipments
-                  .filter(e => exercise.trainingDevices.find(t => t == e.id))
-                  .map(d => d.name)
-                  .join(', ')
-              }}
-            </td>
-          </tr>
+          <template v-if="enabled">
+            <tr>Aktive Übungen</tr>
+            <tr v-for="exercise in enabled" :key="exercise.id">
+              <td>
+                {{ exercise.name }}
+              </td>
+              <td>
+                {{
+                  equipments
+                    .filter(e => exercise.trainingDevices.find(t => t == e.id))
+                    .map(d => d.name)
+                    .join(', ')
+                }}
+              </td>
+            </tr>
+          </template>
+          <template v-if="disabled">
+            <tr>Inaktive Übungen</tr>
+            <tr v-for="exercise in disabled" :key="exercise.id">
+              <td>
+                {{ exercise.name }}
+              </td>
+              <td>
+                {{
+                  equipments
+                    .filter(e => exercise.trainingDevices.find(t => t == e.id))
+                    .map(d => d.name)
+                    .join(', ')
+                }}
+              </td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </div>
@@ -205,7 +224,17 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { addExercise, MUSCLE_OPTIONS, getExercises, addEquipment, getEquipment, delEquipment, updateExercise, updateEquipment } from '@/API';
+import {
+  addExercise,
+  MUSCLE_OPTIONS,
+  getExercises,
+  addEquipment,
+  getEquipment,
+  delEquipment,
+  updateExercise,
+  updateEquipment,
+  delExercise,
+} from '@/API';
 import type { Equipment, Exercise } from '@/types';
 import Multiselect from '@vueform/multiselect';
 
@@ -288,8 +317,10 @@ export default defineComponent({
         delEquipment(id);
       }
       if (usage && window.confirm(`${usage} ${display}`)) {
+        this.exercises.filter(e => e.trainingDevices.find(t => t == id)).forEach(e => delExercise(e.id));
         this.equipments = this.equipments.filter(e => e.id != id);
         delEquipment(id);
+        this.exercises = this.exercises.filter(e => e.trainingDevices.find(t => t !== id));
       }
     },
     async listExercises() {
@@ -386,6 +417,16 @@ export default defineComponent({
         return `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
       }
       return null;
+    },
+    enabled(): Exercise[] {
+      return this.exercises.filter(e =>
+        e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled)
+      );
+    },
+    disabled(): Exercise[] {
+      return this.exercises.filter(e =>
+        e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && this.equipments.find(e => e.id == t)?.disabled)
+      );
     },
   },
 });
