@@ -6,9 +6,9 @@
       <span v-if="!collapsed">
         <b style="font-size: 35px">{{ exercise.name }}</b>
       </span>
-      <b v-if="exercise.difficulty == 'easy'" style="color: #2da64f">Leicht</b>
-      <b v-else-if="exercise.difficulty == 'medium'" style="color: #cfc22d">Mittel</b>
-      <b v-else style="color: #ed4e4e">Schwer</b>
+      <text v-if="exercise.difficulty == 'easy'" style="color: #2da64f">Leicht</text>
+      <text v-else-if="exercise.difficulty == 'medium'" style="color: #cfc22d">Mittel</text>
+      <text v-else style="color: #ed4e4e">Schwer</text>
     </div>
   </div>
 </template>
@@ -102,6 +102,7 @@ export default defineComponent({
   -moz-box-shadow: 0px 1px 22px 16px rgba(0, 0, 0, 0.1) inset;
 }
 b {
-  margin-left: 5px;
+  margin: 5px;
+  text-shadow: 1px 1px 0px black;
 }
 </style>

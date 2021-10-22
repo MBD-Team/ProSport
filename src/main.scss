@@ -1,5 +1,5 @@
 // Body
-$body-bg: #f8fafc;
+$body-bg: #ffffff;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
@@ -42,7 +42,7 @@ $dark: #212529;
   --backColor: rgb(251, 255, 194);
   --neckColor: rgb(255, 216, 172);
 
-  --selectedLegColor: rgb(17, 0, 255);
+  --selectedLegColor: rgb(0, 0, 255);
   --selectedBellyColor: rgb(255, 0, 255);
   --selectedChestColor: rgb(81, 255, 0);
   --selectedShoulderColor: rgb(0, 255, 255);
@@ -85,36 +85,52 @@ $dark: #212529;
   transform: scale(0.9);
 }
 .shoulder {
+  fill-opacity: 0.5 !important;
   fill: var(--selectedShoulderColor) !important;
-  background-color: var(--selectedShoulderColor) !important;
+  background-color: rgb(255, 255, 255) !important;
+  color: var(--selectedShoulderColor) !important;
 }
 .neck {
+  fill-opacity: 0.5 !important;
   fill: var(--selectedNeckColor) !important;
-  background-color: var(--selectedNeckColor) !important;
+  background-color: rgb(255, 255, 255) !important;
+  color: var(--selectedNeckColor) !important;
 }
 .chest {
+  fill-opacity: 0.5 !important;
   fill: var(--selectedChestColor) !important;
-  background-color: var(--selectedChestColor) !important;
+  background-color: rgb(255, 255, 255) !important;
+  color: var(--selectedChestColor) !important;
 }
 .back {
+  fill-opacity: 0.5 !important;
   fill: var(--selectedBackColor) !important;
-  background-color: var(--selectedBackColor) !important;
+  background-color: rgb(255, 255, 255) !important;
+  color: var(--selectedBackColor) !important;
 }
 .belly {
+  fill-opacity: 0.5 !important;
   fill: var(--selectedBellyColor) !important;
-  background-color: var(--selectedBellyColor) !important;
+  background-color: rgb(255, 255, 255) !important;
+  color: var(--selectedBellyColor) !important;
 }
 .butt {
+  fill-opacity: 0.5 !important;
   fill: var(--selectedButtColor) !important;
-  background-color: var(--selectedButtColor) !important;
+  background-color: rgb(255, 255, 255) !important;
+  color: var(--selectedButtColor) !important;
 }
 .leg {
+  fill-opacity: 0.5 !important;
   fill: var(--selectedLegColor) !important;
-  background-color: var(--selectedLegColor) !important;
+  background-color: rgb(255, 255, 255) !important;
+  color: var(--selectedLegColor) !important;
 }
 .arm {
+  fill-opacity: 0.5 !important;
   fill: var(--selectedArmColor) !important;
-  background-color: var(--selectedArmColor) !important;
+  background-color: rgb(255, 255, 255) !important;
+  color: var(--selectedArmColor) !important;
 }
 .unselectable {
   -webkit-touch-callout: none;
