@@ -102,7 +102,7 @@ export default defineComponent({
   },
   methods: {
     exitExerciseDetail() {
-      this.$router.go(-1);
+      this.$router.push('/');
     },
   },
 });
