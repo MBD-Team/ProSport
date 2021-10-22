@@ -1,54 +1,70 @@
 <template>
   <div class="card card-default">
-    <div class="card-header header">
-      <button class="addBtn" @click="add()">Übung hinzufügen</button>
-      <button class="editBtn" style="margin-left: 1em" @click="edit()">Übung editieren</button>
+    <div class="card-header header p-4">
+      <button class="addBtn col-3" @click="add()">Übung hinzufügen</button>
+      <button class="editBtn ms-2 col-3" @click="edit()">Übung editieren</button>
     </div>
-    <div style="margin: 1em">
-      <Multiselect
-        @select="change()"
-        placeholder="Wähle eine Übung"
-        v-if="form == 'edit'"
-        v-model="selectedExercise"
-        :options="exercises.map(({ id, name }) => ({ value: id, label: name }))"
-        :closeOnSelect="true"
-        :searchable="true"
-        noResultsText="Keine Übungen vorhanden"
-      />
+    <div class="card-body p-4" v-if="form == 'edit'">
+      <div class="input-group">
+        <span class="input-group-text col-3" style="background-color: #f2f2f2" v-if="form == 'edit'">Wähle eine Übung:</span>
+        <div class="col-9">
+          <Multiselect
+            @select="change()"
+            v-if="form == 'edit'"
+            v-model="selectedExercise"
+            :options="exercises.map(({ id, name }) => ({ value: id, label: name }))"
+            :closeOnSelect="true"
+            :searchable="true"
+            noResultsText="Keine Übungen vorhanden"
+          />
+        </div>
+      </div>
     </div>
+
     <div class="card-body p-4" v-if="form == 'add' || (form == 'edit' && selectedExercise)">
       <form @submit.prevent="addExe()" autocomplete="off">
         <div class="m-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
-        <div class="mb-4 row">
-          <label class="col-4" for="name">Name der Übung:</label>
-          <div class="col-8">
-            <input class="form-control" type="text" placeholder="" v-model="name" autocomplete="off" required />
-          </div>
+
+        <div class="mb-4 input-group">
+          <span class="input-group-text col-3" style="background-color: #f2f2f2">Name der Übung:</span>
+          <input
+            type="text"
+            style="background-color: #ffffff"
+            aria-label="First name"
+            class="form-control col-9"
+            v-model="name"
+            autocomplete="off"
+            required
+          />
         </div>
-        <div class="mb-4 row">
-          <label class="col-4" for="description">Beschreibung:</label>
-          <div class="col-8">
-            <textarea class="form-control" placeholder="" v-model="description" autocomplete="off" required />
-          </div>
+
+        <div class="mb-4 input-group">
+          <span class="input-group-text col-3" style="background-color: #f2f2f2">Beschreibung:</span>
+          <textarea class="form-control col-9" style="background-color: #ffffff" v-model="description" autocomplete="off" required />
         </div>
-        <div class="mb-4 row">
-          <label class="col-4" for="hints">Hinweise:</label>
-          <div class="col-8">
-            <textarea class="form-control" placeholder="" v-model="hints" autocomplete="off" required />
-          </div>
+        <div class="mb-4 input-group">
+          <span class="input-group-text col-3" style="background-color: #f2f2f2">Hinweise:</span>
+          <textarea class="form-control col-9" style="background-color: #ffffff" v-model="hints" autocomplete="off" required />
         </div>
-        <div class="mb-4 row">
-          <label class="col-4" for="videoURL">YoutubeURL:</label>
-          <div class="col-8">
-            <input minlength="3" class="form-control" type="text" placeholder="" v-model="videoURL" autocomplete="off" required />
-          </div>
+
+        <div class="mb-4 input-group">
+          <span class="input-group-text col-3" style="background-color: #f2f2f2">YoutubeURL:</span>
+          <input
+            minlength="3"
+            class="form-control col-9"
+            style="background-color: #ffffff"
+            type="text"
+            v-model="videoURL"
+            autocomplete="off"
+            required
+          />
         </div>
         <div class="mb-4" v-if="img"><img :src="img" style="width: 180px; height: 100px" /></div>
         <div class="alert alert-danger" v-if="videoURL && !img">Das ist kein Youtube link</div>
         <div class="mb-4 row">
-          <label class="col-4" for="difficulty">Schwierigkeitsgrad:</label>
-          <div class="col-8">
-            <div class="btn-group">
+          <div class="mb-4 input-group">
+            <span class="input-group-text col-3" style="background-color: #f2f2f2">Schwierigkeitsgrad:</span>
+            <div class="btn-group col-9">
               <input
                 type="radio"
                 class="btn-check"
@@ -82,9 +98,9 @@
             </div>
           </div>
         </div>
-        <div class="mb-4 row">
-          <label class="col-4" for="muscles">Hauptmuskel:</label>
-          <div class="col-8">
+        <div class="mb-4 input-group">
+          <span class="input-group-text col-3" style="background-color: #f2f2f2">Hauptmuskel:</span>
+          <div class="col-9">
             <Multiselect
               v-model="primaryMuscles"
               :options="muscleOptions.filter(m => !this.secondaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
@@ -95,9 +111,10 @@
             />
           </div>
         </div>
-        <div class="mb-4 row">
-          <label class="col-4" for="muscles">Hilfsmuskel:</label>
-          <div class="col-8">
+
+        <div class="mb-4 input-group">
+          <span class="input-group-text col-3" style="background-color: #f2f2f2">Hilfsmuskel:</span>
+          <div class="col-9">
             <Multiselect
               v-model="secondaryMuscles"
               :options="muscleOptions.filter(m => !this.primaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
@@ -108,9 +125,10 @@
             />
           </div>
         </div>
-        <div class="mb-4 row">
-          <label class="col-4" for="muscles">Trainigsgerät:</label>
-          <div class="col-8">
+
+        <div class="mb-4 input-group">
+          <span class="input-group-text col-3" style="background-color: #f2f2f2">Trainigsgerät:</span>
+          <div class="col-9">
             <Multiselect
               v-model="trainingDevices"
               :options="equipments.map(({ id, name }) => ({ value: id, label: name }))"
@@ -123,14 +141,14 @@
           </div>
         </div>
 
-        <button class="btn btn-primary col-3" type="submit" v-if="!loading">Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}</button>
+        <button class="addBtn col-3" type="submit" v-if="!loading">Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}</button>
         <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
-        <button class="btn btn-primary ms-2 col-3" type="button" @click="listExercises()">Übungen anzeigen</button>
+        <button class="editBtn ms-2 col-3" type="button" @click="listExercises()">Übungen anzeigen</button>
       </form>
     </div>
   </div>
   <div class="card card-default mt-4" v-if="list">
-    <div class="card-header">Übungen :</div>
+    <div class="card-header header">Übungen :</div>
     <div class="card-body">
       <table class="table table-striped table-bordered">
         <thead>
@@ -178,14 +196,14 @@
   </div>
   <div class="card card-default mt-4">
     <div class="card-header header">Trainingsgerät hinzufügen</div>
-    <div class="card-body" style="padding: 12px 12px 0px 12px">
-      <form class="mb-4 row" @submit.prevent="addEquipment()">
-        <label class="col-4" for="device">Name des Gerätes:</label>
-        <div class="col-8">
-          <input class="form-control" type="text" placeholder="" v-model="equipment" autocomplete="off" required />
+    <div class="card-body p-4">
+      <form class="mb-4" @submit.prevent="addEquipment()">
+        <div class="mb-4 input-group">
+          <span class="input-group-text col-3" style="background-color: #f2f2f2">Name des Gerätes:</span>
+          <input class="form-control" style="background-color: #ffffff" type="text" v-model="equipment" autocomplete="off" required />
         </div>
-        <div class="col-4"></div>
-        <button style="margin-left: 12px !important; margin-top: 10px" class="addBtn ms-2 col-3" type="submit">hinzufügen</button>
+
+        <button class="addBtn col-3" type="submit">Gerät hinzufügen</button>
       </form>
       <div class="m-4 alert alert-danger text-center" v-if="equipmentError">{{ equipmentError }}</div>
       <table class="table table-striped">
