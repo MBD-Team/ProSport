@@ -1,8 +1,16 @@
 <template>
   <nav class="d-flex">
     <div class="col-4"></div>
-    <a class="col-4 overflow-hidden" href="#" style="padding: 5px">
-      <img src="@/assets/PS_Logo_doublebizeps.svg" width="220" height="50" class="" alt="PS_Logo" @dblclick="$router.push('/admin')" />
+    <a class="col-4 overflow-hidden" style="padding: 5px">
+      <img
+        src="@/assets/PS_Logo_doublebizeps.svg"
+        width="220"
+        height="50"
+        class=""
+        alt="PS_Logo"
+        @click="route()"
+        @dblclick="$router.push('/admin')"
+      />
     </a>
 
     <div class="col-4 d-flex align-items-center justify-content-end" v-if="user != null">
@@ -33,6 +41,7 @@
 import { defineComponent } from 'vue';
 import { currentUser } from '@/router';
 import { logout } from '@/API';
+import { closeList } from './state';
 export default defineComponent({
   setup() {
     return { user: currentUser };
@@ -44,6 +53,10 @@ export default defineComponent({
     },
     logOut() {
       logout();
+      this.$router.push('/');
+    },
+    route() {
+      closeList();
       this.$router.push('/');
     },
   },
