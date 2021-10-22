@@ -34,4 +34,8 @@ export default defineComponent({
   methods: {},
 });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+</style>

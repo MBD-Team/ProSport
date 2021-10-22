@@ -14,6 +14,9 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
 h2 {
   text-align: center;
 }

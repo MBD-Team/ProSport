@@ -108,6 +108,9 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
 button {
   background: white;
 }

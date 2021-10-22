@@ -97,9 +97,9 @@ export default defineComponent({
   background-color: rgba(255, 255, 255, 0.952);
   margin: 3px;
   border-radius: 10px;
-  box-shadow: 0px 1px 22px 16px rgba(0, 0, 0, 0.1) inset;
-  -webkit-box-shadow: 0px 1px 22px 16px rgba(0, 0, 0, 0.12) inset;
-  -moz-box-shadow: 0px 1px 22px 16px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0px 1px 35px 10px rgba(0, 0, 0, 0.1) inset;
+  -webkit-box-shadow: 0px 1px 35px 10px rgba(0, 0, 0, 0.12) inset;
+  -moz-box-shadow: 0px 1px 35px 10px rgba(0, 0, 0, 0.1) inset;
 }
 b {
   margin: 5px;
