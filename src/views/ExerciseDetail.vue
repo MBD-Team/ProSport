@@ -43,7 +43,7 @@
         </p>
         <h3>Benötigte Geräte</h3>
         <p style="font-size: 20px">
-          {{ this.equipment.join(', ') }}
+          {{ equipment.join(', ') }}
         </p>
       </div>
     </div>

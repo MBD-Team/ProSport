@@ -253,10 +253,10 @@ import {
   getExercises,
   addEquipment,
   getEquipment,
-  delEquipment,
+  deleteEquipment,
   updateExercise,
   updateEquipment,
-  delExercise,
+  deleteExercise,
 } from '@/API';
 import type { Equipment, Exercise } from '@/types';
 import Multiselect from '@vueform/multiselect';
@@ -337,12 +337,12 @@ export default defineComponent({
           : 'Übungen benutzen dieses Gerät, sicher das du sie entfernen möchtest ?';
       if (!usage) {
         this.equipments = this.equipments.filter(e => e.id != id);
-        delEquipment(id);
+        deleteEquipment(id);
       }
       if (usage && window.confirm(`${usage} ${display}`)) {
-        this.exercises.filter(e => e.trainingDevices.find(t => t == id)).forEach(e => delExercise(e.id));
+        this.exercises.filter(e => e.trainingDevices.find(t => t == id)).forEach(e => deleteExercise(e.id));
         this.equipments = this.equipments.filter(e => e.id != id);
-        delEquipment(id);
+        deleteEquipment(id);
         this.exercises = this.exercises.filter(e => e.trainingDevices.find(t => t !== id));
       }
     },
