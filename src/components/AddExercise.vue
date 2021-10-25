@@ -23,7 +23,7 @@
 
     <div class="card-body p-4" v-if="form == 'add' || (form == 'edit' && selectedExercise)">
       <form @submit.prevent="addExe()" autocomplete="off">
-        <div class="m-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
+        <div class="my-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
 
         <div class="mb-4 input-group">
           <span class="input-group-text col-3" style="background-color: #f2f2f2">Name der Übung:</span>
@@ -61,43 +61,43 @@
         </div>
         <div class="mb-4" v-if="img"><img :src="img" style="width: 180px; height: 100px" /></div>
         <div class="alert alert-danger" v-if="videoURL && !img">Das ist kein Youtube link</div>
-        <div class="mb-4 row">
-          <div class="mb-4 input-group">
-            <span class="input-group-text col-3" style="background-color: #f2f2f2">Schwierigkeitsgrad:</span>
-            <div class="btn-group col-9">
-              <input
-                type="radio"
-                class="btn-check"
-                name="difficulty"
-                id="easy"
-                autocomplete="off"
-                @change="difficulty = 'easy'"
-                :checked="difficulty == 'easy'"
-              />
-              <label class="btn btn-outline-success" for="easy">Leicht</label>
-              <input
-                type="radio"
-                class="btn-check"
-                name="difficulty"
-                id="medium"
-                autocomplete="off"
-                @change="difficulty = 'medium'"
-                :checked="difficulty == 'medium'"
-              />
-              <label class="btn btn-outline-warning" for="medium">Mittel</label>
-              <input
-                type="radio"
-                class="btn-check"
-                name="difficulty"
-                id="hard"
-                autocomplete="off"
-                @change="difficulty = 'hard'"
-                :checked="difficulty == 'hard'"
-              />
-              <label class="btn btn-outline-danger" for="hard">Schwer</label>
-            </div>
+
+        <div class="mb-4 input-group">
+          <span class="input-group-text col-3" style="background-color: #f2f2f2">Schwierigkeitsgrad:</span>
+          <div class="btn-group col-9">
+            <input
+              type="radio"
+              class="btn-check"
+              name="difficulty"
+              id="easy"
+              autocomplete="off"
+              @change="difficulty = 'easy'"
+              :checked="difficulty == 'easy'"
+            />
+            <label class="btn btn-outline-success" for="easy">Leicht</label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="difficulty"
+              id="medium"
+              autocomplete="off"
+              @change="difficulty = 'medium'"
+              :checked="difficulty == 'medium'"
+            />
+            <label class="btn btn-outline-warning" for="medium">Mittel</label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="difficulty"
+              id="hard"
+              autocomplete="off"
+              @change="difficulty = 'hard'"
+              :checked="difficulty == 'hard'"
+            />
+            <label class="btn btn-outline-danger" for="hard">Schwer</label>
           </div>
         </div>
+
         <div class="mb-4 input-group">
           <span class="input-group-text col-3" style="background-color: #f2f2f2">Hauptmuskel:</span>
           <div class="col-9">
@@ -415,6 +415,7 @@ export default defineComponent({
       this.getExercises();
     },
     reset() {
+      this.error = '';
       this.name = '';
       this.description = '';
       this.hints = '';
@@ -447,9 +448,9 @@ export default defineComponent({
       );
     },
     disabled(): Exercise[] {
-      return this.exercises.filter(e =>
-        e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && this.equipments.find(e => e.id == t)?.disabled)
-      );
+      return this.exercises
+        .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && this.equipments.find(e => e.id == t)?.disabled))
+        .filter(e => e.trainingDevices.length > 0);
     },
   },
 });
