@@ -1,11 +1,13 @@
 <template>
   <div class="card card-default">
     <div class="card-header">
-      <button class="btn btn-primary" @click="add()">Übung hinzufügen</button>
-      <button class="btn btn-primary" @click="edit()">Übung editieren</button>
+      <button class="btn btn-primary me-2" @click="add()">Übung hinzufügen</button>
+      <button class="btn btn-secondary" @click="edit()">Übung editieren</button>
       <Multiselect
+        class="mt-2"
         @select="change()"
         v-if="form == 'edit'"
+        placeholder="Übung zum Editieren auswählen"
         v-model="selectedExercise"
         :options="exercises.map(({ id, name }) => ({ value: id, label: name }))"
         :closeOnSelect="true"
@@ -84,7 +86,7 @@
           <div class="col-8">
             <Multiselect
               v-model="primaryMuscles"
-              :options="muscleOptions.filter(m => !this.secondaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
+              :options="muscleOptions.filter(m => !secondaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
               mode="tags"
               :closeOnSelect="false"
               :searchable="true"
@@ -97,7 +99,7 @@
           <div class="col-8">
             <Multiselect
               v-model="secondaryMuscles"
-              :options="muscleOptions.filter(m => !this.primaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
+              :options="muscleOptions.filter(m => !primaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
               mode="tags"
               :closeOnSelect="false"
               :searchable="true"
@@ -118,7 +120,7 @@
             />
           </div>
         </div>
-        <button class="btn btn-primary col-3" type="submit" v-if="!loading">Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}</button>
+        <button class="btn btn-success col-3" type="submit" v-if="!loading"><i class="fas fa-plus"></i> Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}</button>
         <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
         <button class="btn btn-primary ms-2 col-3" type="button" @click="showExercises()">Übungen anzeigen</button>
       </form>
@@ -132,12 +134,12 @@
         <div class="col-8">
           <input class="form-control" type="text" placeholder="" v-model="equipment" autocomplete="off" required />
         </div>
-        <button class="btn btn-primary ms-2 col-3" type="submit">hinzufügen</button>
+        <button class="btn btn-success ms-2 col-3" type="submit"><i class="fas fa-plus"></i> hinzufügen</button>
       </form>
       <ul class="list-group" v-for="e in equipments" :key="e.id">
         <li class="list-group-item">
           {{ e.name }}
-          <div @click="deleteEquipment(e.id)"><i class="fas fa-trash-alt" style="float: right"></i></div>
+          <div @click="deleteEquipment(e.id)" class="btn btn-danger float-end"><i class="fas fa-trash-alt" style="float: right"></i></div>
         </li>
       </ul>
     </div>
