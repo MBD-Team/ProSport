@@ -289,6 +289,7 @@ export default defineComponent({
       trainingDevices: [] as string[],
       muscleOptions: MUSCLE_OPTIONS,
       primaryMuscles: [] as string[],
+      grossMuscles: [] as string[],
       secondaryMuscles: [] as string[],
       equipment: '',
       equipments: [] as Equipment[],
@@ -388,6 +389,15 @@ export default defineComponent({
         return; //not supported
       }
 
+      for (let muscle of this.primaryMuscles) {
+        let muscleObj = MUSCLE_OPTIONS.find(m => m.value == muscle);
+        if (muscleObj) {
+          this.grossMuscles.push(muscleObj.grossMuscle);
+        } else {
+          return (this.error = 'error 404: gross muscle not found');
+        }
+      }
+
       let newExercise = {
         name: this.name,
         description: this.description,
@@ -397,6 +407,7 @@ export default defineComponent({
         difficulty: this.difficulty,
         trainingDevices: this.trainingDevices,
         primaryMuscles: this.primaryMuscles,
+        grossMuscles: this.grossMuscles,
         secondaryMuscles: this.secondaryMuscles,
       };
       try {

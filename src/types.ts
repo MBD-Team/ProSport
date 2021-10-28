@@ -8,6 +8,7 @@ export interface CreatedExercise {
   videoURL: string;
   img: string;
   difficulty: 'easy' | 'medium' | 'hard';
+  grossMuscles: string[];
   primaryMuscles: string[];
   secondaryMuscles: string[];
   trainingDevices: string[];
@@ -15,6 +16,7 @@ export interface CreatedExercise {
 export interface Muscle {
   name: string;
   value: string;
+  grossMuscle: string;
 }
 export interface Equipment {
   id: string;
@@ -22,12 +24,14 @@ export interface Equipment {
   disabled: boolean;
 }
 export const MUSCLE_OPTIONS = [
-  { name: 'Nacken', value: 'neck' },
-  { name: 'Schulter', value: 'shoulder' },
-  { name: 'Arme', value: 'arm' },
-  { name: 'Brust', value: 'chest' },
-  { name: 'Bauch', value: 'belly' },
-  { name: 'Rücken', value: 'back' },
-  { name: 'Po', value: 'butt' },
-  { name: 'Beine', value: 'leg' },
+  { name: 'Nacken', value: 'neck', grossMuscle: 'neck' },
+  { name: 'Schulter', value: 'shoulder', grossMuscle: 'shoulder' },
+  { name: 'Bizeps', value: 'biceps', grossMuscle: 'arm' },
+  { name: 'Trizeps', value: 'triceps', grossMuscle: 'arm' },
+  { name: 'Brust', value: 'chest', grossMuscle: 'chest' },
+  { name: 'Bauch', value: 'belly', grossMuscle: 'belly' },
+  { name: 'Rücken', value: 'back', grossMuscle: 'back' },
+  { name: 'Po', value: 'butt', grossMuscle: 'butt' },
+  { name: 'Oberschenkel', value: 'thigh', grossMuscle: 'leg' },
+  { name: 'Unterschenkel', value: 'lower leg', grossMuscle: 'leg' },
 ] as Muscle[];

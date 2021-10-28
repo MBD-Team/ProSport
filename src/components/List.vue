@@ -2,7 +2,7 @@
   <div :class="direction" id="list" :style="{ width: listWidth }">
     <div class="input-group">
       <label
-        class="input-group-text"
+        class="input-group-text w-25"
         :class="selectedMuscle"
         style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.5rem"
         for="inputGroupSelect01"
@@ -13,6 +13,89 @@
         <option value="1">Leicht</option>
         <option value="2">Mittel</option>
         <option value="3">Schwer</option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label
+        class="input-group-text w-25"
+        :class="selectedMuscle"
+        style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.5rem"
+        for="inputGroupSelect01"
+      >
+        Hauptmuskel
+      </label>
+      <select
+        v-if="MUSCLE_OPTIONS.filter(m => m.grossMuscle == selectedMuscle).length > 1"
+        class="form-select"
+        id="inputGroupSelect01"
+        style="margin: 3px 3px 3px 0px; font-size: 1.5rem"
+        v-model="selectedPrimaryMuscle"
+      >
+        <option value="">Alle</option>
+
+        <option v-for="muscle in MUSCLE_OPTIONS.filter(m => m.grossMuscle == selectedMuscle)" :key="muscle.value" :value="muscle.value">
+          {{ muscle.name }}
+        </option>
+      </select>
+      <select v-else class="form-select" id="inputGroupSelect01" style="margin: 3px 3px 3px 0px; font-size: 1.5rem">
+        <option v-for="muscle in MUSCLE_OPTIONS.filter(m => m.grossMuscle == selectedMuscle)" :key="muscle.value" :value="muscle.value">
+          {{ muscle.name }}
+        </option>
+      </select>
+    </div>
+    <div class="input-group">
+      <label
+        class="input-group-text w-25"
+        :class="selectedMuscle"
+        style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.5rem"
+        for="inputGroupSelect01"
+      >
+        Hilfsmuskel
+      </label>
+      <select
+        v-if="
+          MUSCLE_OPTIONS.filter(m =>
+            this.exercises
+              .filter(e => e.grossMuscles.includes(this.selectedMuscle))
+              .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled))
+              .filter(e => e.primaryMuscles.find(m => m == selectedPrimaryMuscle || !selectedPrimaryMuscle))
+              .some(e => e.secondaryMuscles.includes(m.value))
+          ).length > 1
+        "
+        class="form-select"
+        id="inputGroupSelect01"
+        style="margin: 3px 3px 3px 0px; font-size: 1.5rem"
+        v-model="selectedSecondaryMuscle"
+      >
+        <option value="">Alle</option>
+        <option
+          v-for="muscle in MUSCLE_OPTIONS.filter(m =>
+            this.exercises
+              .filter(e => e.grossMuscles.includes(this.selectedMuscle))
+              .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled))
+              .filter(e => e.primaryMuscles.find(m => m == selectedPrimaryMuscle || !selectedPrimaryMuscle))
+              .some(e => e.secondaryMuscles.includes(m.value))
+          )"
+          :key="muscle.value"
+          :value="muscle.value"
+        >
+          {{ muscle.name }}
+        </option>
+      </select>
+      <select v-else class="form-select" id="inputGroupSelect01" style="margin: 3px 3px 3px 0px; font-size: 1.5rem">
+        <option
+          v-for="muscle in MUSCLE_OPTIONS.filter(m =>
+            this.exercises
+              .filter(e => e.grossMuscles.includes(this.selectedMuscle))
+              .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled))
+              .filter(e => e.primaryMuscles.find(m => m == selectedPrimaryMuscle || !selectedPrimaryMuscle))
+              .some(e => e.secondaryMuscles.includes(m.value))
+          )"
+          :key="muscle.value"
+          :value="muscle.value"
+        >
+          {{ muscle.name }}
+        </option>
       </select>
     </div>
     <div :class="selectedMuscle" id="task" v-for="exercise in filterex" v-bind:key="exercise.id" @click="openExerciseDetail(exercise)">
@@ -29,8 +112,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { collapsed, toggleList, listWidth, selectedMuscle } from '@/components/state';
-import { Equipment, Exercise } from '@/types';
+import { collapsed, toggleList, listWidth, selectedMuscle, selectedSecondaryMuscle, selectedPrimaryMuscle } from '@/components/state';
+import { Equipment, Exercise, MUSCLE_OPTIONS } from '@/types';
 import { readEquipment, readExercises } from '@/API';
 
 export default defineComponent({
@@ -41,7 +124,7 @@ export default defineComponent({
     },
   },
   setup() {
-    return { collapsed, toggleList, listWidth, selectedMuscle };
+    return { collapsed, toggleList, listWidth, selectedMuscle, selectedPrimaryMuscle, selectedSecondaryMuscle, MUSCLE_OPTIONS };
   },
   components: {},
   data() {
@@ -72,8 +155,10 @@ export default defineComponent({
   computed: {
     filterex(): Exercise[] {
       let selectedDifficulty = this.selectedDifficulty;
+      let selectedSecondaryMuscle = this.selectedSecondaryMuscle;
+      let selectedPrimaryMuscle = this.selectedPrimaryMuscle;
       return this.exercises
-        .filter(e => e.primaryMuscles.includes(this.selectedMuscle))
+        .filter(e => e.grossMuscles.includes(this.selectedMuscle))
         .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled))
         .sort(function (a, b) {
           if (a.name < b.name) return -1;
@@ -89,7 +174,9 @@ export default defineComponent({
           if (selectedDifficulty == 2) map.medium = 0;
           if (selectedDifficulty == 3) map.hard = 0;
           return map[a.difficulty] - map[b.difficulty];
-        });
+        })
+        .filter(e => e.secondaryMuscles.find(m => m == selectedSecondaryMuscle || !selectedSecondaryMuscle))
+        .filter(e => e.primaryMuscles.find(m => m == selectedPrimaryMuscle || !selectedPrimaryMuscle));
     },
   },
 });

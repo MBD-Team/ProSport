@@ -29,6 +29,7 @@ export async function createExercise(exercise: CreatedExercise): Promise<string>
     videoURL: exercise.videoURL,
     img: exercise.img,
     difficulty: exercise.difficulty,
+    grossMuscles: exercise.grossMuscles,
     primaryMuscles: exercise.primaryMuscles,
     secondaryMuscles: exercise.secondaryMuscles,
     trainingDevices: exercise.trainingDevices,
@@ -90,6 +91,7 @@ export async function updateExercise(exercise: CreatedExercise, id: string): Pro
       difficulty: exercise.difficulty,
       primaryMuscles: exercise.primaryMuscles,
       secondaryMuscles: exercise.secondaryMuscles,
+      grossMuscles: exercise.grossMuscles,
       trainingDevices: exercise.trainingDevices,
     });
   } catch {

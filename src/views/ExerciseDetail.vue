@@ -95,6 +95,7 @@ export default defineComponent({
         videoURL: '',
         img: '',
         difficulty: 'easy',
+        grossMuscles: [],
         primaryMuscles: [],
         secondaryMuscles: [],
         trainingDevices: [],
