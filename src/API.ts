@@ -4,17 +4,6 @@ import { collection, addDoc, getDocs, updateDoc } from 'firebase/firestore';
 import { currentUser } from './router';
 import { CreatedExercise, Exercise, Equipment, Muscle } from './types';
 
-export const MUSCLE_OPTIONS = [
-  { name: 'Nacken', value: 'neck' },
-  { name: 'Schulter', value: 'shoulder' },
-  { name: 'Arme', value: 'arm' },
-  { name: 'Brust', value: 'chest' },
-  { name: 'Bauch', value: 'belly' },
-  { name: 'Rücken', value: 'back' },
-  { name: 'Po', value: 'butt' },
-  { name: 'Beine', value: 'leg' },
-] as Muscle[];
-
 export async function login(email: string, password: string): Promise<boolean> {
   try {
     const auth = getAuth();
@@ -31,7 +20,7 @@ export async function logout(): Promise<void> {
   await signOut(auth);
   currentUser.value = null;
 }
-export async function addExercise(exercise: CreatedExercise): Promise<string> {
+export async function createExercise(exercise: CreatedExercise): Promise<string> {
   const db = getFirestore();
   const docRef = await addDoc(collection(db, 'exercises'), {
     name: exercise.name,
@@ -46,7 +35,7 @@ export async function addExercise(exercise: CreatedExercise): Promise<string> {
   });
   return docRef.id;
 }
-export async function getExercises(): Promise<Exercise[]> {
+export async function readExercises(): Promise<Exercise[]> {
   const db = getFirestore();
   const docs: QueryDocumentSnapshot<DocumentData>[] = [];
   const querySnapshot = await getDocs(collection(db, 'exercises'));
@@ -55,12 +44,12 @@ export async function getExercises(): Promise<Exercise[]> {
   });
   return docs.map(exercises => ({ ...exercises.data(), id: exercises.id })) as Exercise[];
 }
-export async function delExercise(id: string): Promise<Exercise[]> {
+export async function deleteExercise(id: string): Promise<Exercise[]> {
   const db = getFirestore();
   await deleteDoc(doc(db, 'exercise', id));
-  return getExercises();
+  return readExercises();
 }
-export async function addEquipment(equipment: string): Promise<Equipment> {
+export async function createEquipment(equipment: string): Promise<Equipment> {
   const db = getFirestore();
   const docRef = await addDoc(collection(db, 'equipment'), {
     name: equipment,
@@ -68,7 +57,7 @@ export async function addEquipment(equipment: string): Promise<Equipment> {
   });
   return { id: docRef.id, name: equipment, disabled: false } as Equipment;
 }
-export async function getEquipment(): Promise<Equipment[]> {
+export async function readEquipment(): Promise<Equipment[]> {
   const db = getFirestore();
   const docs: QueryDocumentSnapshot<DocumentData>[] = [];
   const querySnapshot = await getDocs(collection(db, 'equipment'));
@@ -77,17 +66,17 @@ export async function getEquipment(): Promise<Equipment[]> {
   });
   return docs.map(equipment => ({ ...equipment.data(), id: equipment.id })) as Equipment[];
 }
-export async function delEquipment(id: string): Promise<Equipment[] | null> {
+export async function deleteEquipment(id: string): Promise<Equipment[] | null> {
   const db = getFirestore();
   await deleteDoc(doc(db, 'equipment', id));
-  return getEquipment();
+  return readEquipment();
 }
 export async function updateEquipment(equipment: Equipment): Promise<Equipment[]> {
   const db = getFirestore();
   await updateDoc(doc(db, 'equipment', equipment.id), {
     disabled: equipment.disabled,
   });
-  return getEquipment();
+  return readEquipment();
 }
 export async function updateExercise(exercise: CreatedExercise, id: string): Promise<boolean> {
   const db = getFirestore();

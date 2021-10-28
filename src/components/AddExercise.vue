@@ -153,8 +153,9 @@
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th>Name der Übung</th>
-            <th>Benötigte Geräte</th>
+            <th class="w-25">Name der Übung</th>
+            <th class="w-25">Schwierigkeitsgrad</th>
+            <th class="w-50">Benötigte Geräte</th>
           </tr>
         </thead>
         <tbody>
@@ -164,6 +165,7 @@
               <td>
                 {{ exercise.name }}
               </td>
+              <td>{{ exercise.difficulty }}</td>
               <td>
                 {{
                   equipments
@@ -180,6 +182,7 @@
               <td>
                 {{ exercise.name }}
               </td>
+              <td>{{ exercise.difficulty }}</td>
               <td>
                 {{
                   equipments
@@ -248,17 +251,17 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import {
-  addExercise,
-  MUSCLE_OPTIONS,
-  getExercises,
-  addEquipment,
-  getEquipment,
-  delEquipment,
+  createExercise,
+  readExercises,
+  createEquipment,
+  readEquipment,
+  deleteEquipment,
   updateExercise,
   updateEquipment,
-  delExercise,
+  deleteExercise,
 } from '@/API';
-import type { Equipment, Exercise } from '@/types';
+
+import { Equipment, Exercise, MUSCLE_OPTIONS } from '@/types';
 import Multiselect from '@vueform/multiselect';
 
 export default defineComponent({
@@ -281,7 +284,7 @@ export default defineComponent({
       description: '',
       hints: '',
       videoURL: '',
-      difficulty: '',
+      difficulty: '' as 'easy' | 'medium' | 'hard',
       muscles: [],
       trainingDevices: [] as string[],
       muscleOptions: MUSCLE_OPTIONS,
@@ -315,19 +318,19 @@ export default defineComponent({
     },
     async getExercises() {
       try {
-        this.exercises = await getExercises();
+        this.exercises = await readExercises();
       } catch (e) {
         console.log("couldn't load Exercises", e);
       }
     },
     async addEquipment() {
       if (!this.equipment) return;
-      let newEquipment = await addEquipment(this.equipment);
+      let newEquipment = await createEquipment(this.equipment);
       this.equipments.push(newEquipment);
       this.equipment = '';
     },
     async loadEquipment() {
-      this.equipments = await getEquipment();
+      this.equipments = await readEquipment();
     },
     deleteEquipment(id: string) {
       let usage = this.exercises.filter(e => e.trainingDevices.find(t => t == id)).length;
@@ -337,17 +340,17 @@ export default defineComponent({
           : 'Übungen benutzen dieses Gerät, sicher das du sie entfernen möchtest ?';
       if (!usage) {
         this.equipments = this.equipments.filter(e => e.id != id);
-        delEquipment(id);
+        deleteEquipment(id);
       }
       if (usage && window.confirm(`${usage} ${display}`)) {
-        this.exercises.filter(e => e.trainingDevices.find(t => t == id)).forEach(e => delExercise(e.id));
+        this.exercises.filter(e => e.trainingDevices.find(t => t == id)).forEach(e => deleteExercise(e.id));
         this.equipments = this.equipments.filter(e => e.id != id);
-        delEquipment(id);
+        deleteEquipment(id);
         this.exercises = this.exercises.filter(e => e.trainingDevices.find(t => t !== id));
       }
     },
     async listExercises() {
-      let res = await getExercises();
+      let res = await readExercises();
       console.log(res);
 
       if (this.list) this.list = false;
@@ -402,7 +405,7 @@ export default defineComponent({
           updateExercise(newExercise, this.selectedExercise);
         }
         if (this.form == 'add') {
-          addExercise(newExercise);
+          createExercise(newExercise);
         }
       } catch (e) {
         console.error('Error adding document: ', e);
@@ -420,7 +423,7 @@ export default defineComponent({
       this.description = '';
       this.hints = '';
       this.videoURL = '';
-      this.difficulty = '';
+      this.difficulty = 'medium';
       this.primaryMuscles = [];
       this.secondaryMuscles = [];
       this.trainingDevices = [];
@@ -443,14 +446,47 @@ export default defineComponent({
       return null;
     },
     enabled(): Exercise[] {
-      return this.exercises.filter(e =>
-        e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled)
-      );
+      return this.exercises
+        .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled))
+        .sort(function (a, b) {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        })
+        .sort(function (a, b) {
+          let map = {
+            easy: 1,
+            medium: 2,
+            hard: 3,
+          };
+          return map[a.difficulty] - map[b.difficulty];
+        });
     },
     disabled(): Exercise[] {
       return this.exercises
         .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && this.equipments.find(e => e.id == t)?.disabled))
-        .filter(e => e.trainingDevices.length > 0);
+        .filter(e => e.trainingDevices.length > 0)
+        .sort(function (a, b) {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        })
+        .sort(function (a, b) {
+          let map = {
+            easy: 1,
+            medium: 2,
+            hard: 3,
+          };
+          return map[a.difficulty] - map[b.difficulty];
+        });
     },
   },
 });

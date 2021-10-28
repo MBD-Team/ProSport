@@ -57,8 +57,9 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Equipment, Exercise } from '@/types';
-import { getEquipment, MUSCLE_OPTIONS } from '@/API';
+
+import { Equipment, Exercise, MUSCLE_OPTIONS } from '@/types';
+import { readEquipment } from '@/API';
 export default defineComponent({
   created() {
     if (this.$route.params.data) {
@@ -71,7 +72,7 @@ export default defineComponent({
     }
   },
   async mounted() {
-    this.equipmentsLoads = await getEquipment();
+    this.equipmentsLoads = await readEquipment();
     this.equipmentsLoads.forEach(e => {
       this.exercise.trainingDevices.forEach(t => {
         if (e.id == t) {
@@ -93,7 +94,7 @@ export default defineComponent({
         hints: '',
         videoURL: '',
         img: '',
-        difficulty: '',
+        difficulty: 'easy',
         primaryMuscles: [],
         secondaryMuscles: [],
         trainingDevices: [],

@@ -1,8 +1,22 @@
 <template>
   <div :class="direction" id="list" :style="{ width: listWidth }">
+    <div class="input-group">
+      <label
+        class="input-group-text"
+        :class="selectedMuscle"
+        style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.5rem"
+        for="inputGroupSelect01"
+      >
+        Schwierigkeitsgrad
+      </label>
+      <select class="form-select" id="inputGroupSelect01" style="margin: 3px 3px 3px 0px; font-size: 1.5rem" v-model.number="selectedDifficulty">
+        <option value="1">Leicht</option>
+        <option value="2">Mittel</option>
+        <option value="3">Schwer</option>
+      </select>
+    </div>
     <div :class="selectedMuscle" id="task" v-for="exercise in filterex" v-bind:key="exercise.id" @click="openExerciseDetail(exercise)">
       <img :src="exercise.img" style="margin: 10px; width: 180px; height: 100px" />
-
       <span v-if="!collapsed">
         <b style="font-size: 35px">{{ exercise.name }}</b>
       </span>
@@ -17,7 +31,7 @@
 import { defineComponent } from 'vue';
 import { collapsed, toggleList, listWidth, selectedMuscle } from '@/components/state';
 import { Equipment, Exercise } from '@/types';
-import { getEquipment, getExercises } from '@/API';
+import { readEquipment, readExercises } from '@/API';
 
 export default defineComponent({
   props: {
@@ -35,17 +49,18 @@ export default defineComponent({
       exercises: [] as Exercise[],
       selectedExercise: null,
       equipments: [] as Equipment[],
+      selectedDifficulty: 1,
     };
   },
   watch: { $route: 'loadExercises' },
   async mounted() {
     await this.loadExercises();
-    this.equipments = await getEquipment();
+    this.equipments = await readEquipment();
   },
   methods: {
     async loadExercises() {
       try {
-        this.exercises = await getExercises();
+        this.exercises = await readExercises();
       } catch (e) {
         console.log("couldn't load Exercises", e);
       }
@@ -56,9 +71,25 @@ export default defineComponent({
   },
   computed: {
     filterex(): Exercise[] {
+      let selectedDifficulty = this.selectedDifficulty;
       return this.exercises
         .filter(e => e.primaryMuscles.includes(this.selectedMuscle))
-        .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled));
+        .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled))
+        .sort(function (a, b) {
+          if (a.name < b.name) return -1;
+          if (a.name > b.name) return 1;
+          return 0;
+        })
+        .sort(function (a, b) {
+          let map = {
+            easy: 1,
+            medium: 2,
+            hard: 3,
+          };
+          if (selectedDifficulty == 2) map.medium = 0;
+          if (selectedDifficulty == 3) map.hard = 0;
+          return map[a.difficulty] - map[b.difficulty];
+        });
     },
   },
 });
