@@ -103,7 +103,7 @@
           <div class="col-9">
             <Multiselect
               v-model="primaryMuscles"
-              :options="muscleOptions.filter(m => !this.secondaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
+              :options="muscleOptions.filter(m => !secondaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
               mode="tags"
               :closeOnSelect="false"
               :searchable="true"
@@ -117,7 +117,7 @@
           <div class="col-9">
             <Multiselect
               v-model="secondaryMuscles"
-              :options="muscleOptions.filter(m => !this.primaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
+              :options="muscleOptions.filter(m => !primaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
               mode="tags"
               :closeOnSelect="false"
               :searchable="true"
@@ -140,8 +140,7 @@
             />
           </div>
         </div>
-
-        <button class="addBtn col-3" type="submit" v-if="!loading">Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}</button>
+        <button class="btn btn-success col-3" type="submit" v-if="!loading"><i class="fas fa-plus"></i> Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}</button>
         <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
         <button class="editBtn ms-2 col-3" type="button" @click="listExercises()">Übungen anzeigen</button>
       </form>
@@ -202,7 +201,6 @@
           <span class="input-group-text col-3" style="background-color: #f2f2f2">Name des Gerätes:</span>
           <input class="form-control" style="background-color: #ffffff" type="text" v-model="equipment" autocomplete="off" required />
         </div>
-
         <button class="addBtn col-3" type="submit">Gerät hinzufügen</button>
       </form>
       <div class="m-4 alert alert-danger text-center" v-if="equipmentError">{{ equipmentError }}</div>
