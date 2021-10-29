@@ -1,25 +1,27 @@
 <template>
   <div :class="direction" id="list" :style="{ width: listWidth }">
+    <!-- difficulty -->
     <div class="input-group">
       <label
         class="input-group-text w-25"
         :class="selectedMuscle"
-        style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.5rem"
+        style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.2em"
         for="inputGroupSelect01"
       >
         Schwierigkeitsgrad
       </label>
-      <select class="form-select" id="inputGroupSelect01" style="margin: 3px 3px 3px 0px; font-size: 1.5rem" v-model.number="selectedDifficulty">
+      <select class="form-select" id="inputGroupSelect01" style="margin: 3px 3px 3px 0px; font-size: 1.2em" v-model.number="selectedDifficulty">
         <option value="1">Leicht</option>
         <option value="2">Mittel</option>
         <option value="3">Schwer</option>
       </select>
     </div>
+    <!-- primary muscle -->
     <div class="input-group">
       <label
         class="input-group-text w-25"
         :class="selectedMuscle"
-        style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.5rem"
+        style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.2em"
         for="inputGroupSelect01"
       >
         Hauptmuskel
@@ -28,8 +30,9 @@
         v-if="MUSCLE_OPTIONS.filter(m => m.grossMuscle == selectedMuscle).length > 1"
         class="form-select"
         id="inputGroupSelect01"
-        style="margin: 3px 3px 3px 0px; font-size: 1.5rem"
+        style="margin: 3px 3px 3px 0px; font-size: 1.2em"
         v-model="selectedPrimaryMuscle"
+        @change="selectedSecondaryMuscle = ''"
       >
         <option value="">Alle</option>
 
@@ -37,17 +40,18 @@
           {{ muscle.name }}
         </option>
       </select>
-      <select v-else class="form-select" id="inputGroupSelect01" style="margin: 3px 3px 3px 0px; font-size: 1.5rem">
+      <select v-else class="form-select" id="inputGroupSelect01" style="margin: 3px 3px 3px 0px; font-size: 1.2em">
         <option v-for="muscle in MUSCLE_OPTIONS.filter(m => m.grossMuscle == selectedMuscle)" :key="muscle.value" :value="muscle.value">
           {{ muscle.name }}
         </option>
       </select>
     </div>
+    <!-- secondary muscle -->
     <div class="input-group">
       <label
         class="input-group-text w-25"
         :class="selectedMuscle"
-        style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.5rem"
+        style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.2em"
         for="inputGroupSelect01"
       >
         Hilfsmuskel
@@ -64,7 +68,7 @@
         "
         class="form-select"
         id="inputGroupSelect01"
-        style="margin: 3px 3px 3px 0px; font-size: 1.5rem"
+        style="margin: 3px 3px 3px 0px; font-size: 1.2em"
         v-model="selectedSecondaryMuscle"
       >
         <option value="">Alle</option>
@@ -82,7 +86,7 @@
           {{ muscle.name }}
         </option>
       </select>
-      <select v-else class="form-select" id="inputGroupSelect01" style="margin: 3px 3px 3px 0px; font-size: 1.5rem">
+      <select v-else class="form-select" id="inputGroupSelect01" style="margin: 3px 3px 3px 0px; font-size: 1.2em">
         <option
           v-for="muscle in MUSCLE_OPTIONS.filter(m =>
             this.exercises
@@ -98,6 +102,7 @@
         </option>
       </select>
     </div>
+    <!-- exercise -->
     <div :class="selectedMuscle" id="task" v-for="exercise in filterex" v-bind:key="exercise.id" @click="openExerciseDetail(exercise)">
       <img :src="exercise.img" style="margin: 10px; width: 180px; height: 100px" />
       <span v-if="!collapsed">
