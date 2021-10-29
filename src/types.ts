@@ -19,4 +19,5 @@ export interface Muscle {
 export interface Equipment {
   id: string;
   name: string;
+  disabled: boolean;
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="container d-flex align-items-stretch justify-content-center flex-column" style="height: calc(100vh - 200px)">
     <div class="card card-default w-75" style="margin-left: 12.5%">
-      <div class="card-header">Login</div>
+      <div class="card-header header">Login</div>
       <div class="card-body">
         <form @submit.prevent="login()" autocomplete="off">
           <div class="m-4 alert alert-danger text-center" v-if="error">Username or password is not correct</div>
@@ -17,7 +17,7 @@
               <input minlength="3" class="form-control" id="password" type="password" placeholder="password" v-model="password" autocomplete="off" />
             </div>
           </div>
-          <button class="btn btn-primary m-4 col-1" type="submit" v-if="!loggingIn">Login</button>
+          <button class="loginBtn m-4 col-1" type="submit" v-if="!loggingIn">Login</button>
           <span v-else class="m-4 spinner-border spinner-border-sm text-primary"></span>
         </form>
       </div>
