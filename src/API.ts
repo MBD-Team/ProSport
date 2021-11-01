@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { deleteDoc, DocumentData, getFirestore, QueryDocumentSnapshot, doc } from 'firebase/firestore';
 import { collection, addDoc, getDocs, updateDoc } from 'firebase/firestore';
 import { currentUser } from './router';
@@ -20,6 +20,18 @@ export async function logout(): Promise<void> {
   await signOut(auth);
   currentUser.value = null;
 }
+export async function register(email: string, password: string): Promise<boolean> {
+  const auth = getAuth();
+  await createUserWithEmailAndPassword(auth, email, password);
+  return true;
+}
+// export function verify() {
+//   const auth = getAuth();
+//   sendEmailVerification(auth.currentUser).then(() => {
+//     // Email verification sent!
+//     // ...
+//   });
+// }
 export async function createExercise(exercise: CreatedExercise): Promise<string> {
   const db = getFirestore();
   const docRef = await addDoc(collection(db, 'exercises'), {
