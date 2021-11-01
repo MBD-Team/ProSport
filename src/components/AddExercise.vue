@@ -2,7 +2,7 @@
   <div class="card card-default">
     <div class="card-header header p-4">
       <button class="addBtn col-3" @click="add()">Übung hinzufügen</button>
-      <button class="editBtn ms-2 col-3" @click="edit()">Übung editieren</button>
+      <button class="editBtn ms-2 col-3" @click="edit()">Übung Bearbeiten</button>
     </div>
     <div class="card-body p-4" v-if="form == 'edit'">
       <div class="input-group">
@@ -10,6 +10,7 @@
         <div class="col-9">
           <Multiselect
             @select="change()"
+            class="rounded-0 rounded-end"
             v-if="form == 'edit'"
             v-model="selectedExercise"
             :options="exercises.map(({ id, name }) => ({ value: id, label: name }))"
@@ -64,7 +65,7 @@
 
         <div class="mb-4 input-group">
           <span class="input-group-text col-3" style="background-color: #f2f2f2">Schwierigkeitsgrad:</span>
-          <div class="btn-group col-9">
+          <div class="btn-group col-9 m-0">
             <input
               type="radio"
               class="btn-check"
@@ -74,7 +75,7 @@
               @change="difficulty = 'easy'"
               :checked="difficulty == 'easy'"
             />
-            <label class="btn btn-outline-success" for="easy">Leicht</label>
+            <label class="btn btn-outline-success rounded-0" for="easy">Leicht</label>
             <input
               type="radio"
               class="btn-check"
@@ -102,6 +103,7 @@
           <span class="input-group-text col-3" style="background-color: #f2f2f2">Hauptmuskel:</span>
           <div class="col-9">
             <Multiselect
+              class="rounded-0 rounded-end"
               v-model="primaryMuscles"
               :options="muscleOptions.filter(m => !this.secondaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
               mode="tags"
@@ -116,6 +118,7 @@
           <span class="input-group-text col-3" style="background-color: #f2f2f2">Hilfsmuskel:</span>
           <div class="col-9">
             <Multiselect
+              class="rounded-0 rounded-end"
               v-model="secondaryMuscles"
               :options="muscleOptions.filter(m => !this.primaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
               mode="tags"
@@ -130,6 +133,7 @@
           <span class="input-group-text col-3" style="background-color: #f2f2f2">Trainigsgerät:</span>
           <div class="col-9">
             <Multiselect
+              class="rounded-0 rounded-end"
               v-model="trainingDevices"
               :options="equipments.map(({ id, name }) => ({ value: id, label: name }))"
               mode="tags"
@@ -367,8 +371,8 @@ export default defineComponent({
       this.equipments = await updateEquipment(changed);
     },
     addExe() {
-      if (!this.difficulty) return (this.error = 'no difficulty chosen');
-      if (!this.primaryMuscles) return (this.error = 'no primary muscle chosen');
+      if (!this.difficulty) return (this.error = 'kein Schwierigkeitsgrad ausgewählt');
+      if (!this.primaryMuscles) return (this.error = 'kein Hauptmuskel ausgewählt');
 
       let videoURL;
       let img;
@@ -385,7 +389,7 @@ export default defineComponent({
         videoURL = `https://www.youtube.com/embed/${videoID}`;
         img = `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
       } else {
-        this.error = 'wrong URL type';
+        this.error = 'falsche URL, bitte youtube link verwenden';
         return; //not supported
       }
 
@@ -394,7 +398,7 @@ export default defineComponent({
         if (muscleObj) {
           this.grossMuscles.push(muscleObj.grossMuscle);
         } else {
-          return (this.error = 'error 404: gross muscle not found');
+          return (this.error = 'Muskel wurde nicht gefunden');
         }
       }
 
@@ -507,5 +511,18 @@ export default defineComponent({
 button {
   border: 1px hidden rgba(32, 32, 32, 0);
   border-radius: 5px;
+}
+
+.btn-check:focus + .btn-outline-danger,
+.btn-outline-danger:focus + .btn-outline-danger {
+  box-shadow: none !important;
+}
+.btn-check:focus + .btn-outline-warning,
+.btn-outline-warning:focus + .btn-outline-warning {
+  box-shadow: none !important;
+}
+.btn-check:focus + .btn-outline-success,
+.btn-outline-success:focus + .btn-outline-success {
+  box-shadow: none !important;
 }
 </style>
