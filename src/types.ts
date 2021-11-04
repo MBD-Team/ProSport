@@ -23,6 +23,16 @@ export interface Equipment {
   name: string;
   disabled: boolean;
 }
+export interface TrainingsPlan {
+  monday: Exercise[];
+  tuesday: Exercise[];
+  wednesday: Exercise[];
+  thursday: Exercise[];
+  friday: Exercise[];
+  saturday: Exercise[];
+  sunday: Exercise[];
+}
+
 export const MUSCLE_OPTIONS = [
   { name: 'Nacken', value: 'neck', grossMuscle: 'neck' },
   { name: 'Schulter', value: 'shoulder', grossMuscle: 'shoulder' },
