@@ -1,10 +1,12 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import Home from '../views/Home.vue';
 import Admin from '../views/Admin.vue';
+import Register from '../views/Register.vue';
 import ExerciseDetail from '../views/ExerciseDetail.vue';
 import Settings from '../views/Settings.vue';
 import { getAuth, User } from '@firebase/auth';
 import { onAuthStateChanged } from 'firebase/auth';
+import TrainingPlan from '../views/TrainingPlan.vue';
 import { ref } from 'vue';
 
 const routes: Array<RouteRecordRaw> = [
@@ -19,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
     component: Admin,
   },
   {
+    path: '/Register',
+    name: 'Register',
+    component: Register,
+  },
+  {
     path: '/ExerciseDetail',
     name: 'ExerciseDetail',
     props: true,
@@ -29,6 +36,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Settings',
     component: Settings,
     meta: { requiresAuth: true },
+  },
+  {
+    path: '/TrainingPlan',
+    name: 'TrainingPlan',
+    component: TrainingPlan,
   },
 ];
 
