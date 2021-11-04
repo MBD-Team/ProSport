@@ -2,12 +2,7 @@
   <div :class="direction" id="list" :style="{ width: listWidth }">
     <!-- difficulty -->
     <div class="input-group">
-      <label
-        class="input-group-text w-25"
-        :class="selectedMuscle"
-        style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.3rem"
-        for="inputGroupSelect01"
-      >
+      <label class="input-group-text w-25" style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.3rem" for="inputGroupSelect01">
         Schwierigkeit
       </label>
       <select
@@ -23,12 +18,7 @@
     </div>
     <!-- primary muscle -->
     <div class="input-group">
-      <label
-        class="input-group-text w-25"
-        :class="selectedMuscle"
-        style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.3rem"
-        for="inputGroupSelect01"
-      >
+      <label class="input-group-text w-25" style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.3rem" for="inputGroupSelect01">
         Hauptmuskel
       </label>
       <select
@@ -58,12 +48,7 @@
     </div>
     <!-- secondary muscle -->
     <div class="input-group">
-      <label
-        class="input-group-text w-25"
-        :class="selectedMuscle"
-        style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.3rem"
-        for="inputGroupSelect01"
-      >
+      <label class="input-group-text w-25" style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.3rem" for="inputGroupSelect01">
         Hilfsmuskel
       </label>
       <select
