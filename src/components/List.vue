@@ -84,9 +84,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { collapsed, toggleList, listWidth, selectedMuscle, selectedSecondaryMuscle, selectedPrimaryMuscle } from '@/components/state';
+import { collapsed, listWidth, selectedMuscle, selectedSecondaryMuscle, selectedPrimaryMuscle } from '@/components/state';
 import { Equipment, Exercise, Muscle, MUSCLE_OPTIONS } from '@/types';
-import { readEquipment, readExercises } from '@/API';
+import * as API from '@/API';
 
 export default defineComponent({
   props: {
@@ -96,7 +96,7 @@ export default defineComponent({
     },
   },
   setup() {
-    return { collapsed, toggleList, listWidth, selectedMuscle, selectedPrimaryMuscle, selectedSecondaryMuscle, MUSCLE_OPTIONS };
+    return { collapsed, listWidth, selectedMuscle, selectedPrimaryMuscle, selectedSecondaryMuscle, MUSCLE_OPTIONS };
   },
   components: {},
   data() {
@@ -110,12 +110,12 @@ export default defineComponent({
   watch: { $route: 'loadExercises' },
   async mounted() {
     await this.loadExercises();
-    this.equipments = await readEquipment();
+    this.equipments = await API.getEquipment();
   },
   methods: {
     async loadExercises() {
       try {
-        this.exercises = await readExercises();
+        this.exercises = await API.getExercises();
       } catch (e) {
         console.log("couldn't load Exercises", e);
       }

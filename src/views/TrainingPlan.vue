@@ -16,7 +16,7 @@
         <tr>
           <td>
             <ul>
-              <li v-for="exercise in trainingPlan.monday" :key="exerice" class="mb-4" @click="showExeriseDetail(exerice)">
+              <li v-for="exercise in trainingPlan.monday" :key="exercise" class="mb-4" @click="showExeriseDetail(exercise)">
                 <div>{{ exercise.name }}</div>
                 <div>Hauptmuskel:</div>
                 <div>

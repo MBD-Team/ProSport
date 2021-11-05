@@ -43,16 +43,19 @@ export default defineComponent({
     async login() {
       this.error = false;
       this.loggingIn = true;
-      if (await API.login(this.email, this.password)) {
+      try {
+        await API.login(this.email, this.password);
         console.log('admin logged in with:' + this.email);
         this.email = '';
         this.password = '';
         this.$router.push('/');
-      } else {
+      } catch (e) {
+        console.error({ "couldn't login": e });
+      } finally {
         this.password = '';
         this.error = true;
+        this.loggingIn = false;
       }
-      this.loggingIn = false;
     },
     register() {
       this.$router.push('/register');

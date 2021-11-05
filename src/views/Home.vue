@@ -20,7 +20,6 @@ import { orientation, closeList } from '@/components/state';
 export default defineComponent({
   computed: {
     direction() {
-      console.log(orientation);
       return orientation;
     },
   },
