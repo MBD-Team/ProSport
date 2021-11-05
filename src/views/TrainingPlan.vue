@@ -51,111 +51,13 @@ export default defineComponent({
     return {
       MUSCLE_OPTIONS: MUSCLE_OPTIONS,
       trainingPlan: {
-        monday: [
-          {
-            id: '',
-            name: 'test',
-            description: '',
-            hints: '',
-            videoURL: '',
-            img: '',
-            difficulty: 'easy',
-            grossMuscles: ['arm'],
-            primaryMuscles: [],
-            secondaryMuscles: [],
-            trainingDevices: [],
-          },
-        ],
-        tuesday: [
-          {
-            id: '',
-            name: 'test',
-            description: '',
-            hints: '',
-            videoURL: '',
-            img: '',
-            difficulty: 'easy',
-            grossMuscles: ['leg'],
-            primaryMuscles: [],
-            secondaryMuscles: [],
-            trainingDevices: [],
-          },
-        ],
-        wednesday: [
-          {
-            id: '',
-            name: 'test',
-            description: '',
-            hints: '',
-            videoURL: '',
-            img: '',
-            difficulty: 'easy',
-            grossMuscles: ['butt'],
-            primaryMuscles: [],
-            secondaryMuscles: [],
-            trainingDevices: [],
-          },
-        ],
-        thursday: [
-          {
-            id: '',
-            name: 'test',
-            description: '',
-            hints: '',
-            videoURL: '',
-            img: '',
-            difficulty: 'easy',
-            grossMuscles: ['chest'],
-            primaryMuscles: [],
-            secondaryMuscles: [],
-            trainingDevices: [],
-          },
-        ],
-        friday: [
-          {
-            id: '',
-            name: 'test',
-            description: '',
-            hints: '',
-            videoURL: '',
-            img: '',
-            difficulty: 'easy',
-            grossMuscles: ['neck'],
-            primaryMuscles: [],
-            secondaryMuscles: [],
-            trainingDevices: [],
-          },
-        ],
-        saturday: [
-          {
-            id: '',
-            name: 'test',
-            description: '',
-            hints: '',
-            videoURL: '',
-            img: '',
-            difficulty: 'easy',
-            grossMuscles: ['shoulder'],
-            primaryMuscles: [],
-            secondaryMuscles: [],
-            trainingDevices: [],
-          },
-        ],
-        sunday: [
-          {
-            id: '',
-            name: 'test',
-            description: '',
-            hints: '',
-            videoURL: '',
-            img: '',
-            difficulty: 'easy',
-            grossMuscles: ['back'],
-            primaryMuscles: [],
-            secondaryMuscles: [],
-            trainingDevices: [],
-          },
-        ],
+        monday: [] as Exercise[],
+        tuesday: [] as Exercise[],
+        wednesday: [] as Exercise[],
+        thursday: [] as Exercise[],
+        friday: [] as Exercise[],
+        saturday: [] as Exercise[],
+        sunday: [] as Exercise[],
       } as TrainingsPlan,
     };
   },
@@ -175,5 +77,9 @@ li {
   padding: 1px;
   border: 1px solid #999;
   cursor: pointer;
+}
+
+td {
+  border: none !important;
 }
 </style>

@@ -60,6 +60,7 @@ import { defineComponent } from 'vue';
 
 import { Equipment, Exercise, MUSCLE_OPTIONS } from '@/types';
 import { readEquipment } from '@/API';
+import { lastPage } from '@/router';
 export default defineComponent({
   created() {
     if (this.$route.params.data) {
@@ -81,9 +82,9 @@ export default defineComponent({
       });
     });
   },
-
   data() {
     return {
+      lastPage: lastPage,
       equipment: [] as string[],
       equipmentsLoads: [] as Equipment[],
       muscleOptions: MUSCLE_OPTIONS,
@@ -104,7 +105,11 @@ export default defineComponent({
   },
   methods: {
     exitExerciseDetail() {
-      this.$router.push('/');
+      if (lastPage == 'Home') {
+        this.$router.push('/');
+      } else {
+        this.$router.push('/TrainingPlan');
+      }
     },
   },
 });

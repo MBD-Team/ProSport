@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHashHistory, onBeforeRouteUpdate, RouteRecordRaw } from 'vue-router';
 import Home from '../views/Home.vue';
 import Admin from '../views/Admin.vue';
 import Register from '../views/Register.vue';
@@ -65,6 +65,7 @@ const getCurrentUser = () => {
     );
   });
 };
+export let lastPage = 'Home';
 router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   if (!(await getCurrentUser()) && requiresAuth) {
@@ -72,5 +73,11 @@ router.beforeEach(async (to, from, next) => {
   } else {
     next();
   }
+  if (from.name == 'TrainingPlan') {
+    lastPage = 'TrainingPlan';
+  } else {
+    lastPage = 'Home';
+  }
 });
+
 export default router;
