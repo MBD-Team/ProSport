@@ -23,14 +23,29 @@ export interface Equipment {
   name: string;
   disabled: boolean;
 }
+
+export interface TrainingsPlanDataBase {
+  trainingsPlan: {
+    monday: string[];
+    tuesday: string[];
+    wednesday: string[];
+    thursday: string[];
+    friday: string[];
+    saturday: string[];
+    sunday: string[];
+  };
+}
 export interface TrainingsPlan {
-  monday: Exercise[];
-  tuesday: Exercise[];
-  wednesday: Exercise[];
-  thursday: Exercise[];
-  friday: Exercise[];
-  saturday: Exercise[];
-  sunday: Exercise[];
+  monday: string[];
+  tuesday: string[];
+  wednesday: string[];
+  thursday: string[];
+  friday: string[];
+  saturday: string[];
+  sunday: string[];
+}
+export interface User {
+  email: string;
 }
 
 export const MUSCLE_OPTIONS = [

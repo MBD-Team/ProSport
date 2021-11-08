@@ -43,7 +43,7 @@
         </p>
         <h3>Benötigte Geräte</h3>
         <p style="font-size: 20px">
-          {{ this.equipment.join(', ') }}
+          {{ equipment.join(', ') }}
         </p>
       </div>
     </div>
@@ -59,7 +59,8 @@
 import { defineComponent } from 'vue';
 
 import { Equipment, Exercise, MUSCLE_OPTIONS } from '@/types';
-import { readEquipment } from '@/API';
+import { lastPage } from '@/router';
+import * as API from '@/API';
 export default defineComponent({
   created() {
     if (this.$route.params.data) {
@@ -72,7 +73,11 @@ export default defineComponent({
     }
   },
   async mounted() {
-    this.equipmentsLoads = await readEquipment();
+    try {
+      this.equipmentsLoads = await API.getEquipment();
+    } catch (e) {
+      console.error({ "couldn't get Equipments": e });
+    }
     this.equipmentsLoads.forEach(e => {
       this.exercise.trainingDevices.forEach(t => {
         if (e.id == t) {
@@ -81,9 +86,9 @@ export default defineComponent({
       });
     });
   },
-
   data() {
     return {
+      lastPage: lastPage,
       equipment: [] as string[],
       equipmentsLoads: [] as Equipment[],
       muscleOptions: MUSCLE_OPTIONS,
@@ -104,7 +109,11 @@ export default defineComponent({
   },
   methods: {
     exitExerciseDetail() {
-      this.$router.push('/');
+      if (lastPage == 'Home') {
+        this.$router.push('/');
+      } else {
+        this.$router.push('/TrainingPlan');
+      }
     },
   },
 });
