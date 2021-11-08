@@ -144,7 +144,10 @@
             />
           </div>
         </div>
-        <button class="btn btn-success col-3" type="submit" v-if="!loading"><i class="fas fa-plus"></i> Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}</button>
+        <button class="btn btn-success col-3" type="submit" v-if="!loading">
+          <i class="fas fa-plus"></i>
+          Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}
+        </button>
         <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
         <button class="editBtn ms-2 col-3" type="button" @click="listExercises()">Übungen anzeigen</button>
       </form>
@@ -437,6 +440,7 @@ export default defineComponent({
       this.hints = '';
       this.videoURL = '';
       this.difficulty = 'medium';
+      this.grossMuscles = [];
       this.primaryMuscles = [];
       this.secondaryMuscles = [];
       this.trainingDevices = [];

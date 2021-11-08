@@ -1,8 +1,8 @@
 <template>
   <div class="unselectable">
     <svg
-      width="150mm"
-      height="223mm"
+      width="110mm"
+      height="173mm"
       viewBox="0 0 200 270"
       version="1.1"
       id="svg53695"

@@ -60,8 +60,9 @@ $dark: #212529;
   background: linear-gradient(180deg, var(--navbarColor1) 0%, var(--navbarColor2) 88%, var(--navbarColor3) 97%);
   border: hidden;
   border-radius: 5px;
-  width: 70px;
-  height: 33px;
+  width: 10vw;
+  height: 4vh;
+  margin: 2px;
 }
 .loginBtn:active {
   transform: scale(0.9);

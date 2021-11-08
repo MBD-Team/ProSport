@@ -17,9 +17,9 @@
               <input minlength="3" class="form-control" id="password" type="password" placeholder="passwort" v-model="password" autocomplete="off" />
             </div>
           </div>
-          <button class="loginBtn m-4 col-1" type="submit" v-if="!loggingIn">Anmelden</button>
+          <button class="loginBtn" type="submit" v-if="!loggingIn">Anmelden</button>
           <span v-if="loggingIn" class="m-4 spinner-border spinner-border-sm text-primary"></span>
-          <button class="loginBtn m-4 col-1" type="button" @click="register()">Registrieren</button>
+          <button class="loginBtn" type="button" @click="register()">Registrieren</button>
         </form>
       </div>
     </div>

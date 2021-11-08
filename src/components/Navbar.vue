@@ -77,6 +77,7 @@ a {
   text-align: center;
 }
 button {
+  border: hidden;
   background: linear-gradient(180deg, var(--adminButtons1) 0%, var(--adminButtons2) 85%, var(--adminButtons3) 100%);
   border-radius: 5px;
   margin-right: 0.8vw;

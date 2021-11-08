@@ -71,9 +71,11 @@
     </div>
     <!-- exercise -->
     <div :class="selectedMuscle" id="task" v-for="exercise in filterex" v-bind:key="exercise.id" @click="openExerciseDetail(exercise)">
-      <img :src="exercise.img" style="margin: 10px; width: 180px; height: 100px" />
+      <div>
+        <img :src="exercise.img" style="margin: 10px; width: 180px; height: 100px; float: left" />
+      </div>
       <span v-if="!collapsed">
-        <b style="font-size: 35px">{{ exercise.name }}</b>
+        <b style="font-size: 30px">{{ exercise.name }}</b>
       </span>
       <text v-if="exercise.difficulty == 'easy'" style="color: #2da64f">Leicht</text>
       <text v-else-if="exercise.difficulty == 'medium'" style="color: #cfc22d">Mittel</text>
@@ -147,8 +149,8 @@ export default defineComponent({
           if (selectedDifficulty == 3) map.hard = 0;
           return map[a.difficulty] - map[b.difficulty];
         })
-        .filter(e => e.secondaryMuscles.find(m => m == selectedSecondaryMuscle || !selectedSecondaryMuscle))
-        .filter(e => e.primaryMuscles.find(m => m == selectedPrimaryMuscle || !selectedPrimaryMuscle));
+        .filter(e => e.secondaryMuscles.find(m => m == selectedSecondaryMuscle) || !selectedSecondaryMuscle)
+        .filter(e => e.primaryMuscles.find(m => m == selectedPrimaryMuscle) || !selectedPrimaryMuscle);
     },
     filterSecondary(): Muscle[] {
       let selectedPrimaryMuscle = this.selectedPrimaryMuscle;
@@ -209,7 +211,6 @@ export default defineComponent({
   -moz-box-shadow: 0px 1px 35px 10px rgba(0, 0, 0, 0.1) inset;
 }
 b {
-  margin: 5px;
   text-shadow: 1px 1px 0px black;
 }
 </style>

@@ -23,7 +23,7 @@
               <input minlength="3" class="form-control" id="password" type="password" placeholder="passwort" v-model="confirmed" autocomplete="off" />
             </div>
           </div>
-          <button class="loginBtn m-4 col-1" type="submit" v-if="!registering">Registrieren</button>
+          <button class="loginBtn" type="submit" v-if="!registering">Registrieren</button>
           <span v-if="registering" class="m-4 spinner-border spinner-border-sm text-primary"></span>
         </form>
       </div>
