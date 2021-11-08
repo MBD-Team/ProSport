@@ -25,15 +25,7 @@ export interface Equipment {
 }
 
 export interface TrainingsPlanDataBase {
-  trainingsPlan: {
-    monday: string[];
-    tuesday: string[];
-    wednesday: string[];
-    thursday: string[];
-    friday: string[];
-    saturday: string[];
-    sunday: string[];
-  };
+  trainingsPlan: TrainingsPlan;
 }
 export interface TrainingsPlan {
   monday: string[];
