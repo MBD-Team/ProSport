@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, si
 import { deleteDoc, DocumentData, getFirestore, QueryDocumentSnapshot, doc, DocumentReference, UpdateData, setDoc, getDoc } from 'firebase/firestore';
 import { collection, addDoc, getDocs, updateDoc } from 'firebase/firestore';
 import { currentUser } from './router';
-import { CreatedExercise, Exercise, Equipment, TrainingsPlan } from './types';
+import { CreatedExercise, Exercise, Equipment, TrainingsPlan, TrainingsPlanDataBase } from './types';
 
 export async function addAPI<T>(docName: string, data: T): Promise<DocumentReference<T>> {
   const docRef = await addDoc(collection(getFirestore(), docName), data);
@@ -97,7 +97,7 @@ export async function addTrainingsPlan(plan: TrainingsPlan): Promise<void> {
     });
   }
 }
-export async function getTrainingPlans(): Promise<TrainingsPlan | null> {
+export async function getTrainingPlans(): Promise<TrainingsPlanDataBase | null> {
   const id = getAuth().currentUser?.uid;
-  return id ? ((await getDoc(doc(getFirestore(), 'users', id))).data() as TrainingsPlan) : null;
+  return id ? ((await getDoc(doc(getFirestore(), 'users', id))).data() as TrainingsPlanDataBase) : null;
 }

@@ -14,7 +14,7 @@
       </thead>
       <tbody>
         <tr>
-          <td v-for="day of trainingPlan" :key="day">
+          <td v-for="day of trainingsPlanLocal" :key="day">
             <ul>
               <li v-for="exercise of day" :key="exercise" class="mb-4" @click="showExeriseDetail(exercise)">
                 <div>{{ exercise.name }}</div>
@@ -44,13 +44,14 @@
 </template>
 
 <script lang="ts">
-import { Exercise, TrainingsPlan, MUSCLE_OPTIONS } from '@/types';
+import { Exercise, TrainingsPlan, MUSCLE_OPTIONS, TrainingsPlanDataBase } from '@/types';
 import { selectedExercise } from '@/components/state';
 import { defineComponent } from 'vue';
 import * as API from '@/API';
 export default defineComponent({
-  mounted() {
-    this.updateTrainingPlan();
+  async mounted() {
+    await this.loadExercises();
+    await this.updateTrainingPlan();
   },
   setup() {
     return { selectedExercise };
@@ -59,7 +60,19 @@ export default defineComponent({
   data() {
     return {
       MUSCLE_OPTIONS: MUSCLE_OPTIONS,
-      trainingPlan: {
+      exercises: [] as Exercise[],
+
+      trainingsPlanDataBase: {
+        monday: [] as string[],
+        tuesday: [] as string[],
+        wednesday: [] as string[],
+        thursday: [] as string[],
+        friday: [] as string[],
+        saturday: [] as string[],
+        sunday: [] as string[],
+      } as TrainingsPlan,
+
+      trainingsPlanLocal: {
         monday: [] as Exercise[],
         tuesday: [] as Exercise[],
         wednesday: [] as Exercise[],
@@ -67,31 +80,34 @@ export default defineComponent({
         friday: [] as Exercise[],
         saturday: [] as Exercise[],
         sunday: [] as Exercise[],
-      } as TrainingsPlan,
+      },
     };
   },
 
   methods: {
+    async loadExercises() {
+      try {
+        this.exercises = await API.getExercises();
+      } catch (e) {
+        console.log("couldn't load Exercises", e);
+      }
+    },
     showExeriseDetail(exercise: Exercise) {
       this.$router.push({ name: 'ExerciseDetail', params: { data: JSON.stringify(exercise) } });
     },
-    updateTrainingPlan() {
+    async updateTrainingPlan() {
       try {
-        let result = API.getTrainingPlans();
-        if (result) {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          this.trainingPlan = result.then(res => {
-            this.trainingPlan = {
-              monday: { ...Object.values(res as TrainingsPlan) }[0].monday,
-              tuesday: { ...Object.values(res as TrainingsPlan) }[0].tuesday,
-              wednesday: { ...Object.values(res as TrainingsPlan) }[0].wednesday,
-              thursday: { ...Object.values(res as TrainingsPlan) }[0].thursday,
-              friday: { ...Object.values(res as TrainingsPlan) }[0].friday,
-              saturday: { ...Object.values(res as TrainingsPlan) }[0].saturday,
-              sunday: { ...Object.values(res as TrainingsPlan) }[0].sunday,
-            };
-          });
+        let result = await API.getTrainingPlans();
+        if (result?.trainingsPlan) {
+          this.trainingsPlanLocal = {
+            monday: result.trainingsPlan.monday.map(id => this.exercises.find(e => e.id == id)).filter(e => e) as Exercise[],
+            tuesday: result.trainingsPlan.tuesday.map(id => this.exercises.find(e => e.id == id)).filter(e => e) as Exercise[],
+            wednesday: result.trainingsPlan.wednesday.map(id => this.exercises.find(e => e.id == id)).filter(e => e) as Exercise[],
+            thursday: result.trainingsPlan.thursday.map(id => this.exercises.find(e => e.id == id)).filter(e => e) as Exercise[],
+            friday: result.trainingsPlan.friday.map(id => this.exercises.find(e => e.id == id)).filter(e => e) as Exercise[],
+            saturday: result.trainingsPlan.saturday.map(id => this.exercises.find(e => e.id == id)).filter(e => e) as Exercise[],
+            sunday: result.trainingsPlan.sunday.map(id => this.exercises.find(e => e.id == id)).filter(e => e) as Exercise[],
+          };
         }
       } catch (e) {
         console.error({ '': e });

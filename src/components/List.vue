@@ -181,7 +181,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { collapsed, listWidth, selectedMuscle, selectedExercise, selectedSecondaryMuscle, selectedPrimaryMuscle } from '@/components/state';
-import { Equipment, Exercise, Muscle, MUSCLE_OPTIONS, TrainingsPlan } from '@/types';
+import { Equipment, Exercise, Muscle, MUSCLE_OPTIONS, TrainingsPlan, TrainingsPlanDataBase } from '@/types';
 import TrainingPlanContent from '@/components/TrainingPlanContent.vue';
 import * as API from '@/API';
 
@@ -198,14 +198,14 @@ export default defineComponent({
   components: { TrainingPlanContent },
   data() {
     return {
-      trainingPlan: {
-        monday: [] as Exercise[],
-        tuesday: [] as Exercise[],
-        wednesday: [] as Exercise[],
-        thursday: [] as Exercise[],
-        friday: [] as Exercise[],
-        saturday: [] as Exercise[],
-        sunday: [] as Exercise[],
+      trainingsPlan: {
+        monday: [] as string[],
+        tuesday: [] as string[],
+        wednesday: [] as string[],
+        thursday: [] as string[],
+        friday: [] as string[],
+        saturday: [] as string[],
+        sunday: [] as string[],
       } as TrainingsPlan,
       exercises: [] as Exercise[],
       equipments: [] as Equipment[],
@@ -228,23 +228,19 @@ export default defineComponent({
     openExerciseDetail(exercise: Exercise) {
       this.$router.push({ name: 'ExerciseDetail', params: { data: JSON.stringify(exercise) } });
     },
-    openTrainingsPlanAddModal(exercise: Exercise) {
+    async openTrainingsPlanAddModal(exercise: Exercise) {
       try {
-        let result = API.getTrainingPlans();
-        if (result) {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          this.trainingPlan = result.then(res => {
-            this.trainingPlan = {
-              monday: { ...Object.values(res as TrainingsPlan) }[0].monday,
-              tuesday: { ...Object.values(res as TrainingsPlan) }[0].tuesday,
-              wednesday: { ...Object.values(res as TrainingsPlan) }[0].wednesday,
-              thursday: { ...Object.values(res as TrainingsPlan) }[0].thursday,
-              friday: { ...Object.values(res as TrainingsPlan) }[0].friday,
-              saturday: { ...Object.values(res as TrainingsPlan) }[0].saturday,
-              sunday: { ...Object.values(res as TrainingsPlan) }[0].sunday,
-            };
-          });
+        let result = await API.getTrainingPlans();
+        if (result?.trainingsPlan) {
+          this.trainingsPlan = {
+            monday: result?.trainingsPlan.monday,
+            tuesday: result?.trainingsPlan.tuesday,
+            wednesday: result?.trainingsPlan.wednesday,
+            thursday: result?.trainingsPlan.thursday,
+            friday: result?.trainingsPlan.friday,
+            saturday: result?.trainingsPlan.saturday,
+            sunday: result?.trainingsPlan.sunday,
+          };
         }
         this.selectedExercise = exercise;
         let modal = document.getElementById('trainingsPlanAddModal');
@@ -253,6 +249,7 @@ export default defineComponent({
         console.error({ '': e });
       }
     },
+
     closeTrainingsPlanAddModal() {
       let modal = document.getElementById('trainingsPlanAddModal');
       if (modal) modal.style.display = 'none';
@@ -260,29 +257,29 @@ export default defineComponent({
     addExerciseToTrainingPlan(day: string) {
       switch (day) {
         case 'monday':
-          this.trainingPlan.monday.push(this.selectedExercise);
+          this.trainingsPlan.monday.push(this.selectedExercise.id);
           break;
         case 'tuesday':
-          this.trainingPlan.tuesday.push(this.selectedExercise);
+          this.trainingsPlan.tuesday.push(this.selectedExercise.id);
           break;
         case 'wednesday':
-          this.trainingPlan.wednesday.push(this.selectedExercise);
+          this.trainingsPlan.wednesday.push(this.selectedExercise.id);
           break;
         case 'thursday':
-          this.trainingPlan.thursday.push(this.selectedExercise);
+          this.trainingsPlan.thursday.push(this.selectedExercise.id);
           break;
         case 'friday':
-          this.trainingPlan.friday.push(this.selectedExercise);
+          this.trainingsPlan.friday.push(this.selectedExercise.id);
           break;
         case 'saturday':
-          this.trainingPlan.saturday.push(this.selectedExercise);
+          this.trainingsPlan.saturday.push(this.selectedExercise.id);
           break;
         case 'sunday':
-          this.trainingPlan.sunday.push(this.selectedExercise);
+          this.trainingsPlan.sunday.push(this.selectedExercise.id);
           break;
       }
       try {
-        API.addTrainingsPlan(this.trainingPlan);
+        API.addTrainingsPlan(this.trainingsPlan);
       } catch (e) {
         console.error({ "couldn't add TrainingsPlan": e });
       }
