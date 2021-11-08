@@ -23,7 +23,7 @@
     </div>
 
     <div class="card-body p-4" v-if="form == 'add' || (form == 'edit' && selectedExercise)">
-      <form @submit.prevent="addExe()" autocomplete="off">
+      <form @submit.prevent="addExercise()" autocomplete="off">
         <div class="my-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
 
         <div class="mb-4 input-group">
@@ -144,7 +144,10 @@
             />
           </div>
         </div>
-        <button class="btn btn-success col-3" type="submit" v-if="!loading"><i class="fas fa-plus"></i> Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}</button>
+        <button class="btn btn-success col-3" type="submit" v-if="!loading">
+          <i class="fas fa-plus"></i>
+          Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}
+        </button>
         <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
         <button class="editBtn ms-2 col-3" type="button" @click="listExercises()">Übungen anzeigen</button>
       </form>
@@ -252,16 +255,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {
-  createExercise,
-  readExercises,
-  createEquipment,
-  readEquipment,
-  deleteEquipment,
-  updateExercise,
-  updateEquipment,
-  deleteExercise,
-} from '@/API';
+import * as API from '@/API';
 
 import { Equipment, Exercise, MUSCLE_OPTIONS } from '@/types';
 import Multiselect from '@vueform/multiselect';
@@ -270,7 +264,7 @@ export default defineComponent({
   components: { Multiselect },
   watch: { $route: 'getExercises' },
   mounted() {
-    this.loadEquipment();
+    this.getEquipment();
     this.getExercises();
   },
   data() {
@@ -321,19 +315,27 @@ export default defineComponent({
     },
     async getExercises() {
       try {
-        this.exercises = await readExercises();
+        this.exercises = await API.getExercises();
       } catch (e) {
-        console.log("couldn't load Exercises", e);
+        console.error({ "couldn't load Exercises": e });
       }
     },
     async addEquipment() {
       if (!this.equipment) return;
-      let newEquipment = await createEquipment(this.equipment);
-      this.equipments.push(newEquipment);
-      this.equipment = '';
+      try {
+        let newEquipment = await API.addEquipment(this.equipment);
+        this.equipments.push(newEquipment);
+        this.equipment = '';
+      } catch (e) {
+        console.error({ "couldn't add Equipment": e });
+      }
     },
-    async loadEquipment() {
-      this.equipments = await readEquipment();
+    async getEquipment() {
+      try {
+        this.equipments = await API.getEquipment();
+      } catch (e) {
+        console.error({ "couldn't load Equipment": e });
+      }
     },
     deleteEquipment(id: string) {
       let usage = this.exercises.filter(e => e.trainingDevices.find(t => t == id)).length;
@@ -343,19 +345,32 @@ export default defineComponent({
           : 'Übungen benutzen dieses Gerät, sicher das du sie entfernen möchtest ?';
       if (!usage) {
         this.equipments = this.equipments.filter(e => e.id != id);
-        deleteEquipment(id);
+        try {
+          API.deleteEquipment(id);
+        } catch (e) {
+          console.error({ "couldn't delete Equipment": e });
+        }
       }
       if (usage && window.confirm(`${usage} ${display}`)) {
-        this.exercises.filter(e => e.trainingDevices.find(t => t == id)).forEach(e => deleteExercise(e.id));
+        this.exercises
+          .filter(e => e.trainingDevices.find(t => t == id))
+          .forEach(e => {
+            try {
+              API.deleteExercise(e.id);
+            } catch (error) {
+              console.error({ "couldn't delete Exercise with name : error": e.name + ':', error });
+            }
+          });
         this.equipments = this.equipments.filter(e => e.id != id);
-        deleteEquipment(id);
+        try {
+          API.deleteEquipment(id);
+        } catch (e) {
+          console.error({ "couldn't delete Equipment with id : error": id + ':', e });
+        }
         this.exercises = this.exercises.filter(e => e.trainingDevices.find(t => t !== id));
       }
     },
     async listExercises() {
-      let res = await readExercises();
-      console.log(res);
-
       if (this.list) this.list = false;
       else this.list = true;
     },
@@ -366,9 +381,18 @@ export default defineComponent({
         return;
       }
       changed.disabled = disable;
-      this.equipments = await updateEquipment(changed);
+      try {
+        await API.updateEquipment(changed);
+      } catch (e) {
+        console.error({ "couldn't disable Equipment": e });
+      }
+      try {
+        this.equipments = await API.getEquipment();
+      } catch (e) {
+        console.error({ "couldn't load Equipments": e });
+      }
     },
-    addExe() {
+    addExercise() {
       if (!this.difficulty) return (this.error = 'kein Schwierigkeitsgrad ausgewählt');
       if (!this.primaryMuscles) return (this.error = 'kein Hauptmuskel ausgewählt');
 
@@ -415,10 +439,10 @@ export default defineComponent({
       try {
         this.loading = true;
         if (this.form == 'edit') {
-          updateExercise(newExercise, this.selectedExercise);
+          API.updateExercise(newExercise, this.selectedExercise);
         }
         if (this.form == 'add') {
-          createExercise(newExercise);
+          API.addExercise(newExercise);
         }
       } catch (e) {
         console.error('Error adding document: ', e);

@@ -32,6 +32,9 @@ export interface TrainingsPlan {
   saturday: Exercise[];
   sunday: Exercise[];
 }
+export interface User {
+  email: string;
+}
 
 export const MUSCLE_OPTIONS = [
   { name: 'Nacken', value: 'neck', grossMuscle: 'neck' },
