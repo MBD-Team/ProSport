@@ -17,6 +17,10 @@ $light: #f8f9fa;
 $dark: #212529;
 
 :root {
+  --exBtn: #26be77;
+  --exBtn2: #229b62;
+  --exBtn3: #187a4d;
+
   --editButton: #a7a3aa;
   --editButton2: #89878b;
   --editButton3: #5c5b5b;
@@ -65,6 +69,12 @@ $dark: #212529;
   margin: 2px;
 }
 .loginBtn:active {
+  transform: scale(0.9);
+}
+.exBtn {
+  background: linear-gradient(180deg, var(--exBtn) 0%, var(--exBtn2) 88%, var(--exBtn3) 97%);
+}
+.exBtn:active {
   transform: scale(0.9);
 }
 .showbtn {

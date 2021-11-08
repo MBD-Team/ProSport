@@ -1,8 +1,8 @@
 <template>
   <div class="card card-default">
     <div class="card-header header p-4">
-      <button class="addBtn col-3" @click="add()">Übung hinzufügen</button>
-      <button class="editBtn ms-2 col-3" @click="edit()">Übung Bearbeiten</button>
+      <button class="btn addBtn col-3" @click="add()">Übung hinzufügen</button>
+      <button class="btn editBtn ms-2 col-3" @click="edit()">Übung Bearbeiten</button>
     </div>
     <div class="card-body p-4" v-if="form == 'edit'">
       <div class="input-group">
@@ -144,12 +144,12 @@
             />
           </div>
         </div>
-        <button class="btn btn-success col-3" type="submit" v-if="!loading">
+        <button class="btn exBtn col-3" type="submit" v-if="!loading">
           <i class="fas fa-plus"></i>
           Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}
         </button>
         <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
-        <button class="editBtn ms-2 col-3" type="button" @click="listExercises()">Übungen anzeigen</button>
+        <button class="btn editBtn ms-2 col-3" type="button" @click="listExercises()">Übungen anzeigen</button>
       </form>
     </div>
   </div>
@@ -211,7 +211,7 @@
           <span class="input-group-text col-3" style="background-color: #f2f2f2">Name des Gerätes:</span>
           <input class="form-control" style="background-color: #ffffff" type="text" v-model="equipment" autocomplete="off" required />
         </div>
-        <button class="addBtn col-3" type="submit">Gerät hinzufügen</button>
+        <button class="btn addBtn col-3" type="submit">Gerät hinzufügen</button>
       </form>
       <div class="m-4 alert alert-danger text-center" v-if="equipmentError">{{ equipmentError }}</div>
       <table class="table table-striped">
