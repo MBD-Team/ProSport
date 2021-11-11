@@ -97,6 +97,12 @@ export default defineComponent({
 
   methods: {
     deleteExercise(day: string, exerciseIndex: number, id: string) {
+      if (
+        !confirm(
+          `Möchtest du ${this.trainingsPlanLocal[day as keyof TrainingsPlan][exerciseIndex].name} wirklich aus deinem Trainingsplan entfernen?`
+        )
+      )
+        return;
       this.trainingsPlanLocal[day as keyof TrainingsPlan].splice(exerciseIndex, 1);
       this.trainingsPlanDataBase = {
         monday: this.trainingsPlanLocal.monday.map(e => e.id),
@@ -193,3 +199,4 @@ td {
   background-color: var(--selectedArmColor) !important;
 }
 </style>
+deleteExercise(dayIndex, exerciseIndex, exercise.id)
