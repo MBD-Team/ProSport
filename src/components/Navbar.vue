@@ -14,14 +14,14 @@
     </a>
 
     <div class="col-4 d-flex align-items-center justify-content-end" v-if="user != null">
-      <button class="" @click="traningsPlan()" style="height: 45px; width: 45px">
+      <button class="" @click="traningsPlan()" style="height: 45px; width: 45px text-align:center">
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
           <path
             d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
           />
         </svg>
       </button>
-      <button class="" @click="settings()" style="height: 45px; width: 45px" v-if="userRole == 'admin'">
+      <button class="" @click="settings()" style="height: 45px; width: 45px text-align:center" v-if="userRole == 'admin'">
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
           <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
           <path
@@ -29,7 +29,12 @@
           />
         </svg>
       </button>
-      <button class="" @click="logOut()" style="height: 45px; width: 45px">
+      <button
+        class=""
+        @click="logOut()"
+        style="height: 45px; width: 45px text-align:center
+      "
+      >
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
           <path
             fill-rule="evenodd"

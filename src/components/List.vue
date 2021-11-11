@@ -74,7 +74,7 @@
         <text v-else-if="exercise.difficulty == 'medium'" style="margin: 2px; color: #cfc22d">Mittel</text>
         <text v-else style="margin: 2px; color: #ed4e4e">Schwer</text>
       </div>
-      <div class="d-flex" style="align-items: center; padding: 3px; border-left: solid grey 1px">
+      <div v-if="user != null" class="d-flex" style="align-items: center; padding: 3px; border-left: solid grey 1px">
         <svg
           @click.stop="openTrainingsPlanAddModal(exercise)"
           xmlns="http://www.w3.org/2000/svg"
@@ -181,6 +181,7 @@ import { collapsed, listWidth, selectedMuscle, selectedExercise, selectedSeconda
 import { Equipment, Exercise, Muscle, MUSCLE_OPTIONS, TrainingsPlan, TrainingsPlanDataBase } from '@/types';
 import TrainingPlanContent from '@/components/TrainingPlanContent.vue';
 import * as API from '@/API';
+import { currentUser } from '@/router';
 
 export default defineComponent({
   props: {
@@ -190,7 +191,16 @@ export default defineComponent({
     },
   },
   setup() {
-    return { collapsed, listWidth, selectedExercise, selectedMuscle, selectedPrimaryMuscle, selectedSecondaryMuscle, MUSCLE_OPTIONS };
+    return {
+      user: currentUser,
+      collapsed,
+      listWidth,
+      selectedExercise,
+      selectedMuscle,
+      selectedPrimaryMuscle,
+      selectedSecondaryMuscle,
+      MUSCLE_OPTIONS,
+    };
   },
   components: { TrainingPlanContent },
   data() {
