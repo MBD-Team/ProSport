@@ -2,33 +2,27 @@
   <div :class="direction" id="list" :style="{ width: listWidth }">
     <!-- difficulty -->
     <div class="input-group">
-      <label class="input-group-text w-25" style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.3rem" for="inputGroupSelect01">
-        Schwierigkeit
-      </label>
       <select
         class="form-select"
         id="inputGroupSelect01"
-        style="margin: 3px 3px 3px 0px; height: 6vh; font-size: 1.3rem"
+        style="margin: 3px 3px 3px 0px; height: 6vh; width: 33%; font-size: 1.3rem"
         v-model.number="selectedDifficulty"
       >
+        <option value="0" disabled selected>Schwierigkeit</option>
         <option value="1">Leicht</option>
         <option value="2">Mittel</option>
         <option value="3">Schwer</option>
       </select>
-    </div>
-    <!-- primary muscle -->
-    <div class="input-group">
-      <label class="input-group-text w-25" style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.3rem" for="inputGroupSelect01">
-        Hauptmuskel
-      </label>
+      <!-- primary muscle -->
       <select
         v-if="filterPrimary.length > 1"
         class="form-select"
         id="inputGroupSelect01"
-        style="margin: 3px 3px 3px 0px; height: 6vh; font-size: 1.3rem"
+        style="margin: 3px 3px 3px 0px; height: 6vh; width: 33%; font-size: 1.3rem"
         v-model="selectedPrimaryMuscle"
         @change="selectedSecondaryMuscle = ''"
       >
+        <option value="" disabled selected>Hauptmuskel</option>
         <option value="">
           {{
             MUSCLE_OPTIONS.filter(m => m.grossMuscle == selectedMuscle)
@@ -40,30 +34,27 @@
           {{ muscle.name }}
         </option>
       </select>
-      <select v-else class="form-select" id="inputGroupSelect01" style="margin: 3px 3px 3px 0px; font-size: 1.3rem">
+      <select v-else class="form-select" id="inputGroupSelect01" style="margin: 3px 3px 3px 0px; width: 33%; font-size: 1.3rem">
+        <option value="" disabled selected>Hauptmuskel</option>
         <option v-for="muscle in filterPrimary" :key="muscle.value" :value="muscle.value">
           {{ muscle.name }}
         </option>
       </select>
-    </div>
-    <!-- secondary muscle -->
-    <div class="input-group">
-      <label class="input-group-text w-25" style="margin: 3px 0px 3px 3px; height: 6vh; font-size: 1.3rem" for="inputGroupSelect01">
-        Hilfsmuskel
-      </label>
+      <!-- secondary muscle -->
       <select
         v-if="filterSecondary.length > 1"
         class="form-select"
         id="inputGroupSelect01"
-        style="margin: 3px 3px 3px 0px; height: 6vh; font-size: 1.3rem"
+        style="margin: 3px 3px 3px 0px; height: 6vh; width: 33%; font-size: 1.3rem"
         v-model="selectedSecondaryMuscle"
       >
+        <option value="" disabled selected>Hilfsmuskel</option>
         <option value="">Alle</option>
         <option v-for="muscle in filterSecondary" :key="muscle.value" :value="muscle.value">
           {{ muscle.name }}
         </option>
       </select>
-      <select v-else class="form-select" id="inputGroupSelect01" style="margin: 3px 3px 3px 0px; font-size: 1.3rem">
+      <select v-else class="form-select" id="inputGroupSelect01" style="margin: 3px 3px 3px 0px; width: 33%; font-size: 1.3rem">
         <option v-for="muscle in filterSecondary" :key="muscle.value" :value="muscle.value">
           {{ muscle.name }}
         </option>
@@ -71,16 +62,19 @@
     </div>
     <!-- exercise -->
     <div :class="selectedMuscle" id="task" v-for="exercise in filterex" v-bind:key="exercise.id" @click="openExerciseDetail(exercise)">
-      <div>
+      <div class="thumbnailDiv" style="border-radius: 10px 0px 0px 10px">
         <img :src="exercise.img" style="margin: 10px; width: 180px; height: 100px; float: left" />
       </div>
-      <span v-if="!collapsed">
-        <b style="font-size: 30px">{{ exercise.name }}</b>
-      </span>
-      <text v-if="exercise.difficulty == 'easy'" style="color: #2da64f">Leicht</text>
-      <text v-else-if="exercise.difficulty == 'medium'" style="color: #cfc22d">Mittel</text>
-      <text v-else style="color: #ed4e4e">Schwer</text>
-      <text>
+      <div style="width: 80%; margin: 3px">
+        <span v-if="!collapsed">
+          <b style="font-size: 2.5vh">{{ exercise.name }}</b>
+        </span>
+        <br />
+        <text v-if="exercise.difficulty == 'easy'" style="margin: 2px; color: #2da64f">Leicht</text>
+        <text v-else-if="exercise.difficulty == 'medium'" style="margin: 2px; color: #cfc22d">Mittel</text>
+        <text v-else style="margin: 2px; color: #ed4e4e">Schwer</text>
+      </div>
+      <div class="d-flex" style="align-items: center; padding: 3px; border-left: solid grey 1px">
         <svg
           @click.stop="openTrainingsPlanAddModal(exercise)"
           xmlns="http://www.w3.org/2000/svg"
@@ -89,17 +83,18 @@
           fill="currentColor"
           class="bi bi-plus-circle"
           viewBox="0 0 16 16"
+          style="align-items: center"
         >
           <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
           <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
         </svg>
-      </text>
+      </div>
     </div>
   </div>
   <!--new modal-->
   <div class="modal" id="trainingsPlanAddModal" tabindex="-1" aria-labelledby="trainingsPlanAddModalLable" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
+    <div class="">
+      <div class="modal-content" style="padding: 0px; width: 85vw">
         <div class="modal-header">
           <h5 class="modal-title" id="trainingsPlanAddModalLable">An welchen Tag möchtest du die Übung durchführen?</h5>
           <button type="button" @click="closeTrainingsPlanAddModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -107,13 +102,13 @@
         <div class="modal-body">
           <TrainingPlanContent />
         </div>
-        <div class="modal-footer d-flex justify-content: flex-start">
-          <div class="container">
+        <div class="modal-footer">
+          <div class="container d-flex" style="justify-content: center">
             <button
               type="button"
               @click="addExerciseToTrainingPlan('monday')"
-              class="btn btn-secondary rounded-start"
-              style="width: 14.2%; padding: 6px 8px 6px 0px"
+              class="addBtn"
+              style="width: 14.2%; padding: 5px; margin: 2px"
               data-bs-dismiss="modal"
             >
               Montag
@@ -121,8 +116,8 @@
             <button
               type="button"
               @click="addExerciseToTrainingPlan('tuesday')"
-              class="btn btn-secondary"
-              style="width: 14.2%; padding: 6px 8px 6px 0px"
+              class="addBtn"
+              style="width: 14.2%; padding: 5px; margin: 2px"
               data-bs-dismiss="modal"
             >
               Dienstag
@@ -130,8 +125,8 @@
             <button
               type="button"
               @click="addExerciseToTrainingPlan('wednesday')"
-              class="btn btn-secondary"
-              style="width: 14.2%; padding: 6px 8px 6px 0px"
+              class="addBtn"
+              style="width: 14.2%; padding: 5px; margin: 2px"
               data-bs-dismiss="modal"
             >
               Mittwoch
@@ -139,8 +134,8 @@
             <button
               type="button"
               @click="addExerciseToTrainingPlan('thursday')"
-              class="btn btn-secondary"
-              style="width: 14.2%; padding: 6px 8px 6px 0px"
+              class="addBtn"
+              style="width: 14.2%; padding: 5px; margin: 2px"
               data-bs-dismiss="modal"
             >
               Donnerstag
@@ -148,8 +143,8 @@
             <button
               type="button"
               @click="addExerciseToTrainingPlan('friday')"
-              class="btn btn-secondary"
-              style="width: 14.2%; padding: 6px 8px 6px 0px"
+              class="addBtn"
+              style="width: 14.2%; padding: 5px; margin: 2px"
               data-bs-dismiss="modal"
             >
               Freitag
@@ -157,8 +152,8 @@
             <button
               type="button"
               @click="addExerciseToTrainingPlan('saturday')"
-              class="btn btn-secondary"
-              style="width: 14.2%; padding: 6px 8px 6px 0px"
+              class="addBtn"
+              style="width: 14.2%; padding: 5px; margin: 2px"
               data-bs-dismiss="modal"
             >
               Samstag
@@ -166,8 +161,8 @@
             <button
               type="button"
               @click="addExerciseToTrainingPlan('sunday')"
-              class="btn btn-secondary"
-              style="width: 14.2%; padding: 6px 8px 6px 0px"
+              class="addBtn"
+              style="width: 14.2%; padding: 5px; margin: 2px"
               data-bs-dismiss="modal"
             >
               Sonntag
@@ -211,7 +206,7 @@ export default defineComponent({
       } as TrainingsPlan,
       exercises: [] as Exercise[],
       equipments: [] as Equipment[],
-      selectedDifficulty: 1,
+      selectedDifficulty: 0,
     };
   },
   watch: { $route: 'loadExercises' },
@@ -373,7 +368,7 @@ export default defineComponent({
   -moz-box-shadow: 0px 1px 35px 10px rgba(0, 0, 0, 0.1) inset;
 }
 b {
-  text-shadow: 1px 1px 0px black;
+  text-shadow: 1px 1px 0px rgb(170, 170, 170);
 }
 .modal {
   display: none;
@@ -393,5 +388,11 @@ b {
   padding: 5px;
   border: 1px solid #888;
   width: 50vw;
+}
+.modal-header {
+  background: linear-gradient(180deg, var(--navbarColor1) 0%, var(--navbarColor2) 88%, var(--navbarColor3) 97%);
+}
+.input-group {
+  flex-wrap: nowrap !important;
 }
 </style>

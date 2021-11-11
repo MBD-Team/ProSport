@@ -25,7 +25,7 @@ $dark: #212529;
   --editButton2: #89878b;
   --editButton3: #5c5b5b;
 
-  --addButton: #f1f1f2;
+  --addButton: #e2e2e2;
   --addButton2: #adadb1;
   --addButton3: #7d7d8a;
 
@@ -52,7 +52,7 @@ $dark: #212529;
   --selectedShoulderColor: rgb(0, 255, 255);
   --selectedArmColor: rgb(255, 81, 0);
   --selectedButtColor: rgb(183, 0, 255);
-  --selectedBackColor: rgb(238, 255, 0);
+  --selectedBackColor: rgb(155, 163, 34);
   --selectedNeckColor: rgb(136, 255, 0);
 }
 // Style Classes
@@ -91,57 +91,85 @@ $dark: #212529;
 }
 .addBtn {
   background: linear-gradient(180deg, var(--addButton) 0%, var(--addButton2) 85%, var(--addButton3) 100%);
+  border: hidden;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 30px;
 }
 .addBtn:active {
   transform: scale(0.9);
 }
 .shoulder {
+  display: flex;
   fill-opacity: 0.5 !important;
   fill: var(--selectedShoulderColor) !important;
-  background-color: rgb(255, 255, 255) !important;
-  color: var(--selectedShoulderColor) !important;
+  color: black !important;
+  .thumbnailDiv {
+    background-color: var(--selectedShoulderColor);
+  }
 }
 .neck {
+  display: flex;
   fill-opacity: 0.5 !important;
   fill: var(--selectedNeckColor) !important;
-  background-color: rgb(255, 255, 255) !important;
-  color: var(--selectedNeckColor) !important;
+  color: black !important;
+  .thumbnailDiv {
+    background-color: var(--selectedNeckColor);
+  }
 }
 .chest {
+  display: flex;
   fill-opacity: 0.5 !important;
   fill: var(--selectedChestColor) !important;
-  background-color: rgb(255, 255, 255) !important;
-  color: var(--selectedChestColor) !important;
+  color: black !important;
+  .thumbnailDiv {
+    background-color: var(--selectedChestColor);
+  }
 }
 .back {
+  display: flex;
   fill-opacity: 0.5 !important;
   fill: var(--selectedBackColor) !important;
-  background-color: rgb(255, 255, 255) !important;
-  color: var(--selectedBackColor) !important;
+  color: black !important;
+  .thumbnailDiv {
+    background-color: var(--selectedBackColor);
+  }
 }
 .belly {
+  display: flex;
   fill-opacity: 0.5 !important;
   fill: var(--selectedBellyColor) !important;
-  background-color: rgb(255, 255, 255) !important;
-  color: var(--selectedBellyColor) !important;
+  color: black !important;
+  .thumbnailDiv {
+    background-color: var(--selectedBellyColor);
+  }
 }
 .butt {
+  display: flex;
   fill-opacity: 0.5 !important;
   fill: var(--selectedButtColor) !important;
-  background-color: rgb(255, 255, 255) !important;
-  color: var(--selectedButtColor) !important;
+  color: black !important;
+  .thumbnailDiv {
+    background-color: var(--selectedButtColor);
+  }
 }
 .leg {
+  display: flex;
   fill-opacity: 0.5 !important;
   fill: var(--selectedLegColor) !important;
-  background-color: rgb(255, 255, 255) !important;
-  color: var(--selectedLegColor) !important;
+  color: black !important;
+  .thumbnailDiv {
+    background-color: var(--selectedLegColor);
+  }
 }
 .arm {
+  display: flex;
   fill-opacity: 0.5 !important;
   fill: var(--selectedArmColor) !important;
-  background-color: rgb(255, 255, 255) !important;
-  color: var(--selectedArmColor) !important;
+  color: black !important;
+  .thumbnailDiv {
+    background-color: var(--selectedArmColor);
+  }
 }
 .unselectable {
   -webkit-touch-callout: none;

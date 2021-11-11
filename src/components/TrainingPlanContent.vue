@@ -1,8 +1,8 @@
 <template>
-  <div class="container mt-4">
+  <div class="container" style="">
     <table class="table">
       <thead>
-        <tr>
+        <tr style="text-align: center">
           <th style="width: 14.2%">Montag</th>
           <th style="width: 14.2%">Dienstag</th>
           <th style="width: 14.2%">Mittwoch</th>
@@ -15,21 +15,14 @@
       <tbody>
         <tr>
           <td v-for="day of trainingsPlanLocal" :key="day">
-            <ul>
-              <li v-for="exercise of day" :key="exercise" class="mb-4" @click="showExeriseDetail(exercise)">
-                <div>{{ exercise.name }}</div>
-                <div>Hauptmuskel:</div>
+            <ul style="padding: 0">
+              <li v-for="exercise of day" :key="exercise" class="mb-3" @click="showExeriseDetail(exercise)" style="text-align: center">
+                <div :class="exercise.grossMuscles[0]" style="font-size: 15px; border-radius: 5px 5px 0px 0px">
+                  {{ exercise.name }}
+                </div>
                 <div>
                   {{
                     MUSCLE_OPTIONS.filter(m => exercise?.primaryMuscles.includes(m.value))
-                      .map(p => p.name)
-                      .join(', ')
-                  }}
-                </div>
-                <div>Hilfsmuskel:</div>
-                <div>
-                  {{
-                    MUSCLE_OPTIONS.filter(m => exercise.secondaryMuscles.includes(m.value))
                       .map(p => p.name)
                       .join(', ')
                   }}
@@ -117,18 +110,50 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 ul {
   list-style: none;
 }
 li {
-  padding: 1px;
-  border: 1px solid #999;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
+  background-color: var(--addButton);
 }
 
 td {
   border: none !important;
 }
+.shoulder {
+  color: #000000 !important;
+  background-color: var(--selectedShoulderColor) !important;
+}
+.neck {
+  color: #000000 !important;
+  background-color: var(--selectedNeckColor) !important;
+}
+.chest {
+  color: #000000 !important;
+  background-color: var(--selectedChestColor) !important;
+}
+.back {
+  color: #000000 !important;
+  background-color: var(--selectedBackColor) !important;
+}
+.belly {
+  color: #000000 !important;
+  background-color: var(--selectedBellyColor) !important;
+}
+.butt {
+  color: #000000 !important;
+  background-color: var(--selectedButtColor) !important;
+}
+.leg {
+  color: #000000 !important;
+  background-color: var(--selectedLegColor) !important;
+}
+.arm {
+  color: #000000 !important;
+  background-color: var(--selectedArmColor) !important;
+}
 </style>
-
