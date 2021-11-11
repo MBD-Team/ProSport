@@ -3,6 +3,9 @@ import { deleteDoc, DocumentData, getFirestore, QueryDocumentSnapshot, doc, Docu
 import { collection, addDoc, getDocs, updateDoc } from 'firebase/firestore';
 import { currentUser } from './router';
 import { CreatedExercise, Exercise, Equipment, TrainingsPlan, TrainingsPlanDataBase } from './types';
+import { ref } from 'vue';
+
+export const userRole = ref('');
 
 export async function addAPI<T>(docName: string, data: T): Promise<DocumentReference<T>> {
   const docRef = await addDoc(collection(getFirestore(), docName), data);
@@ -46,6 +49,7 @@ export async function register(email: string, password: string): Promise<void> {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   await setDoc(doc(getFirestore(), 'users', userCredential.user.uid), {
     email: email,
+    role: 'user',
   });
 }
 // export function verify() {
@@ -92,7 +96,7 @@ export async function deleteEquipment(id: string): Promise<void> {
 export async function addTrainingsPlan(plan: TrainingsPlan): Promise<void> {
   const id = getAuth().currentUser?.uid;
   if (id) {
-    await setDoc(doc(getFirestore(), 'users', id), {
+    await updateDoc(doc(getFirestore(), 'users', id), {
       trainingsPlan: plan,
     });
   }
@@ -100,4 +104,8 @@ export async function addTrainingsPlan(plan: TrainingsPlan): Promise<void> {
 export async function getTrainingPlans(): Promise<TrainingsPlanDataBase | null> {
   const id = getAuth().currentUser?.uid;
   return id ? ((await getDoc(doc(getFirestore(), 'users', id))).data() as TrainingsPlanDataBase) : null;
+}
+export async function getRole(): Promise<string | null> {
+  const id = getAuth().currentUser?.uid;
+  return id ? ((await getDoc(doc(getFirestore(), 'users', id))).get('role') as string) : null;
 }

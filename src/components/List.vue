@@ -248,6 +248,7 @@ export default defineComponent({
     },
 
     closeTrainingsPlanAddModal() {
+      this.selectedExercise = {} as Exercise;
       let modal = document.getElementById('trainingsPlanAddModal');
       if (modal) modal.style.display = 'none';
     },

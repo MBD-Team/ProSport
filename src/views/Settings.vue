@@ -6,8 +6,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import AddExercise from '@/components/AddExercise.vue';
-
+import * as API from '@/API';
 export default defineComponent({
+  async beforeMount() {
+    if (((await API.getRole()) as string) != 'admin') {
+      this.$router.push('/');
+    }
+  },
   components: {
     AddExercise,
   },
