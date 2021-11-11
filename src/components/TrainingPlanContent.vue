@@ -59,6 +59,7 @@ import { Exercise, TrainingsPlan, MUSCLE_OPTIONS } from '@/types';
 import { selectedExercise } from '@/components/state';
 import { defineComponent } from 'vue';
 import * as API from '@/API';
+import { getRole } from '@/API';
 export default defineComponent({
   async mounted() {
     await this.loadExercises();

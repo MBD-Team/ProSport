@@ -47,7 +47,10 @@ export default defineComponent({
   },
   methods: {
     async register() {
-      if (this.confirmed !== this.password) this.error = 'Die passwörter stimmen nicht überein';
+      if (this.confirmed !== this.password) {
+        this.error = 'Die passwörter stimmen nicht überein';
+        return;
+      }
       this.registering = true;
       try {
         await API.register(this.email, this.password);
