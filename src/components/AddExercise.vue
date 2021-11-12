@@ -1,8 +1,8 @@
 <template>
   <div class="card card-default">
     <div class="card-header header p-4">
-      <button class="addBtn col-3" @click="add()">Übung hinzufügen</button>
-      <button class="editBtn ms-2 col-3" @click="edit()">Übung editieren</button>
+      <button class="btn addBtn col-3" @click="add()">Übung hinzufügen</button>
+      <button class="btn editBtn ms-2 col-3" @click="edit()">Übung bearbeiten</button>
     </div>
     <div class="card-body p-4" v-if="form == 'edit'">
       <div class="input-group">
@@ -10,6 +10,7 @@
         <div class="col-9">
           <Multiselect
             @select="change()"
+            class="rounded-0 rounded-end"
             v-if="form == 'edit'"
             v-model="selectedExercise"
             :options="exercises.map(({ id, name }) => ({ value: id, label: name }))"
@@ -22,7 +23,7 @@
     </div>
 
     <div class="card-body p-4" v-if="form == 'add' || (form == 'edit' && selectedExercise)">
-      <form @submit.prevent="addExe()" autocomplete="off">
+      <form @submit.prevent="addExercise()" autocomplete="off">
         <div class="my-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
 
         <div class="mb-4 input-group">
@@ -64,20 +65,20 @@
 
         <div class="mb-4 input-group">
           <span class="input-group-text col-3" style="background-color: #f2f2f2">Schwierigkeitsgrad:</span>
-          <div class="btn-group col-9">
+          <div class="btn-group col-9 m-0">
             <input
               type="radio"
-              class="btn-check"
+              class="btn-check shadow-none"
               name="difficulty"
               id="easy"
               autocomplete="off"
               @change="difficulty = 'easy'"
               :checked="difficulty == 'easy'"
             />
-            <label class="btn btn-outline-success" for="easy">Leicht</label>
+            <label class="btn btn-outline-success rounded-0" for="easy">Leicht</label>
             <input
               type="radio"
-              class="btn-check"
+              class="btn-check shadow-none"
               name="difficulty"
               id="medium"
               autocomplete="off"
@@ -87,7 +88,7 @@
             <label class="btn btn-outline-warning" for="medium">Mittel</label>
             <input
               type="radio"
-              class="btn-check"
+              class="btn-check shadow-none"
               name="difficulty"
               id="hard"
               autocomplete="off"
@@ -102,6 +103,7 @@
           <span class="input-group-text col-3" style="background-color: #f2f2f2">Hauptmuskel:</span>
           <div class="col-9">
             <Multiselect
+              class="rounded-0 rounded-end"
               v-model="primaryMuscles"
               :options="muscleOptions.filter(m => !secondaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
               mode="tags"
@@ -116,6 +118,7 @@
           <span class="input-group-text col-3" style="background-color: #f2f2f2">Hilfsmuskel:</span>
           <div class="col-9">
             <Multiselect
+              class="rounded-0 rounded-end"
               v-model="secondaryMuscles"
               :options="muscleOptions.filter(m => !primaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
               mode="tags"
@@ -130,6 +133,7 @@
           <span class="input-group-text col-3" style="background-color: #f2f2f2">Trainigsgerät:</span>
           <div class="col-9">
             <Multiselect
+              class="rounded-0 rounded-end"
               v-model="trainingDevices"
               :options="equipments.map(({ id, name }) => ({ value: id, label: name }))"
               mode="tags"
@@ -140,9 +144,12 @@
             />
           </div>
         </div>
-        <button class="btn btn-success col-3" type="submit" v-if="!loading"><i class="fas fa-plus"></i> Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}</button>
+        <button class="btn exBtn col-3" type="submit" v-if="!loading">
+          <i class="fas fa-plus"></i>
+          Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}
+        </button>
         <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
-        <button class="editBtn ms-2 col-3" type="button" @click="listExercises()">Übungen anzeigen</button>
+        <button class="btn editBtn ms-2 col-3" type="button" @click="listExercises()">Übungen anzeigen</button>
       </form>
     </div>
   </div>
@@ -152,8 +159,9 @@
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th>Name der Übung</th>
-            <th>Benötigte Geräte</th>
+            <th class="w-25">Name der Übung</th>
+            <th class="w-25">Schwierigkeitsgrad</th>
+            <th class="w-50">Benötigte Geräte</th>
           </tr>
         </thead>
         <tbody>
@@ -163,6 +171,7 @@
               <td>
                 {{ exercise.name }}
               </td>
+              <td>{{ exercise.difficulty }}</td>
               <td>
                 {{
                   equipments
@@ -179,6 +188,7 @@
               <td>
                 {{ exercise.name }}
               </td>
+              <td>{{ exercise.difficulty }}</td>
               <td>
                 {{
                   equipments
@@ -201,7 +211,7 @@
           <span class="input-group-text col-3" style="background-color: #f2f2f2">Name des Gerätes:</span>
           <input class="form-control" style="background-color: #ffffff" type="text" v-model="equipment" autocomplete="off" required />
         </div>
-        <button class="addBtn col-3" type="submit">Gerät hinzufügen</button>
+        <button class="btn addBtn col-3" type="submit">Gerät hinzufügen</button>
       </form>
       <div class="m-4 alert alert-danger text-center" v-if="equipmentError">{{ equipmentError }}</div>
       <table class="table table-striped">
@@ -245,25 +255,16 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {
-  addExercise,
-  MUSCLE_OPTIONS,
-  getExercises,
-  addEquipment,
-  getEquipment,
-  delEquipment,
-  updateExercise,
-  updateEquipment,
-  delExercise,
-} from '@/API';
-import type { Equipment, Exercise } from '@/types';
+import * as API from '@/API';
+
+import { Equipment, Exercise, MUSCLE_OPTIONS } from '@/types';
 import Multiselect from '@vueform/multiselect';
 
 export default defineComponent({
   components: { Multiselect },
   watch: { $route: 'getExercises' },
   mounted() {
-    this.loadEquipment();
+    this.getEquipment();
     this.getExercises();
   },
   data() {
@@ -279,11 +280,12 @@ export default defineComponent({
       description: '',
       hints: '',
       videoURL: '',
-      difficulty: '',
+      difficulty: '' as 'easy' | 'medium' | 'hard',
       muscles: [],
       trainingDevices: [] as string[],
       muscleOptions: MUSCLE_OPTIONS,
       primaryMuscles: [] as string[],
+      grossMuscles: [] as string[],
       secondaryMuscles: [] as string[],
       equipment: '',
       equipments: [] as Equipment[],
@@ -312,20 +314,34 @@ export default defineComponent({
       this.form = 'edit';
     },
     async getExercises() {
+      this.errorReset();
       try {
-        this.exercises = await getExercises();
+        this.exercises = await API.getExercises();
       } catch (e) {
-        console.log("couldn't load Exercises", e);
+        this.error = 'Übungen konnten nicht geladen werden';
+        console.error({ "couldn't load Exercises": e });
       }
     },
     async addEquipment() {
       if (!this.equipment) return;
-      let newEquipment = await addEquipment(this.equipment);
-      this.equipments.push(newEquipment);
-      this.equipment = '';
+      this.errorReset();
+      try {
+        let newEquipment = await API.addEquipment(this.equipment);
+        this.equipments.push(newEquipment);
+        this.equipment = '';
+      } catch (e) {
+        this.equipmentError = 'Geräte konnten nicht gespeichert werden';
+        console.error({ "couldn't add Equipment": e });
+      }
     },
-    async loadEquipment() {
-      this.equipments = await getEquipment();
+    async getEquipment() {
+      this.errorReset();
+      try {
+        this.equipments = await API.getEquipment();
+      } catch (e) {
+        this.equipmentError = 'Geräte konnten nicht geladen werden';
+        console.error({ "couldn't load Equipment": e });
+      }
     },
     deleteEquipment(id: string) {
       let usage = this.exercises.filter(e => e.trainingDevices.find(t => t == id)).length;
@@ -335,19 +351,38 @@ export default defineComponent({
           : 'Übungen benutzen dieses Gerät, sicher das du sie entfernen möchtest ?';
       if (!usage) {
         this.equipments = this.equipments.filter(e => e.id != id);
-        delEquipment(id);
+        this.errorReset();
+        try {
+          API.deleteEquipment(id);
+        } catch (e) {
+          this.equipmentError = 'Gerät konnte nicht gelöscht werden';
+          console.error({ "couldn't delete Equipment": e });
+        }
       }
       if (usage && window.confirm(`${usage} ${display}`)) {
-        this.exercises.filter(e => e.trainingDevices.find(t => t == id)).forEach(e => delExercise(e.id));
+        this.exercises
+          .filter(e => e.trainingDevices.find(t => t == id))
+          .forEach(async e => {
+            this.errorReset();
+            try {
+              await API.deleteExercise(e.id);
+            } catch (error) {
+              this.error = 'Übung konnte nicht gelöscht werden';
+              console.error({ "couldn't delete Exercise with name : error": e.name + ':', error });
+            }
+          });
         this.equipments = this.equipments.filter(e => e.id != id);
-        delEquipment(id);
+        this.errorReset();
+        try {
+          API.deleteEquipment(id);
+        } catch (e) {
+          this.equipmentError = 'Gerät konnte nicht gelöscht werden';
+          console.error({ "couldn't delete Equipment with id : error": id + ':', e });
+        }
         this.exercises = this.exercises.filter(e => e.trainingDevices.find(t => t !== id));
       }
     },
     async listExercises() {
-      let res = await getExercises();
-      console.log(res);
-
       if (this.list) this.list = false;
       else this.list = true;
     },
@@ -358,11 +393,24 @@ export default defineComponent({
         return;
       }
       changed.disabled = disable;
-      this.equipments = await updateEquipment(changed);
+      this.errorReset();
+      try {
+        await API.updateEquipment(changed);
+      } catch (e) {
+        this.equipmentError = 'Gerät konnte nicht deaktiviert werden';
+        console.error({ "couldn't disable Equipment": e });
+      }
+      this.errorReset();
+      try {
+        this.equipments = await API.getEquipment();
+      } catch (e) {
+        this.equipmentError = 'Geräte konnten nicht geladen werden';
+        console.error({ "couldn't load Equipments": e });
+      }
     },
-    addExe() {
-      if (!this.difficulty) return (this.error = 'no difficulty chosen');
-      if (!this.primaryMuscles) return (this.error = 'no primary muscle chosen');
+    addExercise() {
+      if (!this.difficulty) return (this.error = 'kein Schwierigkeitsgrad ausgewählt');
+      if (!this.primaryMuscles) return (this.error = 'kein Hauptmuskel ausgewählt');
 
       let videoURL;
       let img;
@@ -379,7 +427,7 @@ export default defineComponent({
         videoURL = `https://www.youtube.com/embed/${videoID}`;
         img = `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
       } else {
-        this.error = 'wrong URL type';
+        this.error = 'falsche URL, bitte youtube link verwenden';
         return; //not supported
       }
 
@@ -394,13 +442,14 @@ export default defineComponent({
         primaryMuscles: this.primaryMuscles,
         secondaryMuscles: this.secondaryMuscles,
       };
+      this.errorReset();
       try {
         this.loading = true;
         if (this.form == 'edit') {
-          updateExercise(newExercise, this.selectedExercise);
+          API.updateExercise(newExercise, this.selectedExercise);
         }
         if (this.form == 'add') {
-          addExercise(newExercise);
+          API.addExercise(newExercise);
         }
       } catch (e) {
         console.error('Error adding document: ', e);
@@ -414,15 +463,20 @@ export default defineComponent({
     },
     reset() {
       this.error = '';
+      this.equipmentError = '';
       this.name = '';
       this.description = '';
       this.hints = '';
       this.videoURL = '';
-      this.difficulty = '';
+      this.difficulty = 'medium';
       this.primaryMuscles = [];
       this.secondaryMuscles = [];
       this.trainingDevices = [];
       this.selectedExercise = '';
+    },
+    errorReset() {
+      this.error = '';
+      this.equipmentError = '';
     },
   },
 
@@ -441,14 +495,20 @@ export default defineComponent({
       return null;
     },
     enabled(): Exercise[] {
-      return this.exercises.filter(e =>
-        e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled)
-      );
+      return this.exercises
+        .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled))
+        .sort((a, b) => (a.name < b.name ? -1 : 1))
+        .sort(function (a, b) {
+          let map = {
+            easy: 1,
+            medium: 2,
+            hard: 3,
+          };
+          return map[a.difficulty] - map[b.difficulty];
+        });
     },
     disabled(): Exercise[] {
-      return this.exercises
-        .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && this.equipments.find(e => e.id == t)?.disabled))
-        .filter(e => e.trainingDevices.length > 0);
+      return this.enabled.filter(e => e.trainingDevices.length > 0);
     },
   },
 });

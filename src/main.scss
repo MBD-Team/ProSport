@@ -1,5 +1,5 @@
 // Body
-$body-bg: #f8fafc;
+$body-bg: #ffffff;
 
 // Typography
 $font-family-sans-serif: 'Nunito', sans-serif;
@@ -17,21 +17,25 @@ $light: #f8f9fa;
 $dark: #212529;
 
 :root {
+  --exBtn: #26be77;
+  --exBtn2: #229b62;
+  --exBtn3: #187a4d;
+
   --editButton: #a7a3aa;
   --editButton2: #89878b;
   --editButton3: #5c5b5b;
 
-  --addButton: #f1f1f2;
+  --addButton: #e2e2e2;
   --addButton2: #adadb1;
   --addButton3: #7d7d8a;
 
-  --adminButtons1: #817611;
-  --adminButtons2: #b9a012;
-  --adminButtons3: #f1d012;
+  --adminButtons1: #f17338;
+  --adminButtons2: #b86229;
+  --adminButtons3: #7c5221;
 
-  --navbarColor1: #f1d012;
-  --navbarColor2: #b9a012;
-  --navbarColor3: #817611;
+  --navbarColor1: #f15912;
+  --navbarColor2: #bd5d1d;
+  --navbarColor3: #814d11;
 
   --legColor: rgb(212, 209, 255);
   --bellyColor: rgb(255, 217, 255);
@@ -42,14 +46,14 @@ $dark: #212529;
   --backColor: rgb(251, 255, 194);
   --neckColor: rgb(255, 216, 172);
 
-  --selectedLegColor: rgb(17, 0, 255);
-  --selectedBellyColor: rgb(255, 0, 255);
+  --selectedLegColor: rgb(0, 140, 255);
+  --selectedBellyColor: rgb(255, 0, 128);
   --selectedChestColor: rgb(81, 255, 0);
   --selectedShoulderColor: rgb(0, 255, 255);
-  --selectedArmColor: rgb(255, 0, 0);
-  --selectedButtColor: rgb(0, 255, 191);
-  --selectedBackColor: rgb(238, 255, 0);
-  --selectedNeckColor: rgb(255, 136, 0);
+  --selectedArmColor: rgb(255, 81, 0);
+  --selectedButtColor: rgb(183, 0, 255);
+  --selectedBackColor: rgb(155, 163, 34);
+  --selectedNeckColor: rgb(136, 255, 0);
 }
 // Style Classes
 .header {
@@ -60,10 +64,17 @@ $dark: #212529;
   background: linear-gradient(180deg, var(--navbarColor1) 0%, var(--navbarColor2) 88%, var(--navbarColor3) 97%);
   border: hidden;
   border-radius: 5px;
-  width: 70px;
-  height: 33px;
+  width: 10vw;
+  height: 4vh;
+  margin: 2px;
 }
 .loginBtn:active {
+  transform: scale(0.9);
+}
+.exBtn {
+  background: linear-gradient(180deg, var(--exBtn) 0%, var(--exBtn2) 88%, var(--exBtn3) 97%);
+}
+.exBtn:active {
   transform: scale(0.9);
 }
 .showbtn {
@@ -80,42 +91,49 @@ $dark: #212529;
 }
 .addBtn {
   background: linear-gradient(180deg, var(--addButton) 0%, var(--addButton2) 85%, var(--addButton3) 100%);
+  border: hidden;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 30px;
 }
 .addBtn:active {
   transform: scale(0.9);
 }
+// mixin
+@mixin muscles($muscle) {
+  display: flex;
+  fill-opacity: 0.5 !important;
+  fill: $muscle !important;
+  color: black !important;
+  .thumbnailDiv {
+    background-color: $muscle;
+  }
+}
 .shoulder {
-  fill: var(--selectedShoulderColor) !important;
-  background-color: var(--selectedShoulderColor) !important;
+  @include muscles(var(--selectedShoulderColor));
 }
 .neck {
-  fill: var(--selectedNeckColor) !important;
-  background-color: var(--selectedNeckColor) !important;
+  @include muscles(var(--selectedNeckColor));
 }
 .chest {
-  fill: var(--selectedChestColor) !important;
-  background-color: var(--selectedChestColor) !important;
+  @include muscles(var(--selectedChestColor));
 }
 .back {
-  fill: var(--selectedBackColor) !important;
-  background-color: var(--selectedBackColor) !important;
+  @include muscles(var(--selectedBackColor));
 }
 .belly {
-  fill: var(--selectedBellyColor) !important;
-  background-color: var(--selectedBellyColor) !important;
+  @include muscles(var(--selectedBellyColor));
 }
 .butt {
-  fill: var(--selectedButtColor) !important;
-  background-color: var(--selectedButtColor) !important;
+  @include muscles(var(--selectedButtColor));
 }
 .leg {
-  fill: var(--selectedLegColor) !important;
-  background-color: var(--selectedLegColor) !important;
+  @include muscles(var(--selectedLegColor));
 }
 .arm {
-  fill: var(--selectedArmColor) !important;
-  background-color: var(--selectedArmColor) !important;
+  @include muscles(var(--selectedArmColor));
 }
+
 .unselectable {
   -webkit-touch-callout: none;
   -webkit-user-select: none;

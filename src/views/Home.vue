@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="d-flex justify-content-around" @click="closeList">
-      <HumanFront />
-      <HumanBack />
+    <div class="d-flex justify-content-center" @click="closeList">
+      <div style="margin-right: 8%"><HumanFront /></div>
+      <div style="margin-left: 8%"><HumanBack /></div>
     </div>
     <List :direction="orientation" />
   </div>
@@ -34,4 +34,8 @@ export default defineComponent({
   methods: {},
 });
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+</style>

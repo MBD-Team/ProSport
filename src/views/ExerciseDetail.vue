@@ -43,7 +43,7 @@
         </p>
         <h3>Benötigte Geräte</h3>
         <p style="font-size: 20px">
-          {{ this.equipment.join(', ') }}
+          {{ equipment.join(', ') }}
         </p>
       </div>
     </div>
@@ -57,8 +57,10 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Equipment, Exercise } from '@/types';
-import { getEquipment, MUSCLE_OPTIONS } from '@/API';
+
+import { Equipment, Exercise, MUSCLE_OPTIONS } from '@/types';
+import { lastPage } from '@/router';
+import * as API from '@/API';
 export default defineComponent({
   created() {
     if (this.$route.params.data) {
@@ -71,7 +73,12 @@ export default defineComponent({
     }
   },
   async mounted() {
-    this.equipmentsLoads = await getEquipment();
+    try {
+      this.equipmentsLoads = await API.getEquipment();
+    } catch (e) {
+      alert('Geräte konnten nicht geladen werden');
+      console.error({ "couldn't get Equipments": e });
+    }
     this.equipmentsLoads.forEach(e => {
       this.exercise.trainingDevices.forEach(t => {
         if (e.id == t) {
@@ -80,9 +87,9 @@ export default defineComponent({
       });
     });
   },
-
   data() {
     return {
+      lastPage: lastPage,
       equipment: [] as string[],
       equipmentsLoads: [] as Equipment[],
       muscleOptions: MUSCLE_OPTIONS,
@@ -93,7 +100,8 @@ export default defineComponent({
         hints: '',
         videoURL: '',
         img: '',
-        difficulty: '',
+        difficulty: 'easy',
+        grossMuscles: [],
         primaryMuscles: [],
         secondaryMuscles: [],
         trainingDevices: [],
@@ -102,12 +110,19 @@ export default defineComponent({
   },
   methods: {
     exitExerciseDetail() {
-      this.$router.push('/');
+      if (lastPage == 'Home') {
+        this.$router.push('/');
+      } else {
+        this.$router.push('/TrainingPlan');
+      }
     },
   },
 });
 </script>
 <style lang="scss" scoped>
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
 button {
   background: white;
 }
