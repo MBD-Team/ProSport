@@ -68,7 +68,7 @@
           <div class="btn-group col-9 m-0">
             <input
               type="radio"
-              class="btn-check"
+              class="btn-check shadow-none"
               name="difficulty"
               id="easy"
               autocomplete="off"
@@ -78,7 +78,7 @@
             <label class="btn btn-outline-success rounded-0" for="easy">Leicht</label>
             <input
               type="radio"
-              class="btn-check"
+              class="btn-check shadow-none"
               name="difficulty"
               id="medium"
               autocomplete="off"
@@ -88,7 +88,7 @@
             <label class="btn btn-outline-warning" for="medium">Mittel</label>
             <input
               type="radio"
-              class="btn-check"
+              class="btn-check shadow-none"
               name="difficulty"
               id="hard"
               autocomplete="off"
@@ -506,18 +506,5 @@ export default defineComponent({
 button {
   border: 1px hidden rgba(32, 32, 32, 0);
   border-radius: 5px;
-}
-
-.btn-check:focus + .btn-outline-danger,
-.btn-outline-danger:focus + .btn-outline-danger {
-  box-shadow: none !important;
-}
-.btn-check:focus + .btn-outline-warning,
-.btn-outline-warning:focus + .btn-outline-warning {
-  box-shadow: none !important;
-}
-.btn-check:focus + .btn-outline-success,
-.btn-outline-success:focus + .btn-outline-success {
-  box-shadow: none !important;
 }
 </style>
