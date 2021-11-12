@@ -314,6 +314,7 @@ export default defineComponent({
       this.form = 'edit';
     },
     async getExercises() {
+      this.errorReset();
       try {
         this.exercises = await API.getExercises();
       } catch (e) {
@@ -323,6 +324,7 @@ export default defineComponent({
     },
     async addEquipment() {
       if (!this.equipment) return;
+      this.errorReset();
       try {
         let newEquipment = await API.addEquipment(this.equipment);
         this.equipments.push(newEquipment);
@@ -333,6 +335,7 @@ export default defineComponent({
       }
     },
     async getEquipment() {
+      this.errorReset();
       try {
         this.equipments = await API.getEquipment();
       } catch (e) {
@@ -348,6 +351,7 @@ export default defineComponent({
           : 'Übungen benutzen dieses Gerät, sicher das du sie entfernen möchtest ?';
       if (!usage) {
         this.equipments = this.equipments.filter(e => e.id != id);
+        this.errorReset();
         try {
           API.deleteEquipment(id);
         } catch (e) {
@@ -359,6 +363,7 @@ export default defineComponent({
         this.exercises
           .filter(e => e.trainingDevices.find(t => t == id))
           .forEach(async e => {
+            this.errorReset();
             try {
               await API.deleteExercise(e.id);
             } catch (error) {
@@ -367,6 +372,7 @@ export default defineComponent({
             }
           });
         this.equipments = this.equipments.filter(e => e.id != id);
+        this.errorReset();
         try {
           API.deleteEquipment(id);
         } catch (e) {
@@ -387,12 +393,14 @@ export default defineComponent({
         return;
       }
       changed.disabled = disable;
+      this.errorReset();
       try {
         await API.updateEquipment(changed);
       } catch (e) {
         this.equipmentError = 'Gerät konnte nicht deaktiviert werden';
         console.error({ "couldn't disable Equipment": e });
       }
+      this.errorReset();
       try {
         this.equipments = await API.getEquipment();
       } catch (e) {
@@ -434,6 +442,7 @@ export default defineComponent({
         primaryMuscles: this.primaryMuscles,
         secondaryMuscles: this.secondaryMuscles,
       };
+      this.errorReset();
       try {
         this.loading = true;
         if (this.form == 'edit') {
@@ -464,6 +473,10 @@ export default defineComponent({
       this.secondaryMuscles = [];
       this.trainingDevices = [];
       this.selectedExercise = '';
+    },
+    errorReset() {
+      this.error = '';
+      this.equipmentError = '';
     },
   },
 
