@@ -317,6 +317,7 @@ export default defineComponent({
       try {
         this.exercises = await API.getExercises();
       } catch (e) {
+        this.error = 'Übungen konnten nicht geladen werden';
         console.error({ "couldn't load Exercises": e });
       }
     },
@@ -327,6 +328,7 @@ export default defineComponent({
         this.equipments.push(newEquipment);
         this.equipment = '';
       } catch (e) {
+        this.equipmentError = 'Geräte konnten nicht gespeichert werden';
         console.error({ "couldn't add Equipment": e });
       }
     },
@@ -334,6 +336,7 @@ export default defineComponent({
       try {
         this.equipments = await API.getEquipment();
       } catch (e) {
+        this.equipmentError = 'Geräte konnten nicht geladen werden';
         console.error({ "couldn't load Equipment": e });
       }
     },
@@ -348,16 +351,18 @@ export default defineComponent({
         try {
           API.deleteEquipment(id);
         } catch (e) {
+          this.equipmentError = 'Gerät konnte nicht gelöscht werden';
           console.error({ "couldn't delete Equipment": e });
         }
       }
       if (usage && window.confirm(`${usage} ${display}`)) {
         this.exercises
           .filter(e => e.trainingDevices.find(t => t == id))
-          .forEach(e => {
+          .forEach(async e => {
             try {
-              API.deleteExercise(e.id);
+              await API.deleteExercise(e.id);
             } catch (error) {
+              this.error = 'Übung konnte nicht gelöscht werden';
               console.error({ "couldn't delete Exercise with name : error": e.name + ':', error });
             }
           });
@@ -365,6 +370,7 @@ export default defineComponent({
         try {
           API.deleteEquipment(id);
         } catch (e) {
+          this.equipmentError = 'Gerät konnte nicht gelöscht werden';
           console.error({ "couldn't delete Equipment with id : error": id + ':', e });
         }
         this.exercises = this.exercises.filter(e => e.trainingDevices.find(t => t !== id));
@@ -384,11 +390,13 @@ export default defineComponent({
       try {
         await API.updateEquipment(changed);
       } catch (e) {
+        this.equipmentError = 'Gerät konnte nicht deaktiviert werden';
         console.error({ "couldn't disable Equipment": e });
       }
       try {
         this.equipments = await API.getEquipment();
       } catch (e) {
+        this.equipmentError = 'Geräte konnten nicht geladen werden';
         console.error({ "couldn't load Equipments": e });
       }
     },
@@ -415,15 +423,6 @@ export default defineComponent({
         return; //not supported
       }
 
-      for (let muscle of this.primaryMuscles) {
-        let muscleObj = MUSCLE_OPTIONS.find(m => m.value == muscle);
-        if (muscleObj) {
-          this.grossMuscles.push(muscleObj.grossMuscle);
-        } else {
-          return (this.error = 'Muskel wurde nicht gefunden');
-        }
-      }
-
       let newExercise = {
         name: this.name,
         description: this.description,
@@ -433,7 +432,6 @@ export default defineComponent({
         difficulty: this.difficulty,
         trainingDevices: this.trainingDevices,
         primaryMuscles: this.primaryMuscles,
-        grossMuscles: this.grossMuscles,
         secondaryMuscles: this.secondaryMuscles,
       };
       try {
@@ -461,7 +459,6 @@ export default defineComponent({
       this.hints = '';
       this.videoURL = '';
       this.difficulty = 'medium';
-      this.grossMuscles = [];
       this.primaryMuscles = [];
       this.secondaryMuscles = [];
       this.trainingDevices = [];
@@ -487,13 +484,7 @@ export default defineComponent({
       return this.exercises
         .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled))
         .sort(function (a, b) {
-          if (a.name < b.name) {
-            return -1;
-          }
-          if (a.name > b.name) {
-            return 1;
-          }
-          return 0;
+          return a.name < b.name ? -1 : 1;
         })
         .sort(function (a, b) {
           let map = {
@@ -505,26 +496,7 @@ export default defineComponent({
         });
     },
     disabled(): Exercise[] {
-      return this.exercises
-        .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && this.equipments.find(e => e.id == t)?.disabled))
-        .filter(e => e.trainingDevices.length > 0)
-        .sort(function (a, b) {
-          if (a.name < b.name) {
-            return -1;
-          }
-          if (a.name > b.name) {
-            return 1;
-          }
-          return 0;
-        })
-        .sort(function (a, b) {
-          let map = {
-            easy: 1,
-            medium: 2,
-            hard: 3,
-          };
-          return map[a.difficulty] - map[b.difficulty];
-        });
+      return this.enabled.filter(e => e.trainingDevices.length > 0);
     },
   },
 });
