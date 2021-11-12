@@ -454,6 +454,7 @@ export default defineComponent({
     },
     reset() {
       this.error = '';
+      this.equipmentError = '';
       this.name = '';
       this.description = '';
       this.hints = '';
@@ -483,9 +484,7 @@ export default defineComponent({
     enabled(): Exercise[] {
       return this.exercises
         .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled))
-        .sort(function (a, b) {
-          return a.name < b.name ? -1 : 1;
-        })
+        .sort((a, b) => (a.name < b.name ? -1 : 1))
         .sort(function (a, b) {
           let map = {
             easy: 1,

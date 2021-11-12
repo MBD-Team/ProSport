@@ -50,10 +50,10 @@ export default defineComponent({
         this.password = '';
         this.$router.push('/');
       } catch (e) {
+        this.error = true;
         console.error({ "couldn't login": e });
       } finally {
         this.password = '';
-        this.error = true;
         this.loggingIn = false;
       }
     },
