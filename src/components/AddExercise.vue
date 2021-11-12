@@ -2,7 +2,7 @@
   <div class="card card-default">
     <div class="card-header header p-4">
       <button class="btn addBtn col-3" @click="add()">Übung hinzufügen</button>
-      <button class="btn editBtn ms-2 col-3" @click="edit()">Übung Bearbeiten</button>
+      <button class="btn editBtn ms-2 col-3" @click="edit()">Übung bearbeiten</button>
     </div>
     <div class="card-body p-4" v-if="form == 'edit'">
       <div class="input-group">
@@ -68,7 +68,7 @@
           <div class="btn-group col-9 m-0">
             <input
               type="radio"
-              class="btn-check"
+              class="btn-check shadow-none"
               name="difficulty"
               id="easy"
               autocomplete="off"
@@ -78,7 +78,7 @@
             <label class="btn btn-outline-success rounded-0" for="easy">Leicht</label>
             <input
               type="radio"
-              class="btn-check"
+              class="btn-check shadow-none"
               name="difficulty"
               id="medium"
               autocomplete="off"
@@ -88,7 +88,7 @@
             <label class="btn btn-outline-warning" for="medium">Mittel</label>
             <input
               type="radio"
-              class="btn-check"
+              class="btn-check shadow-none"
               name="difficulty"
               id="hard"
               autocomplete="off"
@@ -505,18 +505,5 @@ export default defineComponent({
 button {
   border: 1px hidden rgba(32, 32, 32, 0);
   border-radius: 5px;
-}
-
-.btn-check:focus + .btn-outline-danger,
-.btn-outline-danger:focus + .btn-outline-danger {
-  box-shadow: none !important;
-}
-.btn-check:focus + .btn-outline-warning,
-.btn-outline-warning:focus + .btn-outline-warning {
-  box-shadow: none !important;
-}
-.btn-check:focus + .btn-outline-success,
-.btn-outline-success:focus + .btn-outline-success {
-  box-shadow: none !important;
 }
 </style>
