@@ -241,11 +241,7 @@ export default defineComponent({
         .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled))
         .filter(e => e.secondaryMuscles.find(m => m == this.selectedSecondaryMuscle) || !this.selectedSecondaryMuscle)
         .filter(e => e.primaryMuscles.find(m => m == this.selectedPrimaryMuscle) || !this.selectedPrimaryMuscle)
-        .sort((a, b) => {
-          if (a.name < b.name) return -1;
-          if (a.name > b.name) return 1;
-          return 0;
-        })
+        .sort((a, b) => (a.name < b.name ? -1 : 1))
         .sort((a, b) => {
           let map = {
             easy: 1,
