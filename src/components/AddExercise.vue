@@ -2,7 +2,7 @@
   <div class="card card-default">
     <div class="card-header header p-4">
       <button class="btn addBtn col-3" @click="add()">Übung hinzufügen</button>
-      <button class="btn editBtn ms-2 col-3" @click="edit()">Übung Bearbeiten</button>
+      <button class="btn editBtn ms-2 col-3" @click="edit()">Übung bearbeiten</button>
     </div>
     <div class="card-body p-4" v-if="form == 'edit'">
       <div class="input-group">

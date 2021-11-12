@@ -99,78 +99,41 @@ $dark: #212529;
 .addBtn:active {
   transform: scale(0.9);
 }
-.shoulder {
+// mixin
+@mixin muscles($muscle) {
   display: flex;
   fill-opacity: 0.5 !important;
-  fill: var(--selectedShoulderColor) !important;
+  fill: $muscle !important;
   color: black !important;
   .thumbnailDiv {
-    background-color: var(--selectedShoulderColor);
+    background-color: $muscle;
   }
+}
+.shoulder {
+  @include muscles(var(--selectedShoulderColor));
 }
 .neck {
-  display: flex;
-  fill-opacity: 0.5 !important;
-  fill: var(--selectedNeckColor) !important;
-  color: black !important;
-  .thumbnailDiv {
-    background-color: var(--selectedNeckColor);
-  }
+  @include muscles(var(--selectedNeckColor));
 }
 .chest {
-  display: flex;
-  fill-opacity: 0.5 !important;
-  fill: var(--selectedChestColor) !important;
-  color: black !important;
-  .thumbnailDiv {
-    background-color: var(--selectedChestColor);
-  }
+  @include muscles(var(--selectedChestColor));
 }
 .back {
-  display: flex;
-  fill-opacity: 0.5 !important;
-  fill: var(--selectedBackColor) !important;
-  color: black !important;
-  .thumbnailDiv {
-    background-color: var(--selectedBackColor);
-  }
+  @include muscles(var(--selectedBackColor));
 }
 .belly {
-  display: flex;
-  fill-opacity: 0.5 !important;
-  fill: var(--selectedBellyColor) !important;
-  color: black !important;
-  .thumbnailDiv {
-    background-color: var(--selectedBellyColor);
-  }
+  @include muscles(var(--selectedBellyColor));
 }
 .butt {
-  display: flex;
-  fill-opacity: 0.5 !important;
-  fill: var(--selectedButtColor) !important;
-  color: black !important;
-  .thumbnailDiv {
-    background-color: var(--selectedButtColor);
-  }
+  @include muscles(var(--selectedButtColor));
 }
 .leg {
-  display: flex;
-  fill-opacity: 0.5 !important;
-  fill: var(--selectedLegColor) !important;
-  color: black !important;
-  .thumbnailDiv {
-    background-color: var(--selectedLegColor);
-  }
+  @include muscles(var(--selectedLegColor));
 }
 .arm {
-  display: flex;
-  fill-opacity: 0.5 !important;
-  fill: var(--selectedArmColor) !important;
-  color: black !important;
-  .thumbnailDiv {
-    background-color: var(--selectedArmColor);
-  }
+  @include muscles(var(--selectedArmColor));
 }
+
 .unselectable {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
