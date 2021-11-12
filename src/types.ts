@@ -8,7 +8,6 @@ export interface CreatedExercise {
   videoURL: string;
   img: string;
   difficulty: 'easy' | 'medium' | 'hard';
-  grossMuscles: string[];
   primaryMuscles: string[];
   secondaryMuscles: string[];
   trainingDevices: string[];

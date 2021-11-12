@@ -76,6 +76,7 @@ export default defineComponent({
     try {
       this.equipmentsLoads = await API.getEquipment();
     } catch (e) {
+      alert('Geräte konnten nicht geladen werden');
       console.error({ "couldn't get Equipments": e });
     }
     this.equipmentsLoads.forEach(e => {

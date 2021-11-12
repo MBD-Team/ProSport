@@ -3,13 +3,13 @@
     <table class="table">
       <thead>
         <tr style="text-align: center">
-          <th style="width: 14.2%">Montag</th>
-          <th style="width: 14.2%">Dienstag</th>
-          <th style="width: 14.2%">Mittwoch</th>
-          <th style="width: 14.2%">Donnerstag</th>
-          <th style="width: 14.2%">Freitag</th>
-          <th style="width: 14.2%">Samstag</th>
-          <th style="width: 14.2%">Sonntag</th>
+          <th
+            v-for="day of ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']"
+            :key="day"
+            :style="`width:${100 / 7}%`"
+          >
+            {{ day }}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -23,7 +23,10 @@
                 @click="showExeriseDetail(exercise)"
                 style="text-align: center"
               >
-                <div :class="exercise.grossMuscles[0]" style="font-size: 15px; border-radius: 5px 5px 0px 0px">
+                <div
+                  :class="MUSCLE_OPTIONS.find(m => m.value == exercise.primaryMuscles[0])?.grossMuscle"
+                  style="font-size: 15px; border-radius: 5px 5px 0px 0px; justify-content: center"
+                >
                   {{ exercise.name }}
                 </div>
                 <div>
@@ -116,6 +119,7 @@ export default defineComponent({
       try {
         API.addTrainingsPlan(this.trainingsPlanDataBase);
       } catch (e) {
+        alert('Trainingsplan konnte nicht geladen werden.');
         console.error({ "couldn't add TrainingsPlan": e });
       }
       this.updateTrainingPlan();
@@ -124,6 +128,7 @@ export default defineComponent({
       try {
         this.exercises = await API.getExercises();
       } catch (e) {
+        alert('Übungen konnten nicht geladen werden.');
         console.log("couldn't load Exercises", e);
       }
     },
@@ -145,6 +150,7 @@ export default defineComponent({
           };
         }
       } catch (e) {
+        alert('Trainingsplan konnte nicht gespeichert werden.');
         console.error({ '': e });
       }
     },

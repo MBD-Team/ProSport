@@ -105,70 +105,25 @@
         <div class="modal-footer">
           <div class="container d-flex" style="justify-content: center">
             <button
+              v-for="day of [
+                { name: 'Montag', value: 'monday' },
+                { name: 'Dienstag', value: 'tuesday' },
+                { name: 'Mittwoch', value: 'wednesday' },
+                { name: 'Donnerstag', value: 'thursday' },
+                { name: 'Freitag', value: 'friday' },
+                { name: 'Samstag', value: 'saturday' },
+                { name: 'Sonntag', value: 'sunday' },
+              ]"
+              :key="day.name"
               type="button"
-              @click="addExerciseToTrainingPlan('monday')"
+              @click="addExerciseToTrainingPlan(day.value)"
               class="addBtn"
               style="width: 14.2%; padding: 5px; margin: 2px"
               data-bs-dismiss="modal"
             >
-              Montag
-            </button>
-            <button
-              type="button"
-              @click="addExerciseToTrainingPlan('tuesday')"
-              class="addBtn"
-              style="width: 14.2%; padding: 5px; margin: 2px"
-              data-bs-dismiss="modal"
-            >
-              Dienstag
-            </button>
-            <button
-              type="button"
-              @click="addExerciseToTrainingPlan('wednesday')"
-              class="addBtn"
-              style="width: 14.2%; padding: 5px; margin: 2px"
-              data-bs-dismiss="modal"
-            >
-              Mittwoch
-            </button>
-            <button
-              type="button"
-              @click="addExerciseToTrainingPlan('thursday')"
-              class="addBtn"
-              style="width: 14.2%; padding: 5px; margin: 2px"
-              data-bs-dismiss="modal"
-            >
-              Donnerstag
-            </button>
-            <button
-              type="button"
-              @click="addExerciseToTrainingPlan('friday')"
-              class="addBtn"
-              style="width: 14.2%; padding: 5px; margin: 2px"
-              data-bs-dismiss="modal"
-            >
-              Freitag
-            </button>
-            <button
-              type="button"
-              @click="addExerciseToTrainingPlan('saturday')"
-              class="addBtn"
-              style="width: 14.2%; padding: 5px; margin: 2px"
-              data-bs-dismiss="modal"
-            >
-              Samstag
-            </button>
-            <button
-              type="button"
-              @click="addExerciseToTrainingPlan('sunday')"
-              class="addBtn"
-              style="width: 14.2%; padding: 5px; margin: 2px"
-              data-bs-dismiss="modal"
-            >
-              Sonntag
+              {{ day.name }}
             </button>
           </div>
-          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
         </div>
       </div>
     </div>
@@ -229,6 +184,7 @@ export default defineComponent({
       try {
         this.exercises = await API.getExercises();
       } catch (e) {
+        alert('Übungen konnten nicht geladen werden.');
         console.log("couldn't load Exercises", e);
       }
     },
@@ -249,10 +205,12 @@ export default defineComponent({
             sunday: result?.trainingsPlan.sunday,
           };
         }
+
         this.selectedExercise = exercise;
         let modal = document.getElementById('trainingsPlanAddModal');
         if (modal) modal.style.display = 'block';
       } catch (e) {
+        alert('Trainingsplan konnte nicht geladen werden.');
         console.error({ '': e });
       }
     },
@@ -263,68 +221,47 @@ export default defineComponent({
       if (modal) modal.style.display = 'none';
     },
     addExerciseToTrainingPlan(day: string) {
-      switch (day) {
-        case 'monday':
-          this.trainingsPlan.monday.push(this.selectedExercise.id);
-          break;
-        case 'tuesday':
-          this.trainingsPlan.tuesday.push(this.selectedExercise.id);
-          break;
-        case 'wednesday':
-          this.trainingsPlan.wednesday.push(this.selectedExercise.id);
-          break;
-        case 'thursday':
-          this.trainingsPlan.thursday.push(this.selectedExercise.id);
-          break;
-        case 'friday':
-          this.trainingsPlan.friday.push(this.selectedExercise.id);
-          break;
-        case 'saturday':
-          this.trainingsPlan.saturday.push(this.selectedExercise.id);
-          break;
-        case 'sunday':
-          this.trainingsPlan.sunday.push(this.selectedExercise.id);
-          break;
-      }
+      this.trainingsPlan[day as keyof TrainingsPlan].push(this.selectedExercise.id);
       try {
         API.addTrainingsPlan(this.trainingsPlan);
       } catch (e) {
+        alert('Trainingsplan konnte nicht gespeichert werden.');
         console.error({ "couldn't add TrainingsPlan": e });
       }
       this.closeTrainingsPlanAddModal();
     },
   },
   computed: {
+    selectedMuscles(): string[] {
+      return this.MUSCLE_OPTIONS.filter(m => m.grossMuscle == this.selectedMuscle).map(m => m.value);
+    },
     filterex(): Exercise[] {
-      let selectedDifficulty = this.selectedDifficulty;
-      let selectedSecondaryMuscle = this.selectedSecondaryMuscle;
-      let selectedPrimaryMuscle = this.selectedPrimaryMuscle;
       return this.exercises
-        .filter(e => e.grossMuscles.includes(this.selectedMuscle))
+        .filter(e => e.primaryMuscles.some(m => this.selectedMuscles.includes(m)))
         .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled))
-        .sort(function (a, b) {
+        .filter(e => e.secondaryMuscles.find(m => m == this.selectedSecondaryMuscle) || !this.selectedSecondaryMuscle)
+        .filter(e => e.primaryMuscles.find(m => m == this.selectedPrimaryMuscle) || !this.selectedPrimaryMuscle)
+        .sort((a, b) => {
           if (a.name < b.name) return -1;
           if (a.name > b.name) return 1;
           return 0;
         })
-        .sort(function (a, b) {
+        .sort((a, b) => {
           let map = {
             easy: 1,
             medium: 2,
             hard: 3,
           };
-          if (selectedDifficulty == 2) map.medium = 0;
-          if (selectedDifficulty == 3) map.hard = 0;
+          if (this.selectedDifficulty == 2) map.medium = 0;
+          if (this.selectedDifficulty == 3) map.hard = 0;
           return map[a.difficulty] - map[b.difficulty];
-        })
-        .filter(e => e.secondaryMuscles.find(m => m == selectedSecondaryMuscle) || !selectedSecondaryMuscle)
-        .filter(e => e.primaryMuscles.find(m => m == selectedPrimaryMuscle) || !selectedPrimaryMuscle);
+        });
     },
     filterSecondary(): Muscle[] {
       let selectedPrimaryMuscle = this.selectedPrimaryMuscle;
       return MUSCLE_OPTIONS.filter(m =>
         this.exercises
-          .filter(e => e.grossMuscles.includes(this.selectedMuscle))
+          .filter(e => e.primaryMuscles.some(m => this.selectedMuscles.includes(m)))
           .filter(e => e.trainingDevices.every(t => this.equipments.find(e => e.id == t) && !this.equipments.find(e => e.id == t)?.disabled))
           .filter(e => e.primaryMuscles.find(m => m == selectedPrimaryMuscle || !selectedPrimaryMuscle))
           .some(e => e.secondaryMuscles.includes(m.value))
