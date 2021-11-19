@@ -92,7 +92,7 @@
     </div>
   </div>
   <!--new modal-->
-  <div class="modal" id="trainingsPlanAddModal" tabindex="-1" aria-labelledby="trainingsPlanAddModalLable" aria-hidden="true">
+  <div class="modal modal-dialog-scrollable" id="trainingsPlanAddModal" tabindex="-1" aria-labelledby="trainingsPlanAddModalLable" aria-hidden="true">
     <div class="">
       <div class="modal-content" style="padding: 0px; width: 85vw">
         <div class="modal-header">
@@ -375,10 +375,11 @@ b {
 }
 .modal-content {
   background-color: #fefefe;
-  margin: 15% auto;
+  margin: 10% auto;
   padding: 5px;
   border: 1px solid #888;
   width: 50vw;
+  max-height: 60vh !important;
 }
 .modal-header {
   background: linear-gradient(180deg, var(--navbarColor1) 0%, var(--navbarColor2) 88%, var(--navbarColor3) 97%);
