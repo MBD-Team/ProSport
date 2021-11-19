@@ -1,17 +1,8 @@
 <template>
-  <nav class="d-flex unselectable">
-    <div class="col-4"></div>
-    <a class="col-4 overflow-hidden" style="padding: 5px">
-      <img
-        src="@/assets/PS_Logo_doublebizeps.svg"
-        width="220"
-        height="50"
-        class=""
-        alt="PS_Logo"
-        @click="route()"
-        @dblclick="$router.push('/admin')"
-      />
-    </a>
+  <nav class="unselectable d-flex w-100">
+    <div class="col-8 d-flex p-2">
+      <img src="@/assets/PS_Logo_doublebizeps.svg" height="50" class="" alt="PS_Logo" @click="route()" @dblclick="$router.push('/admin')" />
+    </div>
 
     <div class="col-4 d-flex align-items-center justify-content-end" v-if="user != null">
       <button class="" @click="traningsPlan()" style="height: 45px; width: 45px text-align:center">
@@ -85,6 +76,16 @@ export default defineComponent({
 nav {
   background: linear-gradient(180deg, var(--navbarColor1) 0%, var(--navbarColor2) 88%, var(--navbarColor3) 97%);
   box-shadow: 0px -8px 8px 10px rgba(0, 0, 0, 0.5);
+
+  .col-8 {
+    img {
+      width: 220px;
+      position: relative;
+      @media (min-width: 768px) {
+        left: calc(75% - 110px);
+      }
+    }
+  }
 }
 
 img {

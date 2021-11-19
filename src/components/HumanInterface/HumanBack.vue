@@ -1,9 +1,8 @@
 <template>
   <div class="unselectable">
     <svg
-      width="110mm"
-      height="173mm"
-      viewBox="0 0 200 270"
+      width="25vw"
+      viewBox="3 30 147 245"
       version="1.1"
       id="svg53695"
       inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
@@ -356,6 +355,9 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
+svg {
+  margin-top: 6%;
+}
 img {
   margin-left: auto;
   margin-right: auto;

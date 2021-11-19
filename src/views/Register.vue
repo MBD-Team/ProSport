@@ -5,26 +5,30 @@
       <div class="card-body">
         <form @submit.prevent="register()" autocomplete="off">
           <div class="m-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
-          <div class="p-4 row">
-            <label class="col-4" for="email">Email:</label>
-            <div class="col-8">
-              <input minlength="3" class="form-control" id="email" type="text" placeholder="email" v-model="email" autocomplete="off" />
+
+          <div class="mb-4 input-group">
+            <span class="input-group-text col-4 col-lg-2" style="background-color: #f2f2f2">Email:</span>
+            <input minlength="3" class="form-control" id="email" type="text" v-model="email" autocomplete="off" required />
+          </div>
+
+          <div class="mb-4 input-group">
+            <span class="input-group-text col-4 col-lg-2" style="background-color: #f2f2f2">Passwort:</span>
+            <input minlength="3" class="form-control" id="password" type="password" autocomplete="off" required />
+          </div>
+          <div class="mb-4 input-group">
+            <span class="input-group-text col-4 col-lg-2" style="background-color: #f2f2f2">
+              Passwort
+              <br />
+              bestätigen:
+            </span>
+            <input minlength="3" class="form-control" id="password" type="password" v-model="confirmed" autocomplete="off" required />
+          </div>
+          <div class="row">
+            <div class="col-6 col-lg-2">
+              <button class="loginBtn p-1" style="width: 100%" type="submit" v-if="!registering">Registrieren</button>
+              <span v-if="registering" class="m-4 spinner-border spinner-border-sm text-primary"></span>
             </div>
           </div>
-          <div class="p-4 row">
-            <label class="col-4" for="Password">Passwort:</label>
-            <div class="col-8">
-              <input minlength="3" class="form-control" id="password" type="password" placeholder="passwort" v-model="password" autocomplete="off" />
-            </div>
-          </div>
-          <div class="p-4 row">
-            <label class="col-4" for="Password">Passwort bestätigen:</label>
-            <div class="col-8">
-              <input minlength="3" class="form-control" id="password" type="password" placeholder="passwort" v-model="confirmed" autocomplete="off" />
-            </div>
-          </div>
-          <button class="loginBtn" type="submit" v-if="!registering">Registrieren</button>
-          <span v-if="registering" class="m-4 spinner-border spinner-border-sm text-primary"></span>
         </form>
       </div>
     </div>
