@@ -371,9 +371,6 @@ export default defineComponent({
 });
 </script>
 <style scoped lang="scss">
-svg {
-  margin-top: 5%;
-}
 img {
   margin-left: auto;
   margin-right: auto;
