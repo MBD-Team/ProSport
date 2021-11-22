@@ -1,8 +1,51 @@
 <template>
   <div>
-    <div class="d-flex justify-content-center" @click="closeList" :style="displaySize ? null : 'height:91vh'">
-      <div class="front" style="margin-right: 8%" v-if="view == 'front' || displaySize"><HumanFront /></div>
-      <div class="back" style="margin-left: 8%" v-if="view == 'back' || displaySize"><HumanBack /></div>
+    <div class="d-flex justify-content-center" @click.stop="closeList" :style="displaySize ? null : 'height:91vh'">
+      <div class="front" style="margin-right: 8%" v-if="displaySize"><HumanFront /></div>
+      <div class="back" style="margin-left: 8%" v-if="displaySize"><HumanBack /></div>
+
+      <div class="fluid-container" v-if="!displaySize" v-show="viewCarousel" style="height: 91vh" @change="switchView()">
+        <div id="carouselExampleControls" class="carousel slide pointer-event" data-bs-interval="0">
+          <div class="carousel-inner text-center" style="height: 91vh; width: 99vw">
+            <div class="carousel-item">
+              <div class="front" style="margin-right: 8%"><HumanFront /></div>
+            </div>
+            <div class="carousel-item active">
+              <div class="front" style="margin-right: 8%"><HumanBack /></div>
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            href="#carouselExampleControls"
+            role="button"
+            data-bs-slide="prev"
+            style="background-color: none; width: 0vw; height: 0vh; opacity: 1"
+            id="prev"
+          >
+            <span aria-hidden="true" style="width: 100%; color: white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="0%" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+              </svg>
+            </span>
+            <span class="sr-only">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            href="#carouselExampleControls"
+            role="button"
+            data-bs-slide="next"
+            style="background-color: none; width: 0vw; height: 0vh; opacity: 1"
+            id="next"
+          >
+            <span aria-hidden="true" style="width: 100%; color: white">
+              <svg xmlns="http://www.w3.org/2000/svg" width="0%" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+              </svg>
+            </span>
+            <span class="sr-only">Next</span>
+          </button>
+        </div>
+      </div>
     </div>
     <button class="btn btn-success shadow-none" @click="switchView()">{{ textView }}</button>
     <List :direction="orientation" />
@@ -51,17 +94,24 @@ export default defineComponent({
       LIST_WIDTH.value = 90;
     }
   },
+  mounted() {
+    document.getElementById('next')?.click();
+    this.viewCarousel = true;
+  },
   setup() {
     return { orientation, closeList, LIST_WIDTH };
   },
   data() {
     return {
       view: 'front',
+      viewCarousel: false,
     };
   },
   methods: {
     switchView() {
+      console.log('f');
       this.view == 'front' ? (this.view = 'back') : (this.view = 'front');
+      document.getElementById('next')?.click();
     },
   },
 });
@@ -78,7 +128,7 @@ export default defineComponent({
   }
   @media (max-width: 768px) {
     transform: scale(3) !important;
-    margin-bottom: 100vh;
+    margin-top: 30vh !important;
     margin-left: 10%;
   }
 }
@@ -89,7 +139,7 @@ export default defineComponent({
   }
   @media (max-width: 768px) {
     transform: scale(3) !important;
-    margin-bottom: 100vh;
+    margin-top: 30vh !important;
     margin-right: 6%;
   }
 }
