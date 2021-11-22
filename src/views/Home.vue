@@ -4,7 +4,7 @@
       <div class="front" style="margin-right: 8%" v-if="displaySize"><HumanFront /></div>
       <div class="back" style="margin-left: 8%" v-if="displaySize"><HumanBack /></div>
 
-      <div class="fluid-container" v-if="!displaySize" v-show="viewCarousel" style="height: 91vh" @change="switchView()">
+      <div class="fluid-container" v-if="!displaySize" v-show="viewCarousel" style="height: 91vh">
         <div id="carouselExampleControls" class="carousel slide pointer-event" data-bs-interval="0">
           <div class="carousel-inner text-center" style="height: 91vh; width: 99vw">
             <div class="carousel-item">
@@ -47,7 +47,7 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-success shadow-none" @click="switchView()">{{ textView }}</button>
+    <button class="btn btn-success shadow-none" @click="next()">{{ textView }}</button>
     <List :direction="orientation" />
   </div>
 </template>
@@ -97,6 +97,10 @@ export default defineComponent({
   mounted() {
     document.getElementById('next')?.click();
     this.viewCarousel = true;
+    let myCarousel = document.getElementById('carouselExampleControls');
+    myCarousel?.addEventListener('slide.bs.carousel', () => {
+      this.switchView();
+    });
   },
   setup() {
     return { orientation, closeList, LIST_WIDTH };
@@ -109,8 +113,9 @@ export default defineComponent({
   },
   methods: {
     switchView() {
-      console.log('f');
       this.view == 'front' ? (this.view = 'back') : (this.view = 'front');
+    },
+    next() {
       document.getElementById('next')?.click();
     },
   },
