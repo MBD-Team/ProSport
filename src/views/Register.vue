@@ -13,7 +13,7 @@
 
           <div class="mb-4 input-group">
             <span class="input-group-text col-4 col-lg-2" style="background-color: #f2f2f2">Passwort:</span>
-            <input minlength="3" class="form-control" id="password" type="password" autocomplete="off" required />
+            <input minlength="3" class="form-control" id="password" type="password" v-model="password" autocomplete="off" required />
           </div>
           <div class="mb-4 input-group">
             <span class="input-group-text col-4 col-lg-2" style="background-color: #f2f2f2">
@@ -52,7 +52,7 @@ export default defineComponent({
   methods: {
     async register() {
       if (this.confirmed !== this.password) {
-        this.error = 'Die passwörter stimmen nicht überein';
+        this.error = 'Die Passwörter stimmen nicht überein';
         return;
       }
       this.registering = true;
