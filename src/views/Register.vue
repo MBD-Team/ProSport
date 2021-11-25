@@ -5,7 +5,7 @@
       <div class="card-body">
         <form @submit.prevent="register()" autocomplete="off">
           <div class="m-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
-
+          <div class="m-4 alert alert-success text-center" v-if="success">{{ success }}</div>
           <div class="mb-4 input-group">
             <span class="input-group-text col-4 col-lg-2" style="background-color: #f2f2f2">Email:</span>
             <input minlength="3" class="form-control" id="email" type="text" v-model="email" autocomplete="off" required />
@@ -46,6 +46,7 @@ export default defineComponent({
       password: '',
       email: '',
       error: '',
+      success: '',
       registering: false,
     };
   },
@@ -58,6 +59,10 @@ export default defineComponent({
       this.registering = true;
       try {
         await API.register(this.email, this.password);
+        this.success = 'Accout erfolgreich erstellt';
+        this.confirmed = '';
+        this.password = '';
+        this.email = '';
       } catch (e) {
         console.log("couldn't register", e);
         this.error = 'Der Account konnte leider nicht registriert werden';
