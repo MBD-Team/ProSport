@@ -53,17 +53,42 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
 import HumanFront from '@/components/HumanInterface/HumanFront.vue';
 import HumanBack from '@/components/HumanInterface/HumanBack.vue';
-
 import List from '@/components/List.vue';
 import { orientation, closeList, LIST_WIDTH } from '@/components/state';
 
 export default defineComponent({
+  components: { HumanFront, HumanBack, List },
+  created() {
+    window.innerWidth > 768 ? (LIST_WIDTH.value = 60) : (LIST_WIDTH.value = 90);
+  },
+  mounted() {
+    document.getElementById('next')?.click();
+    this.viewCarousel = true;
+    document.getElementById('carouselExampleControls')?.addEventListener('slide.bs.carousel', () => {
+      this.switchView();
+    });
+  },
+  setup() {
+    return { orientation, closeList, LIST_WIDTH };
+  },
+  data() {
+    return {
+      view: 'front',
+      viewCarousel: false,
+    };
+  },
+  methods: {
+    switchView() {
+      this.view == 'front' ? (this.view = 'back') : (this.view = 'front');
+    },
+    next() {
+      document.getElementById('next')?.click();
+    },
+  },
   computed: {
     direction() {
-      console.log(orientation);
       if (window.innerWidth > 768) {
         return orientation;
       } else {
@@ -84,39 +109,6 @@ export default defineComponent({
       } else {
         return 'Hinten';
       }
-    },
-  },
-  components: { HumanFront, HumanBack, List },
-  created() {
-    if (window.innerWidth > 768) {
-      LIST_WIDTH.value = 60;
-    } else {
-      LIST_WIDTH.value = 90;
-    }
-  },
-  mounted() {
-    document.getElementById('next')?.click();
-    this.viewCarousel = true;
-    let myCarousel = document.getElementById('carouselExampleControls');
-    myCarousel?.addEventListener('slide.bs.carousel', () => {
-      this.switchView();
-    });
-  },
-  setup() {
-    return { orientation, closeList, LIST_WIDTH };
-  },
-  data() {
-    return {
-      view: 'front',
-      viewCarousel: false,
-    };
-  },
-  methods: {
-    switchView() {
-      this.view == 'front' ? (this.view = 'back') : (this.view = 'front');
-    },
-    next() {
-      document.getElementById('next')?.click();
     },
   },
 });
@@ -157,7 +149,7 @@ export default defineComponent({
 }
 .btn {
   @media (min-width: 768px) {
-    display: none !important;
+    display: none;
   }
   width: 20%;
   position: absolute;
