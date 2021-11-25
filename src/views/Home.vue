@@ -69,6 +69,11 @@ export default defineComponent({
     document.getElementById('carouselExampleControls')?.addEventListener('slide.bs.carousel', () => {
       this.switchView();
     });
+    if (process.env.NODE_ENV === 'production') {
+      console.log('production');
+    } else {
+      console.log('test');
+    }
   },
   setup() {
     return { orientation, closeList, LIST_WIDTH };
