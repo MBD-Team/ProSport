@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-content-center" @click.stop="closeList()" style="width: 100vw; height: 90vh">
+  <div class="d-flex justify-content-center" id="main" @click.stop="closeList()">
     <div class="front" style="margin-right: 8%" v-if="displaySize"><HumanFront /></div>
     <div class="back" style="margin-left: 8%" v-if="displaySize"><HumanBack /></div>
     <div class="fluid-container" v-if="!displaySize" v-show="viewCarousel" style="height: 91vh">
@@ -77,6 +77,7 @@ export default defineComponent({
         return false;
       }
     },
+
     textView() {
       if (this.view == 'front') {
         return 'Vorne';
@@ -124,28 +125,33 @@ export default defineComponent({
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
-
+#main {
+  width: 100vw;
+  height: 91vh;
+}
 .front {
   margin-top: 1%;
   @media (max-width: 1200px) {
-    margin-top: 10%;
-    transform: scale(1.3) !important;
+    margin-bottom: 100vh;
+    margin-top: 10vh;
+    transform: scale(1.3);
   }
   @media (max-width: 768px) {
-    transform: scale(3) !important;
-    margin-top: 30vh !important;
+    transform: scale(3);
+    margin-top: 30vh;
     margin-left: 10%;
   }
 }
 .back {
   margin-top: 2%;
   @media (max-width: 1200px) {
-    margin-top: 10vh !important;
+    margin-bottom: 100vh;
+    margin-top: 11vh;
     transform: scale(1.3);
   }
   @media (max-width: 768px) {
-    transform: scale(10) !important;
-    margin-top: 30vh !important;
+    transform: scale(10);
+    margin-top: 30vh;
     margin-right: 6%;
   }
 }
