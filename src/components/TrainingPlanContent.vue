@@ -73,11 +73,15 @@
           :key="day"
         >
           <h1>{{ day.name }}</h1>
-          <div v-for="(exercise, exerciseIndex) of trainingsPlanLocal[day.value]" :key="exercise" class="mt-3" @click="showExeriseDetail(exercise)">
-            <div
-              :class="MUSCLE_OPTIONS.find(m => m.value == exercise.primaryMuscles[0])?.grossMuscle"
-              style="width: 60%; margin-left: 20%; justify-content: center"
-            >
+
+          <div
+            v-for="(exercise, exerciseIndex) of trainingsPlanLocal[day.value]"
+            :key="exercise"
+            @click="showExeriseDetail(exercise)"
+            style="border: solid 1px black; width: 60%"
+            class="mb-1 mx-auto"
+          >
+            <div :class="MUSCLE_OPTIONS.find(m => m.value == exercise.primaryMuscles[0])?.grossMuscle" style="width: 100%; justify-content: center">
               {{ exercise.name }}
             </div>
 
@@ -102,6 +106,7 @@
           </div>
         </div>
       </div>
+
       <button
         class="carousel-control-prev"
         href="#carouselExampleControls"
