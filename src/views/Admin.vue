@@ -7,18 +7,18 @@
           <div class="m-4 alert alert-danger text-center" v-if="error">Username or password is not correct</div>
 
           <div class="mb-4 input-group">
-            <span class="input-group-text col-4 col-lg-2" style="background-color: #f2f2f2">Email:</span>
+            <span class="input-group-text col-4 col-lg-2 cursorDefault" style="background-color: #f2f2f2">Email:</span>
             <input minlength="3" class="form-control" id="email" type="text" v-model="email" autocomplete="off" required />
           </div>
 
           <div class="mb-4 input-group">
-            <span class="input-group-text col-4 col-lg-2" style="background-color: #f2f2f2">Passwort:</span>
+            <span class="input-group-text col-4 col-lg-2 cursorDefault" style="background-color: #f2f2f2">Passwort:</span>
             <input minlength="3" class="form-control" id="password" type="password" v-model="password" autocomplete="off" required />
           </div>
           <div class="row">
             <div class="col-6 col-lg-2">
               <button class="loginBtn p-1" style="width: 100%" type="submit" v-if="!loggingIn">Anmelden</button>
-              <span v-else class="spinner-border spinner-border-sm text-primary" style="height: 2 rem; width: 2 rem"></span>
+              <span v-else class="spinner-border spinner-border-sm text-primary cursorDefault" style="height: 2 rem; width: 2 rem"></span>
             </div>
             <div class="col-6 col-lg-2">
               <button class="loginBtn p-1" style="width: 100%" type="button" v-if="!loggingIn" @click="register()">Registrieren</button>

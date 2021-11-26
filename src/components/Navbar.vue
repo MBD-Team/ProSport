@@ -1,7 +1,7 @@
 <template>
   <nav class="unselectable d-flex w-100">
     <div class="col-8 d-flex p-2">
-      <img src="@/assets/PS_Logo_doublebizeps.svg" height="50" class="" alt="PS_Logo" @click="route()" @dblclick="$router.push('/admin')" />
+      <img src="@/assets/PS_Logo_doublebizeps.svg" height="50" alt="PS_Logo" @click="route()" @dblclick="$router.push('/admin')" class="pointer" />
     </div>
     <div class="col-4 d-flex align-items-center justify-content-end" v-if="user == null">
       <button class="" @click="$router.push('/admin')" style="height: 45px; width: 45px text-align:center">

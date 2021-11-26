@@ -91,6 +91,7 @@
         />
         <path
           :class="{ shoulder: selectedMuscle == 'shoulder' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -110,6 +111,7 @@
         />
         <path
           :class="{ shoulder: selectedMuscle == 'shoulder' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -129,6 +131,7 @@
         />
         <path
           :class="{ neck: selectedMuscle == 'neck' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -148,6 +151,7 @@
         />
         <path
           :class="{ back: selectedMuscle == 'back' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -167,6 +171,7 @@
         />
         <path
           :class="{ butt: selectedMuscle == 'butt' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -186,6 +191,7 @@
         />
         <path
           :class="{ arm: selectedMuscle == 'arm' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -205,6 +211,7 @@
         />
         <path
           :class="{ arm: selectedMuscle == 'arm' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -224,6 +231,7 @@
         />
         <path
           :class="{ arm: selectedMuscle == 'arm' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -243,6 +251,7 @@
         />
         <path
           :class="{ arm: selectedMuscle == 'arm' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -262,6 +271,7 @@
         />
         <path
           :class="{ leg: selectedMuscle == 'leg' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -281,6 +291,7 @@
         />
         <path
           :class="{ leg: selectedMuscle == 'leg' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -300,6 +311,7 @@
         />
         <path
           :class="{ leg: selectedMuscle == 'leg' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -319,6 +331,7 @@
         />
         <path
           :class="{ leg: selectedMuscle == 'leg' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;

@@ -144,5 +144,10 @@ $dark: #212529;
   -ms-user-select: none;
   user-select: none;
 }
-
+.pointer {
+  cursor: pointer;
+}
+.cursorDefault {
+  cursor: default;
+}
 @import '~bootstrap/scss/bootstrap';

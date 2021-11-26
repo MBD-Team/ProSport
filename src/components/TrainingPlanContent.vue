@@ -57,7 +57,7 @@
 
   <div class="fluid-container" v-if="!displaySize" v-show="viewCarousel">
     <div id="carouselExampleControls" class="carousel slide pointer-event" data-bs-interval="0">
-      <div class="carousel-inner text-center" style="height: 91vh">
+      <div class="carousel-inner text-center" style="height: 91%">
         <div
           class="carousel-item text-center mt-5"
           :class="dayIndex == new Date().getDay() ? 'active' : null"
@@ -76,7 +76,7 @@
           <div v-for="(exercise, exerciseIndex) of trainingsPlanLocal[day.value]" :key="exercise" class="mt-3" @click="showExeriseDetail(exercise)">
             <div
               :class="MUSCLE_OPTIONS.find(m => m.value == exercise.primaryMuscles[0])?.grossMuscle"
-              style="width: 60vw; margin-left: 20vw; justify-content: center"
+              style="width: 60%; margin-left: 20%; justify-content: center"
             >
               {{ exercise.name }}
             </div>
@@ -107,7 +107,7 @@
         href="#carouselExampleControls"
         role="button"
         data-bs-slide="prev"
-        style="background-color: none; width: 20vw; height: 91vh; opacity: 1"
+        style="background-color: none; width: 0vw; height: 0vh; opacity: 1"
         id="prev"
       >
         <span aria-hidden="true" style="width: 100%; color: white">
@@ -122,7 +122,7 @@
         href="#carouselExampleControls"
         role="button"
         data-bs-slide="next"
-        style="background-color: none; width: 20vw; height: 91vh; opacity: 1"
+        style="background-color: none; width: 0vw; height: 0vh; opacity: 1"
         id="next"
       >
         <span aria-hidden="true" style="width: 100%; color: white">
@@ -155,7 +155,7 @@ export default defineComponent({
   },
   computed: {
     displaySize() {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > 1200) {
         return true;
       } else {
         return false;

@@ -1,9 +1,9 @@
 <template>
-  <div :class="direction" id="list" :style="{ width: listWidth }">
+  <div :class="direction" id="list" :style="{ width: listWidth }" class="pointer">
     <!-- difficulty -->
     <div class="row m-1">
       <div class="col-12 col-lg-4 mt-1 mt-lg-0 p-0">
-        <select class="form-select" id="inputGroupSelect01" style="font-size: 1.3rem" v-model.number="selectedDifficulty">
+        <select class="form-select pointer" id="inputGroupSelect01" style="font-size: 1.3rem" v-model.number="selectedDifficulty">
           <option value="0" disabled selected>Schwierigkeit</option>
           <option value="1">Leicht</option>
           <option value="2">Mittel</option>
@@ -14,7 +14,7 @@
       <div class="col-12 col-lg-4 mt-1 mt-lg-0 p-0 px-lg-1">
         <select
           v-if="filterPrimary.length > 1"
-          class="form-select"
+          class="form-select pointer"
           id="inputGroupSelect01"
           style="font-size: 1.3rem"
           v-model="selectedPrimaryMuscle"
@@ -32,7 +32,7 @@
             {{ muscle.name }}
           </option>
         </select>
-        <select v-else class="form-select" id="inputGroupSelect01" style="font-size: 1.3rem">
+        <select v-else class="form-select pointer" id="inputGroupSelect01" style="font-size: 1.3rem">
           <option value="" disabled selected>Hauptmuskel</option>
           <option v-for="muscle in filterPrimary" :key="muscle.value" :value="muscle.value">
             {{ muscle.name }}
@@ -43,7 +43,7 @@
       <div class="col-12 col-lg-4 mt-1 mt-lg-0 p-0">
         <select
           v-if="filterSecondary.length > 1"
-          class="form-select col-4"
+          class="form-select col-4 pointer"
           id="inputGroupSelect01"
           style="font-size: 1.3rem"
           v-model="selectedSecondaryMuscle"
@@ -93,46 +93,18 @@
   </div>
   <!--new modal-->
   <div class="modal modal-dialog-scrollable" id="trainingsPlanAddModal" tabindex="-1" aria-labelledby="trainingsPlanAddModalLable" aria-hidden="true">
-    <div class="">
-      <div class="modal-content" style="padding: 0px; width: 85vw">
-        <div class="modal-header">
-          <h5 class="modal-title" id="trainingsPlanAddModalLable">An welchen Tag möchtest du die Übung durchführen?</h5>
-          <button type="button" @click="closeTrainingsPlanAddModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-content" id="trainingsPlanAddModalContent" style="padding: 0px; width: 85vw">
+      <div class="modal-header">
+        <h5 class="modal-title" id="trainingsPlanAddModalLable">An welchen Tag möchtest du die Übung durchführen?</h5>
+        <button type="button" @click="closeTrainingsPlanAddModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div v-if="displaySize">
+          <TrainingPlanContent />
         </div>
-        <div class="modal-body">
-          <div v-if="displaySize">
-            <TrainingPlanContent />
-          </div>
-          <div v-if="!displaySize">
-            <div class="container text-center">
-              <div
-                v-for="day of [
-                  { name: 'Montag', value: 'monday' },
-                  { name: 'Dienstag', value: 'tuesday' },
-                  { name: 'Mittwoch', value: 'wednesday' },
-                  { name: 'Donnerstag', value: 'thursday' },
-                  { name: 'Freitag', value: 'friday' },
-                  { name: 'Samstag', value: 'saturday' },
-                  { name: 'Sonntag', value: 'sunday' },
-                ]"
-                :key="day.name"
-              >
-                <button
-                  type="button"
-                  @click="addExerciseToTrainingPlan(day.value)"
-                  class="addBtn"
-                  style="width: 60%; padding: 5px; margin: 2px"
-                  data-bs-dismiss="modal"
-                >
-                  {{ day.name }}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer" v-if="displaySize" style="justify-content: center">
-          <div class="container d-flex" style="justify-content: center">
-            <button
+        <div v-if="!displaySize">
+          <div class="container text-center">
+            <div
               v-for="day of [
                 { name: 'Montag', value: 'monday' },
                 { name: 'Dienstag', value: 'tuesday' },
@@ -143,16 +115,42 @@
                 { name: 'Sonntag', value: 'sunday' },
               ]"
               :key="day.name"
-              type="button"
-              @click="addExerciseToTrainingPlan(day.value)"
-              class="addBtn"
-              style="padding: 5px; margin: 2px"
-              :style="`width:${100 / 7}%`"
-              data-bs-dismiss="modal"
             >
-              {{ day.name }}
-            </button>
+              <button
+                type="button"
+                @click="addExerciseToTrainingPlan(day.value)"
+                class="addBtn"
+                style="width: 60%; padding: 5px; margin: 2px"
+                data-bs-dismiss="modal"
+              >
+                {{ day.name }}
+              </button>
+            </div>
           </div>
+        </div>
+      </div>
+      <div class="modal-footer" v-if="displaySize" style="justify-content: center">
+        <div class="container d-flex" style="justify-content: center">
+          <button
+            v-for="day of [
+              { name: 'Montag', value: 'monday' },
+              { name: 'Dienstag', value: 'tuesday' },
+              { name: 'Mittwoch', value: 'wednesday' },
+              { name: 'Donnerstag', value: 'thursday' },
+              { name: 'Freitag', value: 'friday' },
+              { name: 'Samstag', value: 'saturday' },
+              { name: 'Sonntag', value: 'sunday' },
+            ]"
+            :key="day.name"
+            type="button"
+            @click="addExerciseToTrainingPlan(day.value)"
+            class="addBtn"
+            style="padding: 5px; margin: 2px"
+            :style="`width:${100 / 7}%`"
+            data-bs-dismiss="modal"
+          >
+            {{ day.name }}
+          </button>
         </div>
       </div>
     </div>
@@ -205,6 +203,11 @@ export default defineComponent({
   },
   watch: { $route: 'loadExercises' },
   async mounted() {
+    window.addEventListener('click', event => {
+      if (event.target == document.getElementById('trainingsPlanAddModal')) {
+        this.closeTrainingsPlanAddModal();
+      }
+    });
     await this.loadExercises();
     this.equipments = await API.getEquipment();
   },
@@ -379,7 +382,8 @@ b {
   padding: 5px;
   border: 1px solid #888;
   width: 50vw;
-  max-height: 60vh !important;
+  max-height: 60vh;
+  height: 60vh;
 }
 .modal-header {
   background: linear-gradient(180deg, var(--navbarColor1) 0%, var(--navbarColor2) 88%, var(--navbarColor3) 97%);

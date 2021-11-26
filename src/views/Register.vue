@@ -7,16 +7,16 @@
           <div class="m-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
           <div class="m-4 alert alert-success text-center" v-if="success">{{ success }}</div>
           <div class="mb-4 input-group">
-            <span class="input-group-text col-4 col-lg-2" style="background-color: #f2f2f2">Email:</span>
+            <span class="input-group-text col-4 col-lg-2 cursorDefault" style="background-color: #f2f2f2">Email:</span>
             <input minlength="3" class="form-control" id="email" type="text" v-model="email" autocomplete="off" required />
           </div>
 
           <div class="mb-4 input-group">
-            <span class="input-group-text col-4 col-lg-2" style="background-color: #f2f2f2">Passwort:</span>
+            <span class="input-group-text col-4 col-lg-2 cursorDefault" style="background-color: #f2f2f2">Passwort:</span>
             <input minlength="3" class="form-control" id="password" type="password" v-model="password" autocomplete="off" required />
           </div>
           <div class="mb-4 input-group">
-            <span class="input-group-text col-4 col-lg-2" style="background-color: #f2f2f2">
+            <span class="input-group-text col-4 col-lg-2 cursorDefault" style="background-color: #f2f2f2">
               Passwort
               <br />
               bestätigen:
@@ -26,7 +26,7 @@
           <div class="row">
             <div class="col-6 col-lg-2">
               <button class="loginBtn p-1" style="width: 100%" type="submit" v-if="!registering">Registrieren</button>
-              <span v-if="registering" class="m-4 spinner-border spinner-border-sm text-primary"></span>
+              <span v-if="registering" class="m-4 spinner-border spinner-border-sm text-primary cursorDefault"></span>
             </div>
           </div>
         </form>

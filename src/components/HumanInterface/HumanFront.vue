@@ -73,6 +73,7 @@
         />
         <path
           :class="{ chest: selectedMuscle == 'chest' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -108,6 +109,7 @@
         />
         <path
           :class="{ belly: selectedMuscle == 'belly' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -127,6 +129,7 @@
         />
         <path
           :class="{ belly: selectedMuscle == 'belly' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -146,6 +149,7 @@
         />
         <path
           :class="{ belly: selectedMuscle == 'belly' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -165,6 +169,7 @@
         />
         <path
           :class="{ leg: selectedMuscle == 'leg' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -184,6 +189,7 @@
         />
         <path
           :class="{ leg: selectedMuscle == 'leg' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -203,6 +209,7 @@
         />
         <path
           :class="{ leg: selectedMuscle == 'leg' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -222,6 +229,7 @@
         />
         <path
           :class="{ leg: selectedMuscle == 'leg' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -241,6 +249,7 @@
         />
         <path
           :class="{ shoulder: selectedMuscle == 'shoulder' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -260,6 +269,7 @@
         />
         <path
           :class="{ shoulder: selectedMuscle == 'shoulder' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -279,6 +289,7 @@
         />
         <path
           :class="{ arm: selectedMuscle == 'arm' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -298,6 +309,7 @@
         />
         <path
           :class="{ arm: selectedMuscle == 'arm' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -317,6 +329,7 @@
         />
         <path
           :class="{ arm: selectedMuscle == 'arm' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -336,6 +349,7 @@
         />
         <path
           :class="{ arm: selectedMuscle == 'arm' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;

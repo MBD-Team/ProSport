@@ -6,7 +6,7 @@
     </div>
     <div class="card-body p-4" v-if="form == 'edit'">
       <div class="input-group">
-        <span class="input-group-text col-3" style="background-color: #f2f2f2" v-if="form == 'edit'">Wähle eine Übung:</span>
+        <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2" v-if="form == 'edit'">Wähle eine Übung:</span>
         <div class="col-9">
           <Multiselect
             @select="change()"
@@ -27,7 +27,7 @@
         <div class="my-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
 
         <div class="mb-4 input-group">
-          <span class="input-group-text col-3" style="background-color: #f2f2f2">Name der Übung:</span>
+          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Name der Übung:</span>
           <input
             type="text"
             style="background-color: #ffffff"
@@ -40,16 +40,16 @@
         </div>
 
         <div class="mb-4 input-group">
-          <span class="input-group-text col-3" style="background-color: #f2f2f2">Beschreibung:</span>
+          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Beschreibung:</span>
           <textarea class="form-control col-9" style="background-color: #ffffff" v-model="description" autocomplete="off" required />
         </div>
         <div class="mb-4 input-group">
-          <span class="input-group-text col-3" style="background-color: #f2f2f2">Hinweise:</span>
+          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Hinweise:</span>
           <textarea class="form-control col-9" style="background-color: #ffffff" v-model="hints" autocomplete="off" required />
         </div>
 
         <div class="mb-4 input-group">
-          <span class="input-group-text col-3" style="background-color: #f2f2f2">YoutubeURL:</span>
+          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">YoutubeURL:</span>
           <input
             minlength="3"
             class="form-control col-9"
@@ -64,7 +64,7 @@
         <div class="alert alert-danger" v-if="videoURL && !img">Das ist kein Youtube link</div>
 
         <div class="mb-4 input-group">
-          <span class="input-group-text col-3" style="background-color: #f2f2f2">Schwierigkeitsgrad:</span>
+          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Schwierigkeitsgrad:</span>
           <div class="btn-group col-9 m-0">
             <input
               type="radio"
@@ -100,7 +100,7 @@
         </div>
 
         <div class="mb-4 input-group">
-          <span class="input-group-text col-3" style="background-color: #f2f2f2">Hauptmuskel:</span>
+          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Hauptmuskel:</span>
           <div class="col-9">
             <Multiselect
               class="rounded-0 rounded-end"
@@ -115,7 +115,7 @@
         </div>
 
         <div class="mb-4 input-group">
-          <span class="input-group-text col-3" style="background-color: #f2f2f2">Hilfsmuskel:</span>
+          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Hilfsmuskel:</span>
           <div class="col-9">
             <Multiselect
               class="rounded-0 rounded-end"
@@ -130,7 +130,7 @@
         </div>
 
         <div class="mb-4 input-group">
-          <span class="input-group-text col-3" style="background-color: #f2f2f2">Trainigsgerät:</span>
+          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Trainigsgerät:</span>
           <div class="col-9">
             <Multiselect
               class="rounded-0 rounded-end"
@@ -148,7 +148,7 @@
           <i class="fas fa-plus"></i>
           Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}
         </button>
-        <span v-if="loading" class="spinner-border spinner-border-sm text-primary"></span>
+        <span v-if="loading" class="spinner-border spinner-border-sm text-primary cursorDefault"></span>
         <button class="btn editBtn ms-2 col-3" type="button" @click="listExercises()">Übungen anzeigen</button>
       </form>
     </div>
@@ -208,7 +208,7 @@
     <div class="card-body p-4">
       <form class="mb-4" @submit.prevent="addEquipment()">
         <div class="mb-4 input-group">
-          <span class="input-group-text col-3" style="background-color: #f2f2f2">Name des Gerätes:</span>
+          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Name des Gerätes:</span>
           <input class="form-control" style="background-color: #ffffff" type="text" v-model="equipment" autocomplete="off" required />
         </div>
         <button class="btn addBtn col-3" type="submit">Gerät hinzufügen</button>
@@ -224,10 +224,10 @@
           <tr v-for="e in equipments.filter(e => e.disabled == false)" :key="e.id">
             <td>{{ e.name }}</td>
             <td>
-              <div @click="disableEquipment(e.id, true)"><i class="fas fa-ban" style="float: right"></i></div>
+              <div @click="disableEquipment(e.id, true)"><i class="fas fa-ban pointer" style="float: right"></i></div>
             </td>
             <td>
-              <div @click="deleteEquipment(e.id)"><i class="fas fa-trash-alt" style="float: right"></i></div>
+              <div @click="deleteEquipment(e.id)"><i class="fas fa-trash-alt pointer" style="float: right"></i></div>
             </td>
           </tr>
         </tbody>
@@ -242,10 +242,10 @@
           <tr v-for="e in equipments.filter(e => e.disabled == true)" :key="e.id">
             <td>{{ e.name }}</td>
             <td>
-              <div @click="disableEquipment(e.id, false)"><i class="fas fa-check-circle" style="float: right"></i></div>
+              <div @click="disableEquipment(e.id, false)"><i class="fas fa-check-circle pointer" style="float: right"></i></div>
             </td>
             <td>
-              <div @click="deleteEquipment(e.id)"><i class="fas fa-trash-alt" style="float: right"></i></div>
+              <div @click="deleteEquipment(e.id)"><i class="fas fa-trash-alt pointer" style="float: right"></i></div>
             </td>
           </tr>
         </tbody>
