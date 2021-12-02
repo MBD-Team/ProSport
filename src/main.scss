@@ -150,4 +150,172 @@ $dark: #212529;
 .cursorDefault {
   cursor: default;
 }
+//material inputs
+.input-contain {
+  position: relative;
+  input {
+    height: 3.5rem;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 1rem;
+    .placeholder-text {
+      font-size: 1.4rem; //input fontsize
+      padding: 0 1.2rem;
+    }
+  }
+  input:focus {
+    outline: none;
+    border-color: blueviolet;
+    & + .placeholder-text .text {
+      background-color: white;
+      font-size: 1.1rem;
+      transform: translate(0, -100%);
+      border-color: blueviolet;
+      color: blueviolet;
+    }
+  }
+
+  .placeholder-text {
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    pointer-events: none;
+
+    .text {
+      font-size: 1.4rem; // placeholder
+      padding: 0 0.5rem;
+      margin: 0 1rem;
+      transform: translate(0);
+      transition: transform 0.15s ease-out, font-size 0.15s ease-out, background-color 0.2s ease-out, color 0.15s ease-out;
+    }
+  }
+  input:focus + .placeholder-text .text,
+  input.dirty + .placeholder-text .text {
+    background-color: white;
+    font-size: 1.1rem;
+    color: black;
+    transform: translate(0, -100%);
+  }
+  input:focus + .placeholder-text .text {
+    border-color: blueviolet;
+    color: blueviolet;
+  }
+}
+
+.textarea-contain {
+  position: relative;
+  textarea {
+    height: 3.5rem;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 1rem;
+    padding-top: 0.5rem;
+    .placeholder-text {
+      font-size: 1.4rem; //input fontsize
+      padding: 1rem 1.2rem;
+    }
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: blueviolet;
+    & + .placeholder-text .text {
+      background-color: white;
+      font-size: 1.1rem;
+      transform: translate(0, -50%);
+      border-color: blueviolet;
+      color: blueviolet;
+    }
+  }
+  .placeholder-text {
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    pointer-events: none;
+
+    .text {
+      font-size: 1.4rem; // placeholder
+      padding: 0 0.5rem;
+      margin: 0.6rem 1rem;
+      transform: translate(0);
+      transition: transform 0.15s ease-out, font-size 0.15s ease-out, background-color 0.2s ease-out, color 0.15s ease-out;
+    }
+  }
+  textarea:focus + .placeholder-text .text,
+  textarea.dirty + .placeholder-text .text {
+    background-color: white;
+    font-size: 1.1rem;
+    color: black;
+    transform: translate(0, -80%);
+  }
+
+  textarea + .placeholder-text {
+    align-items: flex-start;
+  }
+}
+
+.multiselect-contain {
+  position: relative;
+  .multiselect {
+    height: 3.5rem;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 1rem;
+    .placeholder-text {
+      font-size: 1.4rem; //input fontsize
+      padding: 0 1.2rem;
+    }
+  }
+  .multiselect:focus-within {
+    outline: none;
+    border-color: blueviolet;
+    & + .placeholder-text .text {
+      background-color: rgba(255, 255, 255, 0);
+      font-size: 1.1rem;
+      transform: translate(0, -100%);
+      border-color: blueviolet;
+      color: blueviolet;
+    }
+  }
+  .placeholder-text {
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    pointer-events: none;
+
+    .text {
+      font-size: 1.2rem; // placeholder
+      padding: 0rem 0.5rem;
+      margin: 0rem 1rem;
+      transform: translate(0);
+      transition: transform 0.15s ease-out, font-size 0.15s ease-out, background-color 0.2s ease-out, color 0.15s ease-out;
+    }
+  }
+  .multiselect:focus + .placeholder-text .text,
+  .multiselect.dirty + .placeholder-text .text {
+    background-color: white;
+    font-size: 1.1rem;
+    color: black;
+    transform: translate(0, -100%);
+  }
+  .multiselect:focus + .placeholder-text .text {
+    border-color: blueviolet;
+    color: blueviolet;
+  }
+}
+.multiselect-search {
+  background-color: rgba(255, 255, 255, 0);
+}
 @import '~bootstrap/scss/bootstrap';

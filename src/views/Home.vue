@@ -142,7 +142,7 @@ export default defineComponent({
     transform: scale(1.3);
   }
   @media (max-width: 768px) {
-    transform: scale(10);
+    transform: scale(3);
     margin-top: 30vh;
     margin-right: 6%;
   }

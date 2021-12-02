@@ -20,7 +20,7 @@
           v-model="selectedPrimaryMuscle"
           @change="selectedSecondaryMuscle = ''"
         >
-          <option value="" disabled selected>Hauptmuskel</option>
+          <option value="">Hauptmuskel</option>
           <option value="">
             {{
               MUSCLE_OPTIONS.filter(m => m.grossMuscle == selectedMuscle)
@@ -48,8 +48,7 @@
           style="font-size: 1.3rem"
           v-model="selectedSecondaryMuscle"
         >
-          <option value="" disabled selected>Hilfsmuskel</option>
-          <option value="">Alle</option>
+          <option value="">Hilfsmuskel</option>
           <option v-for="muscle in filterSecondary" :key="muscle.value" :value="muscle.value">
             {{ muscle.name }}
           </option>

@@ -4,61 +4,90 @@
       <button class="btn addBtn col-3" @click="add()">Übung hinzufügen</button>
       <button class="btn editBtn ms-2 col-3" @click="edit()">Übung bearbeiten</button>
     </div>
-    <div class="card-body p-4" v-if="form == 'edit'">
-      <div class="input-group">
-        <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2" v-if="form == 'edit'">Wähle eine Übung:</span>
-        <div class="col-9">
-          <Multiselect
-            @select="change()"
-            class="rounded-0 rounded-end"
-            v-if="form == 'edit'"
-            v-model="selectedExercise"
-            :options="exercises.map(({ id, name }) => ({ value: id, label: name }))"
-            :closeOnSelect="true"
-            :searchable="true"
-            noResultsText="Keine Übungen vorhanden"
-          />
-        </div>
+    <div class="card-body p-4" v-show="form == 'edit'">
+      <div class="multiselect-contain">
+        <Multiselect
+          @select="change()"
+          :class="{ dirty: selectedExercise }"
+          v-show="form == 'edit'"
+          v-model="selectedExercise"
+          :options="exercises.map(({ id, name }) => ({ value: id, label: name }))"
+          :closeOnSelect="true"
+          :searchable="true"
+          id="fname"
+          noResultsText="Keine Übungen vorhanden"
+        />
+        <label class="placeholder-text" for="fname" id="placeholder-fname">
+          <div class="text">Wähle eine Übung</div>
+        </label>
       </div>
     </div>
 
-    <div class="card-body p-4" v-if="form == 'add' || (form == 'edit' && selectedExercise)">
+    <div class="card-body p-4" v-show="form == 'add' || (form == 'edit' && selectedExercise)">
       <form @submit.prevent="addExercise()" autocomplete="off">
         <div class="my-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
 
-        <div class="mb-4 input-group">
-          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Name der Übung:</span>
+        <div class="input-contain mb-4">
           <input
             type="text"
-            style="background-color: #ffffff"
-            aria-label="First name"
-            class="form-control col-9"
+            id="fname"
+            name="fname"
+            autocomplete="off"
+            aria-labelledby="placeholder-fname"
             v-model="name"
-            autocomplete="off"
+            :class="{ dirty: name }"
             required
           />
+          <label class="placeholder-text" for="fname" id="placeholder-fname">
+            <div class="text">Name der Übung</div>
+          </label>
         </div>
 
-        <div class="mb-4 input-group">
-          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Beschreibung:</span>
-          <textarea class="form-control col-9" style="background-color: #ffffff" v-model="description" autocomplete="off" required />
-        </div>
-        <div class="mb-4 input-group">
-          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Hinweise:</span>
-          <textarea class="form-control col-9" style="background-color: #ffffff" v-model="hints" autocomplete="off" required />
-        </div>
-
-        <div class="mb-4 input-group">
-          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">YoutubeURL:</span>
-          <input
-            minlength="3"
-            class="form-control col-9"
-            style="background-color: #ffffff"
+        <div class="textarea-contain mb-4">
+          <textarea
             type="text"
-            v-model="videoURL"
+            id="fname"
+            name="fname"
             autocomplete="off"
+            aria-labelledby="placeholder-fname"
+            v-model="description"
+            :class="{ dirty: description }"
             required
           />
+          <label class="placeholder-text" for="fname" id="placeholder-fname">
+            <div class="text">Beschreibung</div>
+          </label>
+        </div>
+
+        <div class="textarea-contain mb-4">
+          <textarea
+            type="text"
+            id="fname"
+            name="fname"
+            autocomplete="off"
+            aria-labelledby="placeholder-fname"
+            v-model="hints"
+            :class="{ dirty: hints }"
+            required
+          />
+          <label class="placeholder-text" for="fname" id="placeholder-fname">
+            <div class="text">Hinweise</div>
+          </label>
+        </div>
+        <div class="input-contain mb-4">
+          <input
+            type="text"
+            id="fname"
+            name="fname"
+            autocomplete="off"
+            aria-labelledby="placeholder-fname"
+            v-model="videoURL"
+            :class="{ dirty: videoURL }"
+            required
+          />
+          <label class="placeholder-text" for="fname" id="placeholder-fname">
+            <div class="text">YoutubeURL</div>
+          </label>
         </div>
         <div class="mb-4" v-if="img"><img :src="img" style="width: 180px; height: 100px" /></div>
         <div class="alert alert-danger" v-if="videoURL && !img">Das ist kein Youtube link</div>
@@ -99,51 +128,53 @@
           </div>
         </div>
 
-        <div class="mb-4 input-group">
-          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Hauptmuskel:</span>
-          <div class="col-9">
-            <Multiselect
-              class="rounded-0 rounded-end"
-              v-model="primaryMuscles"
-              :options="muscleOptions.filter(m => !secondaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
-              mode="tags"
-              :closeOnSelect="false"
-              :searchable="true"
-              noResultsText="no muscles found"
-            />
-          </div>
+        <div class="multiselect-contain mb-4">
+          <Multiselect
+            v-model="primaryMuscles"
+            :class="{ dirty: primaryMuscles.length > 0 }"
+            :options="muscleOptions.filter(m => !secondaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
+            mode="tags"
+            :closeOnSelect="false"
+            :searchable="true"
+            noResultsText="no muscles found"
+            id="fname"
+          />
+          <label class="placeholder-text" for="fname" id="placeholder-fname">
+            <div class="text">Hauptmuskel</div>
+          </label>
         </div>
 
-        <div class="mb-4 input-group">
-          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Hilfsmuskel:</span>
-          <div class="col-9">
-            <Multiselect
-              class="rounded-0 rounded-end"
-              v-model="secondaryMuscles"
-              :options="muscleOptions.filter(m => !primaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
-              mode="tags"
-              :closeOnSelect="false"
-              :searchable="true"
-              noResultsText="no muscles found"
-            />
-          </div>
+        <div class="multiselect-contain mb-4">
+          <Multiselect
+            v-model="secondaryMuscles"
+            :class="{ dirty: secondaryMuscles.length > 0 }"
+            :options="muscleOptions.filter(m => !primaryMuscles.includes(m.value)).map(({ value, name }) => ({ value: value, label: name }))"
+            mode="tags"
+            :closeOnSelect="false"
+            :searchable="true"
+            noResultsText="no muscles found"
+            id="fname"
+          />
+          <label class="placeholder-text" for="fname" id="placeholder-fname">
+            <div class="text">Hilfsmuskel</div>
+          </label>
+        </div>
+        <div class="multiselect-contain mb-4">
+          <Multiselect
+            v-model="trainingDevices"
+            :class="{ dirty: this.trainingDevices.length > 0 }"
+            :options="equipments.map(({ id, name }) => ({ value: id, label: name }))"
+            mode="tags"
+            :closeOnSelect="false"
+            :searchable="true"
+            noResultsText="keine Geräte vorhanden"
+            id="fname"
+          />
+          <label class="placeholder-text" for="fname" id="placeholder-fname">
+            <div class="text">Trainigsgerät</div>
+          </label>
         </div>
 
-        <div class="mb-4 input-group">
-          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Trainigsgerät:</span>
-          <div class="col-9">
-            <Multiselect
-              class="rounded-0 rounded-end"
-              v-model="trainingDevices"
-              :options="equipments.map(({ id, name }) => ({ value: id, label: name }))"
-              mode="tags"
-              :closeOnSelect="false"
-              :searchable="true"
-              noResultsText="keine Geräte vorhanden"
-              placeholder="Kein Gerät benötigt"
-            />
-          </div>
-        </div>
         <button class="btn exBtn col-3" type="submit" v-if="!loading">
           <i class="fas fa-plus"></i>
           Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}
@@ -207,10 +238,13 @@
     <div class="card-header header">Trainingsgerät hinzufügen</div>
     <div class="card-body p-4">
       <form class="mb-4" @submit.prevent="addEquipment()">
-        <div class="mb-4 input-group">
-          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Name des Gerätes:</span>
-          <input class="form-control" style="background-color: #ffffff" type="text" v-model="equipment" autocomplete="off" required />
+        <div class="input-contain mb-4">
+          <input type="text" id="fname" name="fname" autocomplete="off" aria-labelledby="placeholder-fname" v-model="equipment" required />
+          <label class="placeholder-text" for="fname" id="placeholder-fname">
+            <div class="text">Name des Gerätes</div>
+          </label>
         </div>
+
         <button class="btn addBtn col-3" type="submit">Gerät hinzufügen</button>
       </form>
       <div class="m-4 alert alert-danger text-center" v-if="equipmentError">{{ equipmentError }}</div>
@@ -254,7 +288,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, InputHTMLAttributes, ref, watchEffect } from 'vue';
 import * as API from '@/API';
 
 import { Equipment, Exercise, MUSCLE_OPTIONS } from '@/types';
@@ -263,10 +297,12 @@ import Multiselect from '@vueform/multiselect';
 export default defineComponent({
   components: { Multiselect },
   watch: { $route: 'getExercises' },
+
   mounted() {
     this.getEquipment();
     this.getExercises();
   },
+
   data() {
     return {
       list: false,
@@ -292,6 +328,7 @@ export default defineComponent({
       exercises: [] as Exercise[],
     };
   },
+
   methods: {
     change() {
       let chosenExercise = this.exercises.find(e => e.id == this.selectedExercise);

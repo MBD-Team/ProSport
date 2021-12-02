@@ -6,22 +6,51 @@
         <form @submit.prevent="register()" autocomplete="off">
           <div class="m-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
           <div class="m-4 alert alert-success text-center" v-if="success">{{ success }}</div>
-          <div class="mb-4 input-group">
-            <span class="input-group-text col-4 col-lg-2 cursorDefault" style="background-color: #f2f2f2">Email:</span>
-            <input minlength="3" class="form-control" id="email" type="text" v-model="email" autocomplete="off" required />
-          </div>
 
-          <div class="mb-4 input-group">
-            <span class="input-group-text col-4 col-lg-2 cursorDefault" style="background-color: #f2f2f2">Passwort:</span>
-            <input minlength="3" class="form-control" id="password" type="password" v-model="password" autocomplete="off" required />
+          <div class="input-contain mb-4">
+            <input
+              type="text"
+              id="fname"
+              name="fname"
+              autocomplete="off"
+              aria-labelledby="placeholder-fname"
+              v-model="email"
+              :class="{ dirty: email }"
+              required
+            />
+            <label class="placeholder-text" for="fname" id="placeholder-fname">
+              <div class="text">Email</div>
+            </label>
           </div>
-          <div class="mb-4 input-group">
-            <span class="input-group-text col-4 col-lg-2 cursorDefault" style="background-color: #f2f2f2">
-              Passwort
-              <br />
-              bestätigen:
-            </span>
-            <input minlength="3" class="form-control" id="password" type="password" v-model="confirmed" autocomplete="off" required />
+          <div class="input-contain mb-4">
+            <input
+              type="password"
+              id="fname"
+              name="fname"
+              autocomplete="off"
+              aria-labelledby="placeholder-fname"
+              v-model="password"
+              :class="{ dirty: password }"
+              required
+            />
+            <label class="placeholder-text" for="fname" id="placeholder-fname">
+              <div class="text">Passwort</div>
+            </label>
+          </div>
+          <div class="input-contain mb-4">
+            <input
+              type="password"
+              id="fname"
+              name="fname"
+              autocomplete="off"
+              aria-labelledby="placeholder-fname"
+              v-model="confirmed"
+              :class="{ dirty: confirmed }"
+              required
+            />
+            <label class="placeholder-text" for="fname" id="placeholder-fname">
+              <div class="text">bestätigen</div>
+            </label>
           </div>
           <div class="row">
             <div class="col-6 col-lg-2">
@@ -40,6 +69,17 @@ import { defineComponent } from 'vue';
 import * as API from '@/API';
 
 export default defineComponent({
+  mounted() {
+    let input_elements = document.querySelectorAll('input');
+    for (let input_element of input_elements) {
+      input_element?.setAttribute('value', '');
+      if (input_element) {
+        input_element.addEventListener('keyup', () => {
+          input_element!.setAttribute('value', input_element!.value);
+        });
+      }
+    }
+  },
   data() {
     return {
       confirmed: '',

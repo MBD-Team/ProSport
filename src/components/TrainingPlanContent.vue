@@ -112,10 +112,10 @@
         href="#carouselExampleControls"
         role="button"
         data-bs-slide="prev"
-        style="background-color: none; width: 0vw; height: 0vh; opacity: 1"
+        style="background-color: none; opacity: 1"
         id="prev"
       >
-        <span aria-hidden="true" style="width: 100%; color: white">
+        <span aria-hidden="true" style="width: 0%; color: white">
           <svg xmlns="http://www.w3.org/2000/svg" width="0%" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
             <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
           </svg>
@@ -127,10 +127,10 @@
         href="#carouselExampleControls"
         role="button"
         data-bs-slide="next"
-        style="background-color: none; width: 0vw; height: 0vh; opacity: 1"
+        style="background-color: none; opacity: 1"
         id="next"
       >
-        <span aria-hidden="true" style="width: 100%; color: white">
+        <span aria-hidden="true" style="width: 0%; color: white">
           <svg xmlns="http://www.w3.org/2000/svg" width="0%" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
             <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
           </svg>
