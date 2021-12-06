@@ -2,7 +2,7 @@
   <div class="unselectable">
     <svg
       width="25vw"
-      viewBox="60 29 145 260"
+      viewBox="60 29 145 240"
       version="1.1"
       id="svg53695"
       inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"

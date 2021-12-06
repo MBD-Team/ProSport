@@ -93,38 +93,41 @@
         <div class="alert alert-danger" v-if="videoURL && !img">Das ist kein Youtube link</div>
 
         <div class="mb-4 input-group">
-          <span class="input-group-text col-3 cursorDefault" style="background-color: #f2f2f2">Schwierigkeitsgrad:</span>
-          <div class="btn-group col-9 m-0">
+          <div class="btn-group col-12 m-0" style="height: 3.5rem">
             <input
               type="radio"
-              class="btn-check shadow-none"
+              class="btn-check"
               name="difficulty"
               id="easy"
               autocomplete="off"
               @change="difficulty = 'easy'"
               :checked="difficulty == 'easy'"
             />
-            <label class="btn btn-outline-success rounded-0" for="easy">Leicht</label>
+            <label class="btn btn-outline-success shadow-none" for="easy" style="border-radius: 1rem 0 0 1rem; border: solid var(--bs-success) 2px">
+              Leicht
+            </label>
             <input
               type="radio"
-              class="btn-check shadow-none"
+              class="btn-check"
               name="difficulty"
               id="medium"
               autocomplete="off"
               @change="difficulty = 'medium'"
               :checked="difficulty == 'medium'"
             />
-            <label class="btn btn-outline-warning" for="medium">Mittel</label>
+            <label class="btn btn-outline-warning shadow-none" for="medium" style="border: solid var(--bs-warning) 2px">Mittel</label>
             <input
               type="radio"
-              class="btn-check shadow-none"
+              class="btn-check"
               name="difficulty"
               id="hard"
               autocomplete="off"
               @change="difficulty = 'hard'"
               :checked="difficulty == 'hard'"
             />
-            <label class="btn btn-outline-danger" for="hard">Schwer</label>
+            <label class="btn btn-outline-danger shadow-none" for="hard" style="border-radius: 0 1rem 1rem 0; border: solid var(--bs-danger) 2px">
+              Schwer
+            </label>
           </div>
         </div>
 

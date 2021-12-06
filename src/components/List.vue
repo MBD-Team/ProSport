@@ -92,13 +92,13 @@
   </div>
   <!--new modal-->
   <div class="modal modal-dialog-scrollable" id="trainingsPlanAddModal" tabindex="-1" aria-labelledby="trainingsPlanAddModalLable" aria-hidden="true">
-    <div class="modal-content" id="trainingsPlanAddModalContent" style="padding: 0px; width: 85vw">
+    <div class="modal-content" id="trainingsPlanAddModalContent">
       <div class="modal-header">
         <h5 class="modal-title" id="trainingsPlanAddModalLable">An welchen Tag möchtest du die Übung durchführen?</h5>
         <button type="button" @click="closeTrainingsPlanAddModal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div v-if="displaySize">
+        <div v-if="displaySize" style="height: 100%">
           <TrainingPlanContent />
         </div>
         <div v-if="!displaySize">
@@ -319,6 +319,14 @@ export default defineComponent({
 <style scoped lang="scss">
 * {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+#trainingsPlanAddModalContent {
+  padding: 0px;
+  width: 95%;
+  border: none;
+  @media (max-width: 768px) {
+    width: 85%;
+  }
 }
 img {
   @media (max-width: 768px) {

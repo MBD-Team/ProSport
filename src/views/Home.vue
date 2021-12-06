@@ -117,14 +117,14 @@ export default defineComponent({
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
-#main {
-  width: 100vw;
-  height: 91vh;
-}
+
 .front {
-  margin-top: 1%;
+  @media (max-width: 1920px) {
+    margin-top: 2vh;
+    transform: scale(1);
+    margin-bottom: 0%;
+  }
   @media (max-width: 1200px) {
-    margin-bottom: 100vh;
     margin-top: 10vh;
     transform: scale(1.3);
   }
@@ -135,9 +135,12 @@ export default defineComponent({
   }
 }
 .back {
-  margin-top: 2%;
+  @media (max-width: 1920px) {
+    margin-top: 2vh;
+    transform: scale(1);
+    margin-bottom: 0%;
+  }
   @media (max-width: 1200px) {
-    margin-bottom: 100vh;
     margin-top: 11vh;
     transform: scale(1.3);
   }

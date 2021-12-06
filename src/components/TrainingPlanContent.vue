@@ -55,9 +55,9 @@
     </table>
   </div>
 
-  <div class="fluid-container" v-if="!displaySize" v-show="viewCarousel">
-    <div id="carouselExampleControls" class="carousel slide pointer-event" data-bs-interval="0">
-      <div class="carousel-inner text-center" style="height: 91%">
+  <div class="fluid-container" style="height: 100%" v-if="!displaySize" v-show="viewCarousel">
+    <div id="carouselExampleControls" style="height: 100%" class="carousel slide pointer-event" data-bs-interval="0">
+      <div class="carousel-inner text-center" style="height: 89%">
         <div
           class="carousel-item text-center mt-5"
           :class="dayIndex == new Date().getDay() ? 'active' : null"
@@ -78,21 +78,28 @@
             v-for="(exercise, exerciseIndex) of trainingsPlanLocal[day.value]"
             :key="exercise"
             @click="showExeriseDetail(exercise)"
-            style="border: solid 1px black; width: 60%"
+            style="width: 80%"
             class="mb-1 mx-auto"
           >
-            <div :class="MUSCLE_OPTIONS.find(m => m.value == exercise.primaryMuscles[0])?.grossMuscle" style="width: 100%; justify-content: center">
+            <div
+              :class="MUSCLE_OPTIONS.find(m => m.value == exercise.primaryMuscles[0])?.grossMuscle"
+              style="border-radius: 1rem 1rem 0 0; border: solid black 2px; justify-content: center"
+            >
               {{ exercise.name }}
             </div>
 
-            <div>
+            <div style="border: solid black; border-width: 0 2px 0 2px">
               {{
                 MUSCLE_OPTIONS.filter(m => exercise?.primaryMuscles.includes(m.value))
                   .map(p => p.name)
                   .join(', ')
               }}
             </div>
-            <div class="text-center" @click.stop="deleteExercise(day.value, exerciseIndex)">
+            <div
+              class="text-center"
+              @click.stop="deleteExercise(day.value, exerciseIndex)"
+              style="border-radius: 0 0 1rem 1rem; border: solid black 2px"
+            >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                 <path
                   d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"

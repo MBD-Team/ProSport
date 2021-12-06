@@ -1,8 +1,8 @@
 <template>
-  <div class="container d-flex align-items-stretch justify-content-center flex-column" style="height: calc(100vh - 200px)">
-    <div class="card card-default w-75" style="margin-left: 12.5%">
-      <div class="card-header header">Anmeldung</div>
-      <div class="card-body">
+  <div class="container d-flex align-items-stretch justify-content-center flex-column" style="margin-top: 20vh">
+    <div class="card card-default w-75" style="margin-left: 12.5%; border: none">
+      <div class="card-header header" style="border: 1px solid black; border-bottom: none">Anmeldung</div>
+      <div class="card-body" style="border: 1px solid black; border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px)">
         <form @submit.prevent="register()" autocomplete="off">
           <div class="m-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
           <div class="m-4 alert alert-success text-center" v-if="success">{{ success }}</div>
@@ -53,8 +53,8 @@
             </label>
           </div>
           <div class="row">
-            <div class="col-6 col-lg-2">
-              <button class="loginBtn p-1" style="width: 100%" type="submit" v-if="!registering">Registrieren</button>
+            <div class="col-6 col-lg-3">
+              <button class="loginBtn" style="width: 100%; height: 2rem" type="submit" v-if="!registering">Registrieren</button>
               <span v-if="registering" class="m-4 spinner-border spinner-border-sm text-primary cursorDefault"></span>
             </div>
           </div>
