@@ -2,9 +2,9 @@
   <div class="d-flex justify-content-center" id="main" @click.stop="closeList()">
     <div class="front" style="margin-right: 8%" v-if="displaySize"><HumanFront /></div>
     <div class="back" style="margin-left: 8%" v-if="displaySize"><HumanBack /></div>
-    <div class="fluid-container" v-if="!displaySize" v-show="viewCarousel" style="height: 91vh">
+    <div class="fluid-container" v-if="!displaySize" v-show="viewCarousel" style="height: 89vh">
       <div id="carouselExampleControls" class="carousel slide pointer-event" data-bs-interval="0">
-        <div class="carousel-inner text-center" style="height: 91vh; width: 99vw">
+        <div class="carousel-inner text-center" style="height: 89vh; width: 99vw">
           <div class="carousel-item">
             <div class="front" style="margin-right: 8%"><HumanFront /></div>
           </div>
@@ -61,13 +61,16 @@ import { orientation, closeList, LIST_WIDTH } from '@/components/state';
 export default defineComponent({
   components: { HumanFront, HumanBack, List },
   created() {
-    window.innerWidth > 768 ? (LIST_WIDTH.value = 60) : (LIST_WIDTH.value = 90);
+    this.changeDisplaySize();
   },
   mounted() {
     document.getElementById('next')?.click();
     this.viewCarousel = true;
     document.getElementById('carouselExampleControls')?.addEventListener('slide.bs.carousel', () => {
       this.switchView();
+    });
+    window.addEventListener('resize', () => {
+      this.changeDisplaySize();
     });
   },
   setup() {
@@ -77,6 +80,8 @@ export default defineComponent({
     return {
       view: 'front',
       viewCarousel: false,
+      displaySize: true,
+      direction: 'front',
     };
   },
   methods: {
@@ -86,23 +91,19 @@ export default defineComponent({
     next() {
       document.getElementById('next')?.click();
     },
+    changeDisplaySize() {
+      if (window.innerWidth > 768) {
+        LIST_WIDTH.value = 60;
+        this.displaySize = true;
+        this.direction = orientation.value;
+      } else {
+        LIST_WIDTH.value = 90;
+        this.displaySize = false;
+        this.direction = 'front';
+      }
+    },
   },
   computed: {
-    direction() {
-      if (window.innerWidth > 768) {
-        return orientation;
-      } else {
-        return 'front';
-      }
-    },
-    displaySize() {
-      if (window.innerWidth > 768) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-
     textView() {
       if (this.view == 'front') {
         return 'Vorne';
@@ -117,37 +118,52 @@ export default defineComponent({
 * {
   font-family: Arial, Helvetica, sans-serif;
 }
-
+#main {
+  @media (max-width: 1200px) {
+    height: 90vh;
+  }
+  @media (max-width: 768px) {
+    height: 0vh;
+  }
+}
 .front {
+  max-height: 60vh;
   @media (max-width: 1920px) {
     margin-top: 2vh;
     transform: scale(1);
-    margin-bottom: 0%;
   }
   @media (max-width: 1200px) {
-    margin-top: 10vh;
+    margin-top: 15vh;
     transform: scale(1.3);
   }
   @media (max-width: 768px) {
+    transform: scale(1.6);
+    margin-top: 20vh;
+    margin-left: 10%;
+  }
+  @media (max-width: 576px) {
     transform: scale(3);
     margin-top: 30vh;
-    margin-left: 10%;
   }
 }
 .back {
+  max-height: 60vh;
   @media (max-width: 1920px) {
     margin-top: 2vh;
     transform: scale(1);
-    margin-bottom: 0%;
   }
   @media (max-width: 1200px) {
-    margin-top: 11vh;
+    margin-top: 16vh;
     transform: scale(1.3);
   }
   @media (max-width: 768px) {
+    transform: scale(1.7);
+    margin-top: 20vh;
+    margin-right: 6%;
+  }
+  @media (max-width: 576px) {
     transform: scale(3);
     margin-top: 30vh;
-    margin-right: 6%;
   }
 }
 .btn {

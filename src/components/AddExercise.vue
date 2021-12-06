@@ -1,10 +1,15 @@
 <template>
-  <div class="card card-default">
-    <div class="card-header header p-4">
-      <button class="btn addBtn col-3" @click="add()">Übung hinzufügen</button>
-      <button class="btn editBtn ms-2 col-3" @click="edit()">Übung bearbeiten</button>
+  <div class="card card-default" style="border: none">
+    <div class="card-header header p-4" :class="{ rounded: !form }" style="border: 1px solid black">
+      <button class="btn addBtn col-4 col-sm-3 shadow-none" @click="add()">Übung hinzufügen</button>
+      <button class="btn editBtn ms-2 col-4 col-sm-3 shadow-none" @click="edit()">Übung bearbeiten</button>
     </div>
-    <div class="card-body p-4" v-show="form == 'edit'">
+
+    <div
+      class="card-body p-4"
+      v-show="form == 'edit'"
+      style="border: 1px solid black; border-top: none; border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px)"
+    >
       <div class="multiselect-contain">
         <Multiselect
           @select="change()"
@@ -23,7 +28,11 @@
       </div>
     </div>
 
-    <div class="card-body p-4" v-show="form == 'add' || (form == 'edit' && selectedExercise)">
+    <div
+      class="card-body p-4"
+      v-show="form == 'add' || (form == 'edit' && selectedExercise)"
+      style="border: 1px solid black; border-top: none; border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px)"
+    >
       <form @submit.prevent="addExercise()" autocomplete="off">
         <div class="my-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
 
@@ -178,35 +187,35 @@
           </label>
         </div>
 
-        <button class="btn exBtn col-3" type="submit" v-if="!loading">
-          <i class="fas fa-plus"></i>
+        <button class="btn exBtn col-4 col-sm-3" type="submit" v-if="!loading">
+          <!-- <i class="fas fa-plus"></i> -->
           Übung {{ form == 'add' ? 'hinzufügen' : 'ändern' }}
         </button>
         <span v-if="loading" class="spinner-border spinner-border-sm text-primary cursorDefault"></span>
-        <button class="btn editBtn ms-2 col-3" type="button" @click="listExercises()">Übungen anzeigen</button>
+        <button class="btn editBtn ms-2 col-4 col-sm-3 shadow-none" type="button" @click="listExercises()">Übungen anzeigen</button>
       </form>
     </div>
   </div>
-  <div class="card card-default mt-4" v-if="list">
-    <div class="card-header header">Übungen :</div>
-    <div class="card-body">
+  <div class="card card-default mt-4" style="border: none" v-if="list">
+    <div class="card-header header" style="border: 1px solid black">Übungen :</div>
+    <div class="card-body" style="border: 1px solid black; border-top: none; border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px)">
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th class="w-25">Name der Übung</th>
-            <th class="w-25">Schwierigkeitsgrad</th>
-            <th class="w-50">Benötigte Geräte</th>
+            <th class="w-25 p-0 p-md-2">Name der Übung</th>
+            <th class="w-25 p-0 p-md-2">Schwierig&shy;keitsgrad</th>
+            <th class="w-50 p-0 p-md-2">Benötigte Geräte</th>
           </tr>
         </thead>
         <tbody>
           <template v-if="enabled">
             <tr>Aktive Übungen</tr>
             <tr v-for="exercise in enabled" :key="exercise.id">
-              <td>
+              <td class="p-0 p-md-2">
                 {{ exercise.name }}
               </td>
-              <td>{{ exercise.difficulty }}</td>
-              <td>
+              <td class="p-0 p-md-2">{{ exercise.difficulty }}</td>
+              <td class="p-0 p-md-2">
                 {{
                   equipments
                     .filter(e => exercise.trainingDevices.find(t => t == e.id))
@@ -237,9 +246,9 @@
       </table>
     </div>
   </div>
-  <div class="card card-default mt-4">
-    <div class="card-header header">Trainingsgerät hinzufügen</div>
-    <div class="card-body p-4">
+  <div class="card card-default mt-4" style="border: none">
+    <div class="card-header header" style="border: 1px solid black">Trainingsgerät hinzufügen</div>
+    <div class="card-body p-4" style="border: 1px solid black; border-top: none; border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px)">
       <form class="mb-4" @submit.prevent="addEquipment()">
         <div class="input-contain mb-4">
           <input type="text" id="fname" name="fname" autocomplete="off" aria-labelledby="placeholder-fname" v-model="equipment" required />
@@ -248,7 +257,7 @@
           </label>
         </div>
 
-        <button class="btn addBtn col-3" type="submit">Gerät hinzufügen</button>
+        <button class="btn addBtn col-4 col-sm-3" type="submit">Gerät hinzufügen</button>
       </form>
       <div class="m-4 alert alert-danger text-center" v-if="equipmentError">{{ equipmentError }}</div>
       <table class="table table-striped">

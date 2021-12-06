@@ -57,7 +57,7 @@
 
   <div class="fluid-container" style="height: 100%" v-if="!displaySize" v-show="viewCarousel">
     <div id="carouselExampleControls" style="height: 100%" class="carousel slide pointer-event" data-bs-interval="0">
-      <div class="carousel-inner text-center" style="height: 89%">
+      <div class="carousel-inner text-center" style="height: 89vh">
         <div
           class="carousel-item text-center mt-5"
           :class="dayIndex == new Date().getDay() ? 'active' : null"
@@ -153,7 +153,6 @@ import { Exercise, TrainingsPlan, MUSCLE_OPTIONS } from '@/types';
 import { selectedExercise } from '@/components/state';
 import { defineComponent } from 'vue';
 import * as API from '@/API';
-import { getRole } from '@/API';
 export default defineComponent({
   async created() {
     await this.loadExercises();
