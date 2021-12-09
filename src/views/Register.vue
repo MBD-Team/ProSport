@@ -1,8 +1,8 @@
 <template>
   <div class="container d-flex align-items-stretch justify-content-center flex-column" style="margin-top: 20vh">
-    <div class="card card-default w-75" style="margin-left: 12.5%; border: none">
-      <div class="card-header header" style="border: 1px solid black; border-bottom: none">Anmeldung</div>
-      <div class="card-body" style="border: 1px solid black; border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px)">
+    <div class="card card-default w-75 border-0" style="margin-left: 12.5%">
+      <div class="card-header header border border-dark border-bottom-0">Anmeldung</div>
+      <div class="card-body border border-dark rounded-bottom">
         <form @submit.prevent="register()" autocomplete="off">
           <div class="m-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
           <div class="m-4 alert alert-success text-center" v-if="success">{{ success }}</div>

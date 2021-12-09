@@ -1,5 +1,5 @@
 <template>
-  <div class="container" v-if="displaySize">
+  <div class="mx-2" v-if="displaySize">
     <table class="table">
       <thead>
         <tr style="text-align: center">
@@ -79,16 +79,17 @@
             :key="exercise"
             @click="showExeriseDetail(exercise)"
             style="width: 80%"
-            class="mb-1 mx-auto"
+            class="mb-1 mx-auto pointer"
           >
             <div
               :class="MUSCLE_OPTIONS.find(m => m.value == exercise.primaryMuscles[0])?.grossMuscle"
-              style="border-radius: 1rem 1rem 0 0; border: solid black 2px; justify-content: center"
+              class="pointer border border-2 border-dark"
+              style="border-radius: 1rem 1rem 0 0; justify-content: center"
             >
               {{ exercise.name }}
             </div>
 
-            <div style="border: solid black; border-width: 0 2px 0 2px">
+            <div class="pointer border border-2 border-top-0 border-bottom-0 border-dark">
               {{
                 MUSCLE_OPTIONS.filter(m => exercise?.primaryMuscles.includes(m.value))
                   .map(p => p.name)
@@ -96,9 +97,9 @@
               }}
             </div>
             <div
-              class="text-center"
-              @click.stop="deleteExercise(day.value, exerciseIndex)"
-              style="border-radius: 0 0 1rem 1rem; border: solid black 2px"
+              class="text-center border border-2 border-dark"
+              @click.stop="deleteExercise(day, exerciseIndex)"
+              style="border-radius: 0 0 1rem 1rem"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                 <path
@@ -119,10 +120,10 @@
         href="#carouselExampleControls"
         role="button"
         data-bs-slide="prev"
-        style="background-color: none; opacity: 1"
+        style="background-color: none; opacity: 1; width: 10%; color: white"
         id="prev"
       >
-        <span aria-hidden="true" style="width: 0%; color: white">
+        <span aria-hidden="true">
           <svg xmlns="http://www.w3.org/2000/svg" width="0%" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
             <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
           </svg>
@@ -134,10 +135,10 @@
         href="#carouselExampleControls"
         role="button"
         data-bs-slide="next"
-        style="background-color: none; opacity: 1"
+        style="background-color: none; opacity: 1; width: 10%; color: white"
         id="next"
       >
-        <span aria-hidden="true" style="width: 0%; color: white">
+        <span aria-hidden="true">
           <svg xmlns="http://www.w3.org/2000/svg" width="0%" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
             <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
           </svg>
@@ -159,23 +160,20 @@ export default defineComponent({
     await this.updateTrainingPlan();
     document.getElementById('next')?.click();
     this.viewCarousel = true;
+    this.changeDisplaySize();
   },
-
+  mounted() {
+    window.addEventListener('resize', () => {
+      this.changeDisplaySize();
+    });
+  },
   setup() {
     return { selectedExercise };
-  },
-  computed: {
-    displaySize() {
-      if (window.innerWidth > 1200) {
-        return true;
-      } else {
-        return false;
-      }
-    },
   },
   watch: { selectedExercise: 'updateTrainingPlan' },
   data() {
     return {
+      displaySize: true,
       viewCarousel: false,
       MUSCLE_OPTIONS: MUSCLE_OPTIONS,
       exercises: [] as Exercise[],
@@ -203,12 +201,19 @@ export default defineComponent({
   },
 
   methods: {
-    deleteExercise(day: string, exerciseIndex: number) {
-      console.log(day);
-      console.log(exerciseIndex);
+    changeDisplaySize() {
+      if (window.innerWidth > 1200) {
+        this.displaySize = true;
+      } else {
+        this.displaySize = false;
+      }
+    },
+    deleteExercise(day: any, exerciseIndex: number) {
       if (
         !confirm(
-          `Möchtest du ${this.trainingsPlanLocal[day as keyof TrainingsPlan][exerciseIndex].name} wirklich aus deinem Trainingsplan entfernen?`
+          `Möchtest du ${this.trainingsPlanLocal[day.value as keyof TrainingsPlan][exerciseIndex].name} wirklich aus deinem Trainingsplan am ${
+            day.name
+          } entfernen?`
         )
       )
         return;

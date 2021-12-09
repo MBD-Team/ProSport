@@ -1,8 +1,8 @@
 <template>
   <div class="container d-flex align-items-stretch justify-content-center flex-column" style="margin-top: 20vh">
     <div class="card card-default w-75" style="margin-left: 12.5%; border: none">
-      <div class="card-header header" style="border: 1px solid black; border-bottom: none">Anmeldung</div>
-      <div class="card-body" style="border: 1px solid black; border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px)">
+      <div class="card-header header border border-dark border-bottom-0">Anmeldung</div>
+      <div class="card-body border border-dark rounded-bottom">
         <form @submit.prevent="login()" autocomplete="off">
           <div class="my-4 alert alert-danger text-center" v-if="error">Email der Passwort ist nicht Korrekt</div>
 
@@ -81,7 +81,6 @@ export default defineComponent({
       this.loggingIn = true;
       try {
         await API.login(this.email, this.password);
-        console.log('admin logged in with:' + this.email);
         this.email = '';
         this.password = '';
         this.$router.push('/');

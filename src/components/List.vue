@@ -159,7 +159,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { collapsed, listWidth, selectedMuscle, selectedExercise, selectedSecondaryMuscle, selectedPrimaryMuscle } from '@/components/state';
-import { Equipment, Exercise, Muscle, MUSCLE_OPTIONS, TrainingsPlan, TrainingsPlanDataBase } from '@/types';
+import { Equipment, Exercise, Muscle, MUSCLE_OPTIONS, TrainingsPlan } from '@/types';
 import TrainingPlanContent from '@/components/TrainingPlanContent.vue';
 import * as API from '@/API';
 import { currentUser } from '@/router';

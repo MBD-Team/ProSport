@@ -1,15 +1,10 @@
 <template>
-  <div class="card card-default" style="border: none">
-    <div class="card-header header p-4" :class="{ rounded: !form }" style="border: 1px solid black">
+  <div class="card card-default border-0">
+    <div class="card-header header p-4 border border-dark" :class="{ rounded: !form }">
       <button class="btn addBtn col-4 col-sm-3 shadow-none" @click="add()">Übung hinzufügen</button>
       <button class="btn editBtn ms-2 col-4 col-sm-3 shadow-none" @click="edit()">Übung bearbeiten</button>
     </div>
-
-    <div
-      class="card-body p-4"
-      v-show="form == 'edit'"
-      style="border: 1px solid black; border-top: none; border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px)"
-    >
+    <div class="card-body p-4 border border-dark border-top-0 rounded-bottom" v-show="form == 'edit'">
       <div class="multiselect-contain">
         <Multiselect
           @select="change()"
@@ -28,11 +23,7 @@
       </div>
     </div>
 
-    <div
-      class="card-body p-4"
-      v-show="form == 'add' || (form == 'edit' && selectedExercise)"
-      style="border: 1px solid black; border-top: none; border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px)"
-    >
+    <div class="card-body p-4 border border-dark border-top-0 rounded-bottom" v-show="form == 'add' || (form == 'edit' && selectedExercise)">
       <form @submit.prevent="addExercise()" autocomplete="off">
         <div class="my-4 alert alert-danger text-center" v-if="error">{{ error }}</div>
 
@@ -196,9 +187,9 @@
       </form>
     </div>
   </div>
-  <div class="card card-default mt-4" style="border: none" v-if="list">
-    <div class="card-header header" style="border: 1px solid black">Übungen :</div>
-    <div class="card-body" style="border: 1px solid black; border-top: none; border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px)">
+  <div class="card card-default mt-4 border-0" v-if="list">
+    <div class="card-header header border border-dark">Übungen :</div>
+    <div class="card-body border border-dark border-top-0 rounded-bottom">
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
@@ -246,9 +237,9 @@
       </table>
     </div>
   </div>
-  <div class="card card-default mt-4" style="border: none">
-    <div class="card-header header" style="border: 1px solid black">Trainingsgerät hinzufügen</div>
-    <div class="card-body p-4" style="border: 1px solid black; border-top: none; border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px)">
+  <div class="card card-default mt-4 border-0">
+    <div class="card-header header border border-dark">Trainingsgerät hinzufügen</div>
+    <div class="card-body p-4 border border-dark border-top-0 rounded-bottom">
       <form class="mb-4" @submit.prevent="addEquipment()">
         <div class="input-contain mb-4">
           <input type="text" id="fname" name="fname" autocomplete="off" aria-labelledby="placeholder-fname" v-model="equipment" required />
@@ -300,7 +291,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, InputHTMLAttributes, ref, watchEffect } from 'vue';
+import { defineComponent } from 'vue';
 import * as API from '@/API';
 
 import { Equipment, Exercise, MUSCLE_OPTIONS } from '@/types';
