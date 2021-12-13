@@ -133,7 +133,9 @@ $dark: #212529;
 .arm {
   @include muscles(var(--selectedArmColor));
 }
-
+.carousel-item {
+  transition: transform 0.3s ease, opacity 0.5s ease-out !important;
+}
 .unselectable {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -142,5 +144,185 @@ $dark: #212529;
   -ms-user-select: none;
   user-select: none;
 }
+.pointer {
+  cursor: pointer;
+}
+.cursorDefault {
+  cursor: default;
+}
+//material inputs
+.input-contain {
+  position: relative;
+  input {
+    height: 3.5rem;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 1rem;
+    .placeholder-text {
+      font-size: 1.4rem; //input fontsize
+      padding: 0 1.2rem;
+    }
+  }
+  input:focus {
+    outline: none;
+    border-color: var(--navbarColor1);
+    & + .placeholder-text .text {
+      background-color: white;
+      font-size: 1.1rem;
+      transform: translate(0, -100%);
+      border-color: var(--navbarColor1);
+      color: var(--navbarColor1);
+    }
+  }
 
+  .placeholder-text {
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    pointer-events: none;
+
+    .text {
+      font-size: 1.4rem; // placeholder
+      padding: 0 0.5rem;
+      margin: 0 1rem;
+      transform: translate(0);
+      transition: transform 0.15s ease-out, font-size 0.15s ease-out, background-color 0.2s ease-out, color 0.15s ease-out;
+    }
+  }
+  input:focus + .placeholder-text .text,
+  input.dirty + .placeholder-text .text {
+    background-color: white;
+    font-size: 1.1rem;
+    color: black;
+    transform: translate(0, -100%);
+  }
+  input:focus + .placeholder-text .text {
+    border-color: var(--navbarColor1);
+    color: var(--navbarColor1);
+  }
+}
+
+.textarea-contain {
+  position: relative;
+  textarea {
+    height: 3.5rem;
+    min-height: 3.5rem;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 1rem;
+    padding-top: 0.5rem;
+    .placeholder-text {
+      font-size: 1.4rem; //input fontsize
+      padding: 1rem 1.2rem;
+    }
+  }
+
+  textarea:focus {
+    outline: none;
+    border-color: var(--navbarColor1);
+    & + .placeholder-text .text {
+      background-color: white;
+      font-size: 1.1rem;
+      transform: translate(0, -50%);
+      border-color: var(--navbarColor1);
+      color: var(--navbarColor1);
+    }
+  }
+  .placeholder-text {
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    pointer-events: none;
+
+    .text {
+      font-size: 1.4rem; // placeholder
+      padding: 0 0.5rem;
+      margin: 0.6rem 1rem;
+      transform: translate(0);
+      transition: transform 0.15s ease-out, font-size 0.15s ease-out, background-color 0.2s ease-out, color 0.15s ease-out;
+    }
+  }
+  textarea:focus + .placeholder-text .text,
+  textarea.dirty + .placeholder-text .text {
+    background-color: white;
+    font-size: 1.1rem;
+    color: black;
+    transform: translate(0, -80%);
+  }
+  textarea:focus + .placeholder-text .text {
+    border-color: var(--navbarColor1);
+    color: var(--navbarColor1);
+  }
+  textarea + .placeholder-text {
+    align-items: flex-start;
+  }
+}
+
+.multiselect-contain {
+  position: relative;
+  .multiselect {
+    height: 3.5rem;
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 1rem;
+    .placeholder-text {
+      font-size: 1.4rem; //input fontsize
+      padding: 0 1.2rem;
+    }
+  }
+  .multiselect:focus-within {
+    outline: none;
+    border-color: var(--navbarColor1);
+    & + .placeholder-text .text {
+      background-color: rgb(255, 255, 255);
+      font-size: 1.1rem;
+      transform: translate(0, -100%);
+      border-color: var(--navbarColor1);
+      color: var(--navbarColor1);
+    }
+  }
+  .placeholder-text {
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    pointer-events: none;
+
+    .text {
+      font-size: 1.2rem; // placeholder
+      padding: 0rem 0.5rem;
+      margin: 0rem 1rem;
+      transform: translate(0);
+      transition: transform 0.15s ease-out, font-size 0.15s ease-out, background-color 0.2s ease-out, color 0.15s ease-out;
+    }
+  }
+  .multiselect:focus + .placeholder-text .text,
+  .multiselect.dirty + .placeholder-text .text {
+    background-color: white;
+    font-size: 1.1rem;
+    color: black;
+    transform: translate(0, -100%);
+  }
+  .multiselect:focus-within + .placeholder-text .text {
+    border-color: var(--navbarColor1);
+    color: var(--navbarColor1);
+  }
+}
+.multiselect-search {
+  background-color: rgba(255, 255, 255, 0);
+}
+.is-active {
+  box-shadow: none !important;
+}
 @import '~bootstrap/scss/bootstrap';

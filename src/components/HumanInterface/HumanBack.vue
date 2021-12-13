@@ -1,9 +1,8 @@
 <template>
   <div class="unselectable">
     <svg
-      width="110mm"
-      height="173mm"
-      viewBox="0 0 200 270"
+      width="25vw"
+      viewBox="3 30 147 240"
       version="1.1"
       id="svg53695"
       inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
@@ -92,6 +91,7 @@
         />
         <path
           :class="{ shoulder: selectedMuscle == 'shoulder' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -111,6 +111,7 @@
         />
         <path
           :class="{ shoulder: selectedMuscle == 'shoulder' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -130,6 +131,7 @@
         />
         <path
           :class="{ neck: selectedMuscle == 'neck' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -149,6 +151,7 @@
         />
         <path
           :class="{ back: selectedMuscle == 'back' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -168,6 +171,7 @@
         />
         <path
           :class="{ butt: selectedMuscle == 'butt' }"
+          class="pointer"
           style="
             fill: #000000;
             stroke: #000000;
@@ -187,6 +191,7 @@
         />
         <path
           :class="{ arm: selectedMuscle == 'arm' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -206,6 +211,7 @@
         />
         <path
           :class="{ arm: selectedMuscle == 'arm' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -225,6 +231,7 @@
         />
         <path
           :class="{ arm: selectedMuscle == 'arm' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -244,6 +251,7 @@
         />
         <path
           :class="{ arm: selectedMuscle == 'arm' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -263,6 +271,7 @@
         />
         <path
           :class="{ leg: selectedMuscle == 'leg' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -282,6 +291,7 @@
         />
         <path
           :class="{ leg: selectedMuscle == 'leg' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -301,6 +311,7 @@
         />
         <path
           :class="{ leg: selectedMuscle == 'leg' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
@@ -320,6 +331,7 @@
         />
         <path
           :class="{ leg: selectedMuscle == 'leg' }"
+          class="pointer"
           style="
             fill: #000000;
             fill-opacity: 0.01;
