@@ -1,18 +1,41 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div>
+    <div class="d-flex justify-content-center" @click="closeList">
+      <div style="margin-right: 8%"><HumanFront /></div>
+      <div style="margin-left: 8%"><HumanBack /></div>
+    </div>
+    <List :direction="orientation" />
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { defineComponent } from 'vue';
 
-@Options({
-  components: {
-    HelloWorld,
+import HumanFront from '@/components/HumanInterface/HumanFront.vue';
+import HumanBack from '@/components/HumanInterface/HumanBack.vue';
+
+import List from '@/components/List.vue';
+import { orientation, closeList } from '@/components/state';
+
+export default defineComponent({
+  computed: {
+    direction() {
+      console.log(orientation);
+      return orientation;
+    },
   },
-})
-export default class Home extends Vue {}
+  components: { HumanFront, HumanBack, List },
+  setup() {
+    return { orientation, closeList };
+  },
+  data() {
+    return {};
+  },
+  methods: {},
+});
 </script>
+<style lang="scss" scoped>
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+</style>
